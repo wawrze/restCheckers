@@ -220,6 +220,7 @@ public class InGameUI implements UserInterface {
         }
     }
 
+    @Override
     public void waitForEnter() {
         System.out.println("Press \"Enter\" to continue.");
         sc.nextLine();

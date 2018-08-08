@@ -37,4 +37,6 @@ public interface UserInterface extends Serializable {
 
     boolean endOfGame(Board board, boolean simplePrint, List<String> moves, boolean player);
 
+    void waitForEnter();
+
 }

@@ -3,6 +3,7 @@ package com.wawrze.restcheckers.gameplay;
 import com.wawrze.restcheckers.board.*;
 import com.wawrze.restcheckers.figures.*;
 import com.wawrze.restcheckers.gameplay.userInterfaces.InGameUI;
+import com.wawrze.restcheckers.gameplay.userInterfaces.UserInterface;
 import com.wawrze.restcheckers.moves.*;
 import exceptions.*;
 
@@ -31,7 +32,7 @@ public class Game implements Serializable {
     private RulesSet rulesSet;
     private boolean isBlackAIPlayer;
     private boolean isWhiteAIPlayer;
-    InGameUI inGameUI;
+    UserInterface inGameUI;
 
     public Game(Game game) {
         this.board = new Board(game.getBoard());
@@ -95,7 +96,7 @@ public class Game implements Serializable {
         board.setFigure('H', 7, new Pawn(false));
     }
 
-    public boolean play(InGameUI inGameUI) throws IncorrectMoveFormat, IncorrectMoveException {
+    public boolean play(UserInterface inGameUI) throws IncorrectMoveFormat, IncorrectMoveException {
         this.inGameUI = inGameUI;
         boolean b;
         do {
@@ -378,6 +379,6 @@ public class Game implements Serializable {
         return isWhiteAIPlayer;
     }
 
-    private InGameUI getInGameUI() {return inGameUI;}
+    private UserInterface getInGameUI() {return inGameUI;}
 
 }

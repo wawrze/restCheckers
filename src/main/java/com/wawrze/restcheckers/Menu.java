@@ -3,6 +3,7 @@ package com.wawrze.restcheckers;
 import com.wawrze.restcheckers.gameplay.Game;
 import com.wawrze.restcheckers.gameplay.userInterfaces.InGameUI;
 import com.wawrze.restcheckers.gameplay.RulesSet;
+import com.wawrze.restcheckers.gameplay.userInterfaces.UserInterface;
 import exceptions.IncorrectMoveException;
 import exceptions.IncorrectMoveFormat;
 
@@ -13,7 +14,7 @@ public class Menu {
 
     private Map<String,Game> games;
     private List<RulesSet> rules;
-    InGameUI inGameUI;
+    UserInterface inGameUI;
 
     Scanner sc = new Scanner(System.in);
 

@@ -1,0 +1,610 @@
+body {
+    background: #b1b1b1;
+}
+
+img {
+    max-width: 97%;
+    max-height: 97%;
+    width: auto;
+    height: auto;
+}
+
+.container-main {
+    max-width: 630px;
+}
+
+.board {
+    margin-top: 20px;
+    margin-left: 20px;
+    border: 3px solid black;
+    height: 635px;
+    background: #829eae;
+    font-size: 14px;
+}
+
+.chessboard {
+    width: 100%;
+    max-height: 600px;
+    height: 95.238095238095238095238095238095%;
+}
+
+.status {
+    margin-left: 20px;
+    background: #829eae;
+    border-left: 3px solid black;
+    border-right: 3px solid black;
+    border-bottom: 3px solid black;
+    height: 50px;
+}
+
+.row-board-top {
+    overflow: auto;
+    height: 2.380952380952380952380952380952%;
+    width: 100%;
+}
+
+.row-board-bottom {
+    overflow: auto;
+    height: 3%;
+    width: 100%;
+}
+
+.row-chessboard {
+    overflow: auto;
+    height: 12.5%;
+    width: 100%;
+}
+
+.col {
+    float: left;
+    height: 100%;
+}
+
+.col-1 {
+    width: 11.904761904761904761904761904762%;
+}
+
+.col-board-edges-sides {
+    text-align: center;
+    width: 14.285714285714285714285714285714%;
+}
+
+.col-board-edges {
+    text-align: center;
+    width: 11.904761904761904761904761904762%;
+}
+
+.col-board-sides {
+    text-align: center;
+    width: 2.380952380952380952380952380952%;
+    line-height: 520%;
+}
+
+.black {
+    background: black;
+    color: white;
+}
+
+.white {
+    background: white;
+    color: black;
+}
+
+.fieldset {
+    border: none;
+    margin: 0;
+    padding: 10px;
+    flex-grow: 1;
+}
+
+.a2-black-pawn {
+    display: none;
+}
+
+.a2-black-queen {
+    display: none;
+}
+
+.a2-white-pawn {
+    display: none;
+}
+
+.a2-white-queen {
+    display: none;
+}
+
+.a4-black-pawn {
+    display: none;
+}
+
+.a4-black-queen {
+    display: none;
+}
+
+.a4-white-pawn {
+    display: none;
+}
+
+.a4-white-queen {
+    display: none;
+}
+
+.a6-black-pawn {
+    display: none;
+}
+
+.a6-black-queen {
+    display: none;
+}
+
+.a6-white-pawn {
+    display: none;
+}
+
+.a6-white-queen {
+    display: none;
+}
+
+.a8-black-pawn {
+    display: none;
+}
+
+.a8-black-queen {
+    display: none;
+}
+
+.a8-white-pawn {
+    display: none;
+}
+
+.a8-white-queen {
+    display: none;
+}
+
+.b1-black-pawn {
+    display: none;
+}
+
+.b1-black-queen {
+    display: none;
+}
+
+.b1-white-pawn {
+    display: none;
+}
+
+.b1-white-queen {
+    display: none;
+}
+
+.b3-black-pawn {
+    display: none;
+}
+
+.b3-black-queen {
+    display: none;
+}
+
+.b3-white-pawn {
+    display: none;
+}
+
+.b3-white-queen {
+    display: none;
+}
+
+.b5-black-pawn {
+    display: none;
+}
+
+.b5-black-queen {
+    display: none;
+}
+
+.b5-white-pawn {
+    display: none;
+}
+
+.b5-white-queen {
+    display: none;
+}
+
+.b7-black-pawn {
+    display: none;
+}
+
+.b7-black-queen {
+    display: none;
+}
+
+.b7-white-pawn {
+    display: none;
+}
+
+.b7-white-queen {
+    display: none;
+}
+
+.c2-black-pawn {
+    display: none;
+}
+
+.c2-black-queen {
+    display: none;
+}
+
+.c2-white-pawn {
+    display: none;
+}
+
+.c2-white-queen {
+    display: none;
+}
+
+.c4-black-pawn {
+    display: none;
+}
+
+.c4-black-queen {
+    display: none;
+}
+
+.c4-white-pawn {
+    display: none;
+}
+
+.c4-white-queen {
+    display: none;
+}
+
+.c6-black-pawn {
+    display: none;
+}
+
+.c6-black-queen {
+    display: none;
+}
+
+.c6-white-pawn {
+    display: none;
+}
+
+.c6-white-queen {
+    display: none;
+}
+
+.c8-black-pawn {
+    display: none;
+}
+
+.c8-black-queen {
+    display: none;
+}
+
+.c8-white-pawn {
+    display: none;
+}
+
+.c8-white-queen {
+    display: none;
+}
+
+.d1-black-pawn {
+    display: none;
+}
+
+.d1-black-queen {
+    display: none;
+}
+
+.d1-white-pawn {
+    display: none;
+}
+
+.d1-white-queen {
+    display: none;
+}
+
+.d3-black-pawn {
+    display: none;
+}
+
+.d3-black-queen {
+    display: none;
+}
+
+.d3-white-pawn {
+    display: none;
+}
+
+.d3-white-queen {
+    display: none;
+}
+
+.d5-black-pawn {
+    display: none;
+}
+
+.d5-black-queen {
+    display: none;
+}
+
+.d5-white-pawn {
+    display: none;
+}
+
+.d5-white-queen {
+    display: none;
+}
+
+.d7-black-pawn {
+    display: none;
+}
+
+.d7-black-queen {
+    display: none;
+}
+
+.d7-white-pawn {
+    display: none;
+}
+
+.d7-white-queen {
+    display: none;
+}
+
+.e2-black-pawn {
+    display: none;
+}
+
+.e2-black-queen {
+    display: none;
+}
+
+.e2-white-pawn {
+    display: none;
+}
+
+.e2-white-queen {
+    display: none;
+}
+
+.e4-black-pawn {
+    display: none;
+}
+
+.e4-black-queen {
+    display: none;
+}
+
+.e4-white-pawn {
+    display: none;
+}
+
+.e4-white-queen {
+    display: none;
+}
+
+.e6-black-pawn {
+    display: none;
+}
+
+.e6-black-queen {
+    display: none;
+}
+
+.e6-white-pawn {
+    display: none;
+}
+
+.e6-white-queen {
+    display: none;
+}
+
+.e8-black-pawn {
+    display: none;
+}
+
+.e8-black-queen {
+    display: none;
+}
+
+.e8-white-pawn {
+    display: none;
+}
+
+.e8-white-queen {
+    display: none;
+}
+
+.f1-black-pawn {
+    display: none;
+}
+
+.f1-black-queen {
+    display: none;
+}
+
+.f1-white-pawn {
+    display: none;
+}
+
+.f1-white-queen {
+    display: none;
+}
+
+.f3-black-pawn {
+    display: none;
+}
+
+.f3-black-queen {
+    display: none;
+}
+
+.f3-white-pawn {
+    display: none;
+}
+
+.f3-white-queen {
+    display: none;
+}
+
+.f5-black-pawn {
+    display: none;
+}
+
+.f5-black-queen {
+    display: none;
+}
+
+.f5-white-pawn {
+    display: none;
+}
+
+.f5-white-queen {
+    display: none;
+}
+
+.f7-black-pawn {
+    display: none;
+}
+
+.f7-black-queen {
+    display: none;
+}
+
+.f7-white-pawn {
+    display: none;
+}
+
+.f7-white-queen {
+    display: none;
+}
+
+.g2-black-pawn {
+    display: none;
+}
+
+.g2-black-queen {
+    display: none;
+}
+
+.g2-white-pawn {
+    display: none;
+}
+
+.g2-white-queen {
+    display: none;
+}
+
+.g4-black-pawn {
+    display: none;
+}
+
+.g4-black-queen {
+    display: none;
+}
+
+.g4-white-pawn {
+    display: none;
+}
+
+.g4-white-queen {
+    display: none;
+}
+
+.g6-black-pawn {
+    display: none;
+}
+
+.g6-black-queen {
+    display: none;
+}
+
+.g6-white-pawn {
+    display: none;
+}
+
+.g6-white-queen {
+    display: none;
+}
+
+.g8-black-pawn {
+    display: none;
+}
+
+.g8-black-queen {
+    display: none;
+}
+
+.g8-white-pawn {
+    display: none;
+}
+
+.g8-white-queen {
+    display: none;
+}
+
+.h1-black-pawn {
+    display: none;
+}
+
+.h1-black-queen {
+    display: none;
+}
+
+.h1-white-pawn {
+    display: none;
+}
+
+.h1-white-queen {
+    display: none;
+}
+
+.h3-black-pawn {
+    display: none;
+}
+
+.h3-black-queen {
+    display: none;
+}
+
+.h3-white-pawn {
+    display: none;
+}
+
+.h3-white-queen {
+    display: none;
+}
+
+.h5-black-pawn {
+    display: none;
+}
+
+.h5-black-queen {
+    display: none;
+}
+
+.h5-white-pawn {
+    display: none;
+}
+
+.h5-white-queen {
+    display: none;
+}
+
+.h7-black-pawn {
+    display: none;
+}
+
+.h7-black-queen {
+    display: none;
+}
+
+.h7-white-pawn {
+    display: none;
+}
+
+.h7-white-queen {
+    display: none;
+}
