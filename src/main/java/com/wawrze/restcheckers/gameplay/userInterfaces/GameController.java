@@ -56,7 +56,9 @@ public class GameController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getBoard")
-    public BoardDto getBoard() {
+    public BoardDto getBoard() throws InterruptedException {
+        TimeUnit.MILLISECONDS.sleep(200);
+        System.out.println("REQUEST");
         return boardMapper.mapToBoardDto(game.getBoard(), restUI.getGameStatus());
     }
 

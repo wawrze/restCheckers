@@ -13,7 +13,7 @@ import java.util.List;
 public class RestUI implements UserInterface {
 
     private Deque<String> inQueue = new ArrayDeque<>();
-    private String gameStatus;
+    private String gameStatus = "Game started.";
 
 
     public Deque<String> getInQueue() {

@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 public class RowDto {
 
-    private char name;
+    private int name;
     private List<FigureDto> figures;
 
 }

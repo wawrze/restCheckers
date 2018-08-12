@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 public class FigureDto {
 
     private String name;
+    private int col;
     private boolean color;
 
 }

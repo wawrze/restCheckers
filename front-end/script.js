@@ -1,6 +1,7 @@
 $(document).ready(function () {
 
     const apiRoot = 'http://localhost:8080/game/'
+    const rows = $('[board]');
     
     //init
     createGame();
@@ -17,14 +18,20 @@ $(document).ready(function () {
 
     function getBoard() {
         const requestUrl = apiRoot + 'getBoard';
-
+        
         $.ajax({
             url: requestUrl,
             method: 'GET',
-            success: function (rows) {
-                rows.forEach(row => {
-
-                });
+            contentType: "application/json",
+            success: function () {
+                document.write("I'M IN");
+                //rows.forEach(row => {
+                  //  figures.forEach(figure =>  {
+                        //if (figure.name == "pawn" && figure.color)
+                            
+                            //rows.children()[row.name].children()[figure.col - 1].children()[0].visible = true;
+                 //   });
+                //});
             }
         });
 

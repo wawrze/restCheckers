@@ -27,45 +27,53 @@ public class BoardMapper {
         for(int i = 1;i < 9;i++) {
             listRowA.add(new FigureDto(
                     figureName(board.getFigure('A', i)),
+                    i,
                     board.getFigure('A', i).getColor())
             );
             listRowB.add(new FigureDto(
                     figureName(board.getFigure('B', i)),
+                    i,
                     board.getFigure('B', i).getColor())
             );
             listRowC.add(new FigureDto(
                     figureName(board.getFigure('C', i)),
+                    i,
                     board.getFigure('C', i).getColor())
             );
             listRowD.add(new FigureDto(
                     figureName(board.getFigure('D', i)),
+                    i,
                     board.getFigure('D', i).getColor())
             );
             listRowE.add(new FigureDto(
                     figureName(board.getFigure('E', i)),
+                    i,
                     board.getFigure('E', i).getColor())
             );
             listRowF.add(new FigureDto(
                     figureName(board.getFigure('F', i)),
+                    i,
                     board.getFigure('F', i).getColor())
             );
             listRowG.add(new FigureDto(
                     figureName(board.getFigure('G', i)),
+                    i,
                     board.getFigure('G', i).getColor())
             );
             listRowH.add(new FigureDto(
                     figureName(board.getFigure('H', i)),
+                    i,
                     board.getFigure('H', i).getColor())
             );
         }
-        RowDto rowA = new RowDto('A', listRowA);
-        RowDto rowB = new RowDto('B', listRowB);
-        RowDto rowC = new RowDto('C', listRowC);
-        RowDto rowD = new RowDto('D', listRowD);
-        RowDto rowE = new RowDto('E', listRowE);
-        RowDto rowF = new RowDto('F', listRowF);
-        RowDto rowG = new RowDto('G', listRowG);
-        RowDto rowH = new RowDto('H', listRowH);
+        RowDto rowA = new RowDto(0, listRowA);
+        RowDto rowB = new RowDto(1, listRowB);
+        RowDto rowC = new RowDto(2, listRowC);
+        RowDto rowD = new RowDto(3, listRowD);
+        RowDto rowE = new RowDto(4, listRowE);
+        RowDto rowF = new RowDto(5, listRowF);
+        RowDto rowG = new RowDto(6, listRowG);
+        RowDto rowH = new RowDto(7, listRowH);
         List<RowDto> rowDtos = new ArrayList<>();
         rowDtos.add(rowA);
         rowDtos.add(rowB);
