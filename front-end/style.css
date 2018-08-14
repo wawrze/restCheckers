@@ -9,15 +9,23 @@ img {
     height: auto;
 }
 
-.container-main {
+.container {
+    margin-top: 20px;
+    margin-left: 20px;
     max-width: 630px;
+    background: #829eae;
+}
+
+.header {
+    height: 100px;
+    border-top: 3px solid black;
+    border-left: 3px solid black;
+    border-right: 3px solid black;
 }
 
 .board {
-    margin-top: 20px;
-    margin-left: 20px;
     border: 3px solid black;
-    height: 635px;
+    height: 630px;
     background: #829eae;
     font-size: 14px;
 }
@@ -25,12 +33,10 @@ img {
 .chessboard {
     width: 100%;
     max-height: 600px;
-    height: 95.238095238095238095238095238095%;
+    height: 95%;
 }
 
 .status {
-    margin-left: 20px;
-    background: #829eae;
     border-left: 3px solid black;
     border-right: 3px solid black;
     border-bottom: 3px solid black;
@@ -39,13 +45,13 @@ img {
 
 .row-board-top {
     overflow: auto;
-    height: 2.380952380952380952380952380952%;
+    height: 2.5%;
     width: 100%;
 }
 
 .row-board-bottom {
     overflow: auto;
-    height: 3%;
+    height: 2.5%;
     width: 100%;
 }
 
@@ -61,22 +67,22 @@ img {
 }
 
 .col-1 {
-    width: 11.904761904761904761904761904762%;
+    width: 11.875%;
 }
 
 .col-board-edges-sides {
     text-align: center;
-    width: 14.285714285714285714285714285714%;
+    width: 2.5%;
 }
 
 .col-board-edges {
     text-align: center;
-    width: 11.904761904761904761904761904762%;
+    width: 11.875%;
 }
 
 .col-board-sides {
     text-align: center;
-    width: 2.380952380952380952380952380952%;
+    width: 2.5%;
     line-height: 520%;
 }
 
@@ -99,4 +105,13 @@ img {
 
 .figure {
     display: none;
+}
+
+.fieldset-header {
+    font-size: large;
+    font-weight: 800;
+}
+
+.fieldset-label {
+
 }

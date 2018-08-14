@@ -1,18 +1,45 @@
 $(document).ready(function () {
 
     const apiRoot = 'http://localhost:8080/game/'
-    const rows = $('[board]');
+    const board = $('[board]');
+    const gStatus = $('[gameStatus]');
+
+    var availableRulesSets = {};
     
     //init
-    createGame();
+    gStatus.text("");
+    getAllAvailableRulesSets();
     getBoard();
+
+    function getAllAvailableRulesSets() {
+        var requestUrl = apiRoot + 'getRulesSets';
+
+        $.ajax({
+            url: requestUrl,
+            method: 'GET',
+            contentType: "application/json",
+            success: function (rules) {
+                alert("DONE");
+                var i = 0;
+                rules.forEach(rule => {
+                    availableRulesSets[i] = rule;
+                });
+            }
+        });
+    }
+
+    //need some function to make selection list for rules sets
 
     function createGame() {
         const requestUrl =  apiRoot + 'newGame';
 
         $.ajax({
             url: requestUrl,
-            method: 'POST'
+            method: 'POST',
+            processData: false,
+            error: function () {
+                gStatus.text("Application error.");
+            }
         });
     }
 
@@ -20,41 +47,64 @@ $(document).ready(function () {
         const requestUrl = apiRoot + 'getBoard';
         
         $.ajax({
+            async: true,
+            crossDomain: true,
             url: requestUrl,
             method: 'GET',
-            contentType: "application/json",
-            success: function () {
-                document.write("I'M IN");
-                //rows.forEach(row => {
-                  //  figures.forEach(figure =>  {
-                        //if (figure.name == "pawn" && figure.color)
-                            
-                            //rows.children()[row.name].children()[figure.col - 1].children()[0].visible = true;
-                 //   });
-                //});
+            contentType: "application/json;charset=UTF-8",
+            
+            success: function (chessboard) {
+                gStatus.text(chessboard.gameStatus);
+                chessboard.rows.forEach(row => {
+                    row.figures.forEach(figure =>  {
+                        if (figure.name == "pawn") {
+                            if (figure.color) {
+                                board.children()[row.name].children()[figure.col].children()[0].visible = true;
+                            }
+                            else {
+                                board.children()[row.name].children()[figure.col].children()[2].visible = true;
+                            }
+                        }
+                        if (figure.name == "queen") {
+                            if (figure.color) {
+                                board.children()[row.name].children()[figure.col].children()[1].visible = true;
+                            }
+                            else {
+                                board.children()[row.name].children()[figure.col].children()[3].visible = true;
+                            }
+                        }   
+                    });
+                });
+            },
+            error: function (xhr, textStatus, err) {
+                gStatus.text("Application error.");
             }
         });
-
     }
-    /*
-        function getAllTasks() {
-        const requestUrl = apiRoot + 'getTasks';
+
+    function sendMove(row1, col1, row2, col2) {
+        var requestUrl = apiRoot + 'sendMove';
 
         $.ajax({
             url: requestUrl,
-            method: 'GET',
-            contentType: "application/json",
-            success: function (tasks) {
-                tasks.forEach(task => {
-                    availableTasks[task.id] = task;
-                });
-
-                getAllAvailableBoards(handleDatatableRender, tasks);
+            method: 'POST',
+            processData: true,
+            contentType: "application/json;charset=UTF-8",
+            dataType: 'json',
+            data: JSON.stringify({
+                row1: row1,
+                col1: col1,
+                row2: row2,
+                col2: col2
+            }),
+            success: function (data) {
+                ProcessRequest(data);
             }
         });
     }
 
 
+    /*
     const datatableRowTemplate = $('[data-datatable-row-template]').children()[0];
     const $tasksContainer = $('[data-tasks-container]');
 
