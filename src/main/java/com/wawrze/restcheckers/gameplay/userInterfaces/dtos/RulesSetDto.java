@@ -17,5 +17,6 @@ public class RulesSetDto {
     private boolean isQueenRangeOneAfterCapture;
     private String name;
     private String description;
+    private int id;
 
 }

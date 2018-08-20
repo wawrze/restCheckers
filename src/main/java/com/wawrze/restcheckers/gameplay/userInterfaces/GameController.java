@@ -1,7 +1,9 @@
 package com.wawrze.restcheckers.gameplay.userInterfaces;
 
 import com.wawrze.restcheckers.gameplay.Game;
+import com.wawrze.restcheckers.gameplay.RulesSet;
 import com.wawrze.restcheckers.gameplay.userInterfaces.dtos.BoardDto;
+import com.wawrze.restcheckers.gameplay.userInterfaces.dtos.GameDto;
 import com.wawrze.restcheckers.gameplay.userInterfaces.dtos.MoveDto;
 import com.wawrze.restcheckers.gameplay.userInterfaces.dtos.RulesSetsDto;
 import com.wawrze.restcheckers.gameplay.userInterfaces.mappers.BoardMapper;
@@ -15,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.TimeUnit;
+
+import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping("/game")
@@ -36,14 +40,25 @@ public class GameController {
     private Game game;
     private static final Logger LOGGER = LoggerFactory.getLogger(GameController.class);
 
-    @RequestMapping(method = RequestMethod.POST, value = "newGame")
-    public void startNewGame() throws IncorrectMoveException, IncorrectMoveFormat {
+    @RequestMapping(method = RequestMethod.POST, value = "newGame", consumes = APPLICATION_JSON_VALUE)
+    public void startNewGame(@RequestBody GameDto gameDto) throws IncorrectMoveException, IncorrectMoveFormat {
+        RulesSet rulesSet = null;
+        for(RulesSet r : rules.getRules()) {
+            if(r.getName().equals(gameDto.getRulesName()))
+                rulesSet = r;
+        }
+        boolean isBlackAIPlayer = gameDto.getIsBlackAIPlayer().equals("true");
+        boolean isWhiteAIPlayer = gameDto.getIsWhiteAIPlayer().equals("true");
         game = new Game(
-                "Rest game",
-                rules.getRules().get(0),
-                true,
-                false
+                gameDto.getName(),
+                rulesSet,
+                isBlackAIPlayer,
+                isWhiteAIPlayer
         );
+        if(game == null) {
+            LOGGER.warn("Game not created!");
+            return;
+        }
         LOGGER.info("Game created.");
         game.play(restUI);
     }
@@ -60,6 +75,10 @@ public class GameController {
     @RequestMapping(method = RequestMethod.GET, value = "getBoard")
     public BoardDto getBoard() throws InterruptedException {
         TimeUnit.MILLISECONDS.sleep(200);
+        if(game == null) {
+            LOGGER.warn("Board not sent - no game started!");
+            return null;
+        }
         LOGGER.info("Board sent.");
         return boardMapper.mapToBoardDto(game.getBoard(), restUI.getGameStatus());
     }

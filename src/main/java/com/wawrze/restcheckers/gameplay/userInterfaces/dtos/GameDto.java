@@ -4,13 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
-public class FigureDto {
+public class GameDto {
 
     private String name;
-    private int col;
-    private String color;
+    private String rulesName;
+    private String isWhiteAIPlayer;
+    private String isBlackAIPlayer;
 
 }

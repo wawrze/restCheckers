@@ -28,42 +28,42 @@ public class BoardMapper {
             listRowA.add(new FigureDto(
                     figureName(board.getFigure('A', i)),
                     i,
-                    board.getFigure('A', i).getColor())
+                    (board.getFigure('A', i).getColor()) ? "true" : "false")
             );
             listRowB.add(new FigureDto(
                     figureName(board.getFigure('B', i)),
                     i,
-                    board.getFigure('B', i).getColor())
+                    (board.getFigure('B', i).getColor()) ? "true" : "false")
             );
             listRowC.add(new FigureDto(
                     figureName(board.getFigure('C', i)),
                     i,
-                    board.getFigure('C', i).getColor())
+                    (board.getFigure('C', i).getColor()) ? "true" : "false")
             );
             listRowD.add(new FigureDto(
                     figureName(board.getFigure('D', i)),
                     i,
-                    board.getFigure('D', i).getColor())
+                    (board.getFigure('D', i).getColor()) ? "true" : "false")
             );
             listRowE.add(new FigureDto(
                     figureName(board.getFigure('E', i)),
                     i,
-                    board.getFigure('E', i).getColor())
+                    (board.getFigure('E', i).getColor()) ? "true" : "false")
             );
             listRowF.add(new FigureDto(
                     figureName(board.getFigure('F', i)),
                     i,
-                    board.getFigure('F', i).getColor())
+                    (board.getFigure('F', i).getColor()) ? "true" : "false")
             );
             listRowG.add(new FigureDto(
                     figureName(board.getFigure('G', i)),
                     i,
-                    board.getFigure('G', i).getColor())
+                    (board.getFigure('G', i).getColor()) ? "true" : "false")
             );
             listRowH.add(new FigureDto(
                     figureName(board.getFigure('H', i)),
                     i,
-                    board.getFigure('H', i).getColor())
+                    (board.getFigure('H', i).getColor()) ? "true" : "false")
             );
         }
         RowDto rowA = new RowDto(0, listRowA);

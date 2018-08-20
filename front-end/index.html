@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Page title</title>
+    <title>Checkers Game</title>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
     <div class="container">
+        <button get-board class="">GET BOARD</button>
         <div class="header">
             <fieldset class="fieldset">
                 <label class="fieldset-header">Create new game:</label>
                 <br />
                 <label class="">Game name:</label>
-                <input type="text" name="game-name" placeholder="Enter game name.">
+                <input type="text" name="game-name" placeholder="Enter game name." game-name>
                 <label class="fieldset-label">Rules set:</label>
                 <select class="" name="rules-set" rules-set-select>
-                    <option selected>Classic</option>
-                    <option>English</option>
-                    <option>Poddavki</option>
+                    <option disabled selected>--- select rules set ---</option>
                 </select>
                 <br />
                 <label class="fieldset-label">White player:</label>
@@ -29,7 +28,7 @@
                     <option selected>Human</option>
                     <option>Computer</option>
                 </select>
-                <button type="submit" create-game class="">Create game</button>
+                <button create-game-button class="">Create game</button>
             </fieldset>
         </div>
         <div class="board">
@@ -47,7 +46,7 @@
             </div>
             <div class="chessboard" board>
                 <div class="row-chessboard">
-                    <div class="col col-board-sides black">A</div>
+                    <div class="col col-board-sides black" somename>A</div>
                     <div class="col col-1 white"></div>
                     <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure" /><img src="images/black_queen.jpg" class="figure" /><img src="images/white_pawn.jpg" class="figure" /><img src="images/white_queen.jpg" class="figure" /></div>
                     <div class="col col-1 white"></div>

@@ -5,11 +5,11 @@ $(document).ready(function () {
     const gStatus = $('[gameStatus]');
 
     var availableRulesSets = {};
+    var availableRulesSetsLength;
     
     //init
-    gStatus.text("");
+    gStatus.text("Game not started.");
     getAllAvailableRulesSets();
-    getBoard();
 
     function getAllAvailableRulesSets() {
         var requestUrl = apiRoot + 'getRulesSets';
@@ -18,25 +18,59 @@ $(document).ready(function () {
             url: requestUrl,
             method: 'GET',
             contentType: "application/json",
-            success: function (rules) {
-                alert("DONE");
-                var i = 0;
-                rules.forEach(rule => {
-                    availableRulesSets[i] = rule;
-                });
+            success: function (list) {
+                availableRulesSetsLength = (list.rules).length;
+                for (var i = 0; i < availableRulesSetsLength; i++) {
+                    availableRulesSets[i] = list.rules[i];
+                }
+                prepareRulesSelectOptions();
             }
         });
     }
 
-    //need some function to make selection list for rules sets
+    function prepareRulesSelectOptions() {
+        var list = $('[rules-set-select]');
+
+        for (var i = 0; i < availableRulesSetsLength; i++) {
+            var option = document.createElement("option");
+            option.value = availableRulesSets[i].name;
+            option.text = availableRulesSets[i].name;
+            list.append(option);
+        }
+    }
 
     function createGame() {
-        const requestUrl =  apiRoot + 'newGame';
+        const requestUrl = apiRoot + 'newGame';
+        
+        var gameName = $('[game-name]').val();
+        var gameRulesName = $('[rules-set-select]').val();
+        var blackPlayer = "false";
+        if ($('[black-player-select]').val() == "Computer") {
+            blackPlayer = "true";
+        }
+        var whitePlayer = "false";
+        if ($('[white-player-select]').val() == "Computer") {
+            whitePlayer = "true";
+        }
+
+        if (gameName == "") {
+            gStatus.text("You have to enter game name!");
+            return;
+        }
+        gStatus.text("Game started.");
 
         $.ajax({
             url: requestUrl,
             method: 'POST',
             processData: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            data: JSON.stringify({
+                name: gameName,
+                rulesName: gameRulesName,
+                isBlackAIPlayer: blackPlayer,
+                isWhiteAIPlayer: whitePlayer
+            }),
             error: function () {
                 gStatus.text("Application error.");
             }
@@ -46,19 +80,18 @@ $(document).ready(function () {
     function getBoard() {
         const requestUrl = apiRoot + 'getBoard';
         
+        alert(board.children()[0].children()[0].text);
+
         $.ajax({
-            async: true,
-            crossDomain: true,
             url: requestUrl,
             method: 'GET',
             contentType: "application/json;charset=UTF-8",
-            
             success: function (chessboard) {
                 gStatus.text(chessboard.gameStatus);
                 chessboard.rows.forEach(row => {
                     row.figures.forEach(figure =>  {
                         if (figure.name == "pawn") {
-                            if (figure.color) {
+                            if (figure.color == "true") {
                                 board.children()[row.name].children()[figure.col].children()[0].visible = true;
                             }
                             else {
@@ -66,7 +99,7 @@ $(document).ready(function () {
                             }
                         }
                         if (figure.name == "queen") {
-                            if (figure.color) {
+                            if (figure.color == "true") {
                                 board.children()[row.name].children()[figure.col].children()[1].visible = true;
                             }
                             else {
@@ -103,8 +136,29 @@ $(document).ready(function () {
         });
     }
 
+    $('[create-game-button]').click(createGame);
+    $('[get-board]').click(getBoard);
 
     /*
+
+        function getAllTasks() {
+        const requestUrl = apiRoot + 'getTasks';
+
+        $.ajax({
+            url: requestUrl,
+            method: 'GET',
+            contentType: "application/json",
+            success: function (tasks) {
+                tasks.forEach(task => {
+                    availableTasks[task.id] = task;
+                });
+
+                getAllAvailableBoards(handleDatatableRender, tasks);
+            }
+        });
+    }
+
+
     const datatableRowTemplate = $('[data-datatable-row-template]').children()[0];
     const $tasksContainer = $('[data-tasks-container]');
 
@@ -139,14 +193,7 @@ $(document).ready(function () {
         return element;
     }
 
-    function prepareBoardOrListSelectOptions(availableChoices) {
-        return availableChoices.map(function (choice) {
-            return $('<option>')
-                      .addClass('crud-select__option')
-                      .val(choice.id)
-                      .text(choice.name || 'Unknown name');
-        });
-    }
+
 
     function handleDatatableRender(taskData, boards) {
         $tasksContainer.empty();
@@ -166,22 +213,7 @@ $(document).ready(function () {
         });
     }
 
-    function getAllTasks() {
-        const requestUrl = apiRoot + 'getTasks';
 
-        $.ajax({
-            url: requestUrl,
-            method: 'GET',
-            contentType: "application/json",
-            success: function (tasks) {
-                tasks.forEach(task => {
-                    availableTasks[task.id] = task;
-                });
-
-                getAllAvailableBoards(handleDatatableRender, tasks);
-            }
-        });
-    }
 
     function handleTaskUpdateRequest() {
         var parentEl = $(this).parents('[data-task-id]');
@@ -260,15 +292,6 @@ $(document).ready(function () {
 
         parentEl.find('[data-task-name-input]').val(taskTitle);
         parentEl.find('[data-task-content-input]').val(taskContent);
-    }
-
-    function handleBoardNameSelect(event) {
-        var $changedSelectEl = $(event.target);
-        var selectedBoardId = $changedSelectEl.val();
-        var $listNameSelectEl = $changedSelectEl.siblings('[data-list-name-select]');
-        var preparedListOptions = prepareBoardOrListSelectOptions(availableBoards[selectedBoardId].lists);
-
-        $listNameSelectEl.empty().append(preparedListOptions);
     }
 
     function handleCardCreationRequest(event) {
