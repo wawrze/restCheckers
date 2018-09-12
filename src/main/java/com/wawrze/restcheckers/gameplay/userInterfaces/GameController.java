@@ -65,11 +65,11 @@ public class GameController {
 
     @RequestMapping(method = RequestMethod.POST, value = "sendMove")
     public BoardDto sendMove(@RequestBody MoveDto moveDto) throws InterruptedException {
-        String s = "" + moveDto.getRow1() + moveDto.getCol1() + "-" + moveDto.getRow2() + moveDto.getCol2();
+        String s = moveDto.getMove();
         restUI.getInQueue().push(s);
         TimeUnit.MILLISECONDS.sleep(200);
         LOGGER.info("New move served. Board sent.");
-        return boardMapper.mapToBoardDto(game.getBoard(), restUI.getGameStatus());
+        return boardMapper.mapToBoardDto(game.getBoard(), restUI.getGameStatus(), game.getMoves());
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getBoard")
@@ -80,7 +80,7 @@ public class GameController {
             return null;
         }
         LOGGER.info("Board sent.");
-        return boardMapper.mapToBoardDto(game.getBoard(), restUI.getGameStatus());
+        return boardMapper.mapToBoardDto(game.getBoard(), restUI.getGameStatus(), game.getMoves());
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getRulesSets")

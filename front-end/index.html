@@ -6,7 +6,6 @@
 </head>
 <body>
     <div class="container">
-        <button get-board class="">GET BOARD</button>
         <div class="header">
             <fieldset class="fieldset">
                 <label class="fieldset-header">Create new game:</label>
@@ -155,9 +154,38 @@
                 <div class="col col-board-edges-sides black"></div>
             </div>
         </div>
+        <div class="side-menu">
+            <div class="legend-container">
+                <div class="legend">
+                    <div class="legend-row-top">
+                        <div class="legend-col">BLACK</div>
+                        <div class="legend-col">WHITE</div>
+                        <div class="legend-col-right"></div>
+                    </div>
+                    <div class="legend-row">
+                        <div class="legend-col"><img src="images/black_pawn.jpg" /></div>
+                        <div class="legend-col"><img src="images/white_pawn.jpg" /></div>
+                        <div class="legend-col-right">PAWN</div>
+                    </div>
+                    <div class="legend-row">
+                        <div class="legend-col"><img src="images/black_queen.jpg" /></div>
+                        <div class="legend-col"><img src="images/white_queen.jpg" /></div>
+                        <div class="legend-col-right">QUEEN</div>
+                    </div>
+                </div>
+            </div>
+            <div class="moves-history-container">
+                <div class="moves-history">
+                    <div class="moves-history-header">MOVES HISTORY</div>
+                    <fieldset class="moves-history-list">
+                        <label movesHistory></label>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
         <div class="status">
             <fieldset class="fieldset">
-                <label labe="" gameStatus></label>
+                <label gameStatus></label>
             </fieldset>
         </div>
         <div class="status">
@@ -165,8 +193,8 @@
                 <label class="">
                     Enter your next move:
                 </label>
-                <input type="text" name="next-move" placeholder="eg. F2-E1">
-                <button type="submit" send-move class="">Send move</button>
+                <input type="text" name="next-move" next-move placeholder="eg. F2-E1">
+                <button type="submit" name="send-move" send-move-button class="">Send move</button>
             </fieldset>
         </div>
     </div>

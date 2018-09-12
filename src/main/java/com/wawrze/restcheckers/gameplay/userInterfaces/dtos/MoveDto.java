@@ -9,9 +9,6 @@ import lombok.NoArgsConstructor;
 @Getter
 public class MoveDto {
 
-    private char row1;
-    private int col1;
-    private char row2;
-    private int col2;
+    private String move;
 
 }

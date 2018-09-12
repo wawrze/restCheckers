@@ -13,5 +13,6 @@ public class BoardDto {
 
     private List<RowDto> rows;
     private String gameStatus;
+    private String movesHistory;
 
 }

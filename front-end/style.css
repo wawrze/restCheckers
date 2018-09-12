@@ -12,8 +12,9 @@ img {
 .container {
     margin-top: 20px;
     margin-left: 20px;
-    max-width: 630px;
+    max-width: 1060px;
     background: #829eae;
+    display: block;
 }
 
 .header {
@@ -26,8 +27,10 @@ img {
 .board {
     border: 3px solid black;
     height: 630px;
+    width: 630px;;
     background: #829eae;
     font-size: 14px;
+    display: inline-block;
 }
 
 .chessboard {
@@ -114,4 +117,87 @@ img {
 
 .fieldset-label {
 
+}
+
+.side-menu {
+    background: #829eae;
+    height: 630px;
+    width: 421px;
+    position: absolute;
+    top: 123px;
+    border-top: 3px solid black;
+    border-bottom: 3px solid black;
+    border-right: 3px solid black;
+    display: inline-block;
+}
+
+.legend-container {
+    height: 188px;
+    border-bottom: 3px solid black;
+}
+
+.legend {
+    margin-top: 10px;
+    margin-left: 80px;
+    height: 168px;
+    width: 255px;
+    border: 3px solid white;
+    background: black;
+    text-align: center;
+    color: white;
+}
+
+.legend-row-top {
+    height: 16px;
+    width: 100%;
+    border-bottom: 1px solid white;
+}
+
+.legend-row {
+    height: 75px;
+    width: 100%;
+    border-bottom: 1px solid white;
+}
+
+.legend-col {
+    height: 100%;
+    width: 75px;
+    border-right: 1px solid white;
+    float: left;
+}
+
+.legend-col-right {
+    height: 100%;
+    width: 98px;
+    float: left;
+    line-height: 450%;
+}
+
+.moves-history-container {
+    border-right: 3px solid black;
+    height: 430px;
+    width: 200px;
+    float: left;
+}
+
+.moves-history {
+    margin-top: 10px;
+    margin-left: 10px;
+    height: 404px;
+    width: 174px;
+    border: 3px solid black;
+}
+
+.moves-history-header {
+    border-bottom: 3px solid black;
+    height: 16px;
+    text-align: center;
+}
+
+.moves-history-list {
+    height: 365px;
+    border: none;
+    overflow-y: auto;
+    text-align: center;
+    white-space: pre-line;
 }

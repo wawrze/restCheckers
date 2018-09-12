@@ -323,7 +323,7 @@ public class Game implements Serializable {
         return board;
     }
 
-    private List<String> getMoves() {
+    public List<String> getMoves() {
         return moves;
     }
 

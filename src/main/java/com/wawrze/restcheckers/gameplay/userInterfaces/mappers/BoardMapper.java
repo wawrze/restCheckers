@@ -15,7 +15,7 @@ import java.util.List;
 @Component
 public class BoardMapper {
 
-    public BoardDto mapToBoardDto(final Board board, String gameStatus) {
+    public BoardDto mapToBoardDto(final Board board, String gameStatus, List<String> moves) {
         List<FigureDto> listRowA = new ArrayList<>();
         List<FigureDto> listRowB = new ArrayList<>();
         List<FigureDto> listRowC = new ArrayList<>();
@@ -83,9 +83,25 @@ public class BoardMapper {
         rowDtos.add(rowF);
         rowDtos.add(rowG);
         rowDtos.add(rowH);
-        return new BoardDto(rowDtos, gameStatus);
-    }
+        String movesHistory;
+        if(moves.isEmpty()) {
+            movesHistory = "";
+        }
+        else {
+            int i = moves.size() - 1;
+            movesHistory = moves.get(i);
+            for (i--; i >= 0; i--) {
+                if (moves.get(i).charAt(0) == moves.get(i + 1).charAt(0)) {
+                    movesHistory += ("\n" + moves.get(i));
+                } else {
+                    movesHistory += ("\n\n" + moves.get(i));
+                }
+            }
+        }
 
+
+        return new BoardDto(rowDtos, gameStatus, movesHistory);
+    }
     private String figureName(Figure figure) {
         if(figure instanceof Pawn)
             return "pawn";
