@@ -13,6 +13,9 @@ public class BoardDto {
 
     private List<RowDto> rows;
     private String gameStatus;
+    private boolean activePlayer;
+    private boolean isWhiteAIPlayer;
+    private boolean isBlackAIPlayer;
     private String movesHistory;
 
 }

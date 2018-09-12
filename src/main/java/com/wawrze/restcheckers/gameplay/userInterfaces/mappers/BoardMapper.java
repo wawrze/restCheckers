@@ -15,7 +15,8 @@ import java.util.List;
 @Component
 public class BoardMapper {
 
-    public BoardDto mapToBoardDto(final Board board, String gameStatus, List<String> moves) {
+    public BoardDto mapToBoardDto(Board board, String gameStatus, boolean activePlayer, boolean isWhiteAIPlayer,
+                                  boolean isBlackAIPlayer, List<String> moves) {
         List<FigureDto> listRowA = new ArrayList<>();
         List<FigureDto> listRowB = new ArrayList<>();
         List<FigureDto> listRowC = new ArrayList<>();
@@ -98,9 +99,7 @@ public class BoardMapper {
                 }
             }
         }
-
-
-        return new BoardDto(rowDtos, gameStatus, movesHistory);
+        return new BoardDto(rowDtos, gameStatus, activePlayer, isWhiteAIPlayer, isBlackAIPlayer, movesHistory);
     }
     private String figureName(Figure figure) {
         if(figure instanceof Pawn)

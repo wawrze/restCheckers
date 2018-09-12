@@ -327,7 +327,7 @@ public class Game implements Serializable {
         return moves;
     }
 
-    private boolean isActivePlayer() {
+    public boolean isActivePlayer() {
         return activePlayer;
     }
 
@@ -371,11 +371,11 @@ public class Game implements Serializable {
         return rulesSet;
     }
 
-    private boolean isBlackAIPlayer() {
+    public boolean isBlackAIPlayer() {
         return isBlackAIPlayer;
     }
 
-    private boolean isWhiteAIPlayer() {
+    public boolean isWhiteAIPlayer() {
         return isWhiteAIPlayer;
     }
 

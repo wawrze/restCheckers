@@ -22,6 +22,7 @@ img {
     border-top: 3px solid black;
     border-left: 3px solid black;
     border-right: 3px solid black;
+    text-align: center;
 }
 
 .board {
@@ -37,13 +38,6 @@ img {
     width: 100%;
     max-height: 600px;
     height: 95%;
-}
-
-.status {
-    border-left: 3px solid black;
-    border-right: 3px solid black;
-    border-bottom: 3px solid black;
-    height: 50px;
 }
 
 .row-board-top {
@@ -115,10 +109,6 @@ img {
     font-weight: 800;
 }
 
-.fieldset-label {
-
-}
-
 .side-menu {
     background: #829eae;
     height: 630px;
@@ -170,7 +160,10 @@ img {
     height: 100%;
     width: 98px;
     float: left;
-    line-height: 450%;
+}
+
+.is-ai-player {
+    border: none;
 }
 
 .moves-history-container {
@@ -200,4 +193,23 @@ img {
     overflow-y: auto;
     text-align: center;
     white-space: pre-line;
+}
+
+.status-container {
+    height: 430px;
+    width: 218px;
+    float: left;
+}
+
+.status {
+    border-bottom: 3px solid black;
+    height: 75px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.next-move {
+    border-bottom: 3px solid black;
+    height: 80px;
+    text-align: center;
 }

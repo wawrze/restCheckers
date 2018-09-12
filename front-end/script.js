@@ -4,6 +4,9 @@
     const board = $('[board]');
     const gStatus = $('[gameStatus]');
     const mHistory = $('[movesHistory]');
+    const whitePlayer = $('[isWhiteAIPlayer]');
+    const blackPlayer = $('[isBlackAIPlayer]');
+    const status = $('[status]');
 
     var availableRulesSets = {};
     var availableRulesSetsLength;
@@ -154,6 +157,36 @@
                     });
                 });
                 mHistory.text(chessboard.movesHistory);
+                if (chessboard.blackAIPlayer) {
+                    blackPlayer.text("(Computer)");
+                }
+                else {
+                    if (chessboard.activePlayer) {
+                        blackPlayer.text("(Human)\n(ACTIVE)");
+                    }
+                    else {
+                        blackPlayer.text("(Human)");
+                    }
+                }
+                if (chessboard.whiteAIPlayer) {
+                    whitePlayer.text("(Computer)");
+                }
+                else {
+                    if (chessboard.activePlayer) {
+                        whitePlayer.text("(Human)");
+                    }
+                    else {
+                        whitePlayer.text("(Human)\n(ACTIVE)");
+                    }
+                }
+                if (chessboard.activePlayer) {
+                    status.children()[0].style.background = 'black';
+                    status.children()[0].style.color = 'white';
+                }
+                else {
+                    status.children()[0].style.background = "white";
+                    status.children()[0].style.color = 'black';
+                }
             },
             error: function (xhr, textStatus, err) {
                 gStatus.text("Application error.");

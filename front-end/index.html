@@ -9,7 +9,7 @@
         <div class="header">
             <fieldset class="fieldset">
                 <label class="fieldset-header">Create new game:</label>
-                <br />
+                <br /><br />
                 <label class="">Game name:</label>
                 <input type="text" name="game-name" placeholder="Enter game name." game-name>
                 <label class="fieldset-label">Rules set:</label>
@@ -158,19 +158,25 @@
             <div class="legend-container">
                 <div class="legend">
                     <div class="legend-row-top">
-                        <div class="legend-col">BLACK</div>
-                        <div class="legend-col">WHITE</div>
+                        <div class="legend-col">PAWN</div>
+                        <div class="legend-col">QUEEN</div>
                         <div class="legend-col-right"></div>
                     </div>
                     <div class="legend-row">
                         <div class="legend-col"><img src="images/black_pawn.jpg" /></div>
-                        <div class="legend-col"><img src="images/white_pawn.jpg" /></div>
-                        <div class="legend-col-right">PAWN</div>
+                        <div class="legend-col"><img src="images/black_queen.jpg" /></div>
+                        <div class="legend-col-right">
+                            BLACK<br />
+                            <label isBlackAIPlayer class="is-ai-player"></label>
+                        </div>
                     </div>
                     <div class="legend-row">
-                        <div class="legend-col"><img src="images/black_queen.jpg" /></div>
+                        <div class="legend-col"><img src="images/white_pawn.jpg" /></div>
                         <div class="legend-col"><img src="images/white_queen.jpg" /></div>
-                        <div class="legend-col-right">QUEEN</div>
+                        <div class="legend-col-right">
+                            WHITE<br />
+                            <label isWhiteAIPlayer class="is-ai-player"></label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -182,20 +188,22 @@
                     </fieldset>
                 </div>
             </div>
-        </div>
-        <div class="status">
-            <fieldset class="fieldset">
-                <label gameStatus></label>
-            </fieldset>
-        </div>
-        <div class="status">
-            <fieldset class="fieldset">
-                <label class="">
-                    Enter your next move:
-                </label>
-                <input type="text" name="next-move" next-move placeholder="eg. F2-E1">
-                <button type="submit" name="send-move" send-move-button class="">Send move</button>
-            </fieldset>
+            <div status class="status-container">
+                <div status class="status">
+                    <fieldset class="fieldset">
+                        <label gameStatus></label>
+                    </fieldset>
+                </div>
+                <div class="next-move">
+                    <fieldset class="fieldset">
+                        <label class="">
+                            Enter your next move:
+                        </label>
+                        <input type="text" name="next-move" next-move placeholder="eg. F2-E1">
+                        <button type="submit" name="send-move" send-move-button class="">Send move</button>
+                    </fieldset>
+                </div>
+            </div>
         </div>
     </div>
     <script src="jquery-3.2.1.min.js"></script>
