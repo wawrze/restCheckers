@@ -110,7 +110,7 @@
         $('[new-game-section]')[0].style.display = 'none';
         $('[created-game-section]')[0].style.display = 'block';
         getBoard();
-
+        $('[next-move]').focus();
     }
 
     function sendMove() {
@@ -211,9 +211,69 @@
                     status.children()[0].style.background = "white";
                     status.children()[0].style.color = 'black';
                 }
+                updateGameDetails();
             },
             error: function (xhr, textStatus, err) {
                 gStatus.text("Application error.");
+            }
+        });
+    }
+
+    function updateGameDetails() {
+        const requestUrl = apiRoot + 'getGameProgressDetails';
+
+        $.ajax({
+            url: requestUrl,
+            method: 'GET',
+            contentType: "application/json;charset=UTF-8",
+            success: function (gameDetails) {
+                if (gameDetails.finished) {
+                    $('[game-in-progress]')[0].style.display = 'none';
+                    $('[game-finished]')[0].style.display = 'block';
+                    if (gameDetails.draw) {
+                        $('[game-finished]')[0].style.background = 'grey';
+                        $('[game-finished]')[0].style.color = 'black';
+                        $('[winner-or-draw]').text("DRAW");
+                        $('[type-of-game-finish]').text("(Each player has done 15 moves in the row by a king.)");
+                    }
+                    else {
+                        if (gameDetails.winner) {
+                            $('[winner-or-draw]').text("BLACK WINS");
+                            $('[game-finished]')[0].style.background = 'black';
+                            $('[game-finished]')[0].style.color = 'white';
+                            if (gameDetails.whitePawns == 0 && gameDetails.whiteQueens == 0) {
+                                $('[type-of-game-finish]').text("(White player lost all his figures.)");
+                            }
+                            else {
+                                $('[type-of-game-finish]').text("(White player cannot move.)");
+                            }
+                        }
+                        else {
+                            $('[winner-or-draw]').text("WHITE WINS");
+                            $('[game-finished]')[0].style.background = 'white';
+                            $('[game-finished]')[0].style.color = 'black';
+                            if (gameDetails.whitePawns == 0 && gameDetails.whiteQueens == 0) {
+                                $('[type-of-game-finish]').text("(Black player lost all his figures.)");
+                            }
+                            else {
+                                $('[type-of-game-finish]').text("(Black player cannot move.)");
+                            }
+                        }
+                    }
+                    $('[new-game-section]')[0].style.display = 'block';
+                    $('[created-game-section]')[0].style.display = 'none';
+                }
+                else {
+                    $('[game-in-progress]')[0].style.display = 'block';
+                    $('[game-finished]')[0].style.display = 'none';
+                    $('[moves-done]').text(gameDetails.moves);
+                    $('[white-man]').text(gameDetails.whitePawns);
+                    $('[black-man]').text(gameDetails.blackPawns);
+                    $('[white-kings]').text(gameDetails.whiteQueens);
+                    $('[black-kings]').text(gameDetails.blackQueens);
+                    $('[white-kings-moves]').text(gameDetails.whiteQueenMoves);
+                    $('[black-kings-moves]').text(gameDetails.blackQueenMoves);
+                }
             }
         });
     }

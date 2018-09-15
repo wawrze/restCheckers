@@ -34,12 +34,10 @@
             </div>
             <div class="created-game" created-game-section>
                 <fieldset class="new-game-fieldset">
-                    <br /><br />
+                    <br /><br /><br />
                     <label class="fieldset-header">"</label>
                     <label class="fieldset-header" created-game-name>no name</label>
-                    <label class="fieldset-header">"</label>
-                    <br /><br />
-                    <label class="fieldset-label">game in progress</label>
+                    <label class="fieldset-header">" GAME</label>
                 </fieldset>
             </div>
             <div class="rules">
@@ -245,6 +243,40 @@
                         <input type="text" name="next-move" next-move placeholder="eg. F2-E1">
                         <button type="submit" name="send-move" send-move-button class="">Send move</button>
                     </fieldset>
+                </div>
+                <div class="game-progress-details" game-in-progress>
+                    <label class="game-progress-header">Moves done: </label>
+                    <label moves-done>n/a</label>
+                    <br /><br />
+                    <label class="game-progress-header">Figures: </label>
+                    <br />
+                    <label>White man: </label>
+                    <label white-man>n/a</label>
+                    <br />
+                    <label>White kings: </label>
+                    <label white-kings>n/a</label>
+                    <br /><br />
+                    <label>Black man: </label>
+                    <label black-man>n/a</label>
+                    <br />
+                    <label>Black kings:: </label>
+                    <label black-kings>n/a</label>
+                    <br /><br />
+                    <label class="game-progress-header">Kings moves:</label>
+                    <br />
+                    <label>White kings moves in a row: </label>
+                    <label white-kings-moves>n/a</label>
+                    <br />
+                    <label>Black kings moves in a row: </label>
+                    <label black-kings-moves>n/a</label>
+                </div>
+                <div class="game-progress-details game-finished" game-finished>
+                    <br /><br />
+                    <label class="game-finished-header">Game finished!</label>
+                    <br /><br />
+                    <label class="game-finished-header" winner-or-draw>n/a</label>
+                    <br /><br />
+                    <label class="game-progress-header" type-of-game-finish>n/a</label>
                 </div>
             </div>
         </div>

@@ -68,26 +68,17 @@ public class RestUI implements UserInterface {
     }
 
     @Override
-    public void printMoveHistory(List<String> moves) {
-        System.out.println("[TO IMPLEMENT] PRINTING MOVES HISTORY...");
-    }
+    public void printMoveHistory(List<String> moves) {}
 
     @Override
-    public String getGameName() {
-        System.out.println("[TO IMPLEMENT] READING GAME NAME...");
-        return null;
-    }
+    public String getGameName() {return null;}
 
     @Override
-    public String sideMenu(int line,List<String> moves, boolean player) {
-        System.out.println("[TO IMPLEMENT] SIDE MENU LINE" + line);
-        return null;
-    }
+    public String sideMenu(int line,List<String> moves, boolean player) {return null;}
 
     @Override
     public void printBoard(Board board, boolean simplePrint, boolean player, List<String> moves,
-                    RulesSet rulesSet, boolean isItAITurn) {
-    }
+                    RulesSet rulesSet, boolean isItAITurn) {}
 
     @Override
     public void printMakingMove(boolean simplePrint, char x1, int y1, char x2, int y2, boolean isItAITurn) {
@@ -131,7 +122,7 @@ public class RestUI implements UserInterface {
 
     @Override
     public boolean endOfGame(Board board, boolean simplePrint, List<String> moves, boolean player) {
-        System.out.println("[TO IMPLEMENT] END OF GAME");
+        gameStatus = "Game finished.";
         return false;
     }
 

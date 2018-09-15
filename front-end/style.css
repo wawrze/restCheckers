@@ -181,6 +181,8 @@ img {
     height: 16px;
     width: 100%;
     border-bottom: 1px solid white;
+    background: #829eae;
+    color: black;
 }
 
 .legend-row {
@@ -198,8 +200,10 @@ img {
 
 .legend-col-right {
     height: 100%;
-    width: 98px;
+    width: 103px;
     float: left;
+    background: #829eae;
+    color: black;
 }
 
 .is-ai-player {
@@ -263,4 +267,27 @@ img {
     width: auto;
     text-align: left;
     margin-left: 2px;
+}
+
+.game-progress-details {
+    width: 208px;
+    height: 258px;
+    float: left;
+    padding: 5px;
+    display: none;
+}
+
+.game-progress-header {
+    font-size: large;
+    font-weight: 800;
+    margin: 5px;
+}
+
+.game-finished {
+    text-align: center;
+}
+
+.game-finished-header {
+    font-size: x-large;
+    font-weight: 900;
 }

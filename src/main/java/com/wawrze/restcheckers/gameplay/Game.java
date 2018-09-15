@@ -343,15 +343,15 @@ public class Game implements Serializable {
         return blackQueenMoves;
     }
 
-    private boolean isFinished() {
+    public boolean isFinished() {
         return isFinished;
     }
 
-    private boolean isDraw() {
+    public boolean isDraw() {
         return isDraw;
     }
 
-    private boolean isWinner() {
+    public boolean isWinner() {
         return winner;
     }
 

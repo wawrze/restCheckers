@@ -4,6 +4,7 @@ import com.wawrze.restcheckers.gameplay.Game;
 import com.wawrze.restcheckers.gameplay.RulesSet;
 import com.wawrze.restcheckers.gameplay.userInterfaces.dtos.*;
 import com.wawrze.restcheckers.gameplay.userInterfaces.mappers.BoardMapper;
+import com.wawrze.restcheckers.gameplay.userInterfaces.mappers.GameProgressDetailsMapper;
 import com.wawrze.restcheckers.gameplay.userInterfaces.mappers.RulesSetsMapper;
 import com.wawrze.restcheckers.moves.RulesSets;
 import exceptions.IncorrectMoveException;
@@ -33,6 +34,9 @@ public class GameController {
 
     @Autowired
     RulesSetsMapper rulesSetsMapper;
+
+    @Autowired
+    GameProgressDetailsMapper gameProgressDetailsMapper;
 
     private Game game;
     private static final Logger LOGGER = LoggerFactory.getLogger(GameController.class);
@@ -97,6 +101,12 @@ public class GameController {
         }
         LOGGER.info("Rules set sent.");
         return rulesSetsMapper.mapToRulesSetDto(rulesSet);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "getGameProgressDetails")
+    public GameProgressDetailsDto getGameProgressDetails() {
+        LOGGER.info("Game details sent.");
+        return gameProgressDetailsMapper.mapToGameProgressDetailsDto(game);
     }
 
 }
