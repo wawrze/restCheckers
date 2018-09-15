@@ -23,12 +23,44 @@ img {
     border-left: 3px solid black;
     border-right: 3px solid black;
     text-align: center;
+    line-height: 13px;
+}
+
+.new-game {
+    height: 100%;
+    width: 450px;
+    border-right: 3px solid black;
+    float: left;
+    display: normal;
+}
+
+.created-game {
+    height: 100%;
+    width: 450px;
+    border-right: 3px solid black;
+    display: normal;
+    float: left;
+    display: none;
+}
+
+.rules {
+    display: normal;
+    float: left;
+    height: 100%;
+    width: 601px;
+}
+
+.rules-fieldset {
+    border: none;
+    margin: 0;
+    padding: 5px;
+    flex-grow: 1;
 }
 
 .board {
     border: 3px solid black;
     height: 630px;
-    width: 630px;;
+    width: 630px;
     background: #829eae;
     font-size: 14px;
     display: inline-block;
@@ -77,6 +109,9 @@ img {
     width: 11.875%;
 }
 
+.fieldset-label {
+    font-size: medium;
+}
 .col-board-sides {
     text-align: center;
     width: 2.5%;
@@ -93,10 +128,11 @@ img {
     color: black;
 }
 
-.fieldset {
+.new-game-fieldset {
     border: none;
     margin: 0;
     padding: 10px;
+    line-height: 10px;
     flex-grow: 1;
 }
 
@@ -107,6 +143,10 @@ img {
 .fieldset-header {
     font-size: large;
     font-weight: 800;
+}
+
+.fieldset {
+    border: none;
 }
 
 .side-menu {
@@ -212,4 +252,15 @@ img {
     border-bottom: 3px solid black;
     height: 80px;
     text-align: center;
+}
+
+.empty-line {
+    height: 8px;
+}
+
+.rules-details-col {
+    float: left;
+    width: auto;
+    text-align: left;
+    margin-left: 2px;
 }

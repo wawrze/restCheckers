@@ -7,28 +7,71 @@
 <body>
     <div class="container">
         <div class="header">
-            <fieldset class="fieldset">
-                <label class="fieldset-header">Create new game:</label>
-                <br /><br />
-                <label class="">Game name:</label>
-                <input type="text" name="game-name" placeholder="Enter game name." game-name>
-                <label class="fieldset-label">Rules set:</label>
-                <select class="" name="rules-set" rules-set-select>
-                    <option disabled selected>--- select rules set ---</option>
-                </select>
-                <br />
-                <label class="fieldset-label">White player:</label>
-                <select class="" name="white-player-select" white-player-select>
-                    <option selected>Human</option>
-                    <option>Computer</option>
-                </select>
-                <label class="fieldset-label">Black player:</label>
-                <select class="" name="black-player-select" black-player-select>
-                    <option selected>Human</option>
-                    <option>Computer</option>
-                </select>
-                <button create-game-button class="">Create game</button>
-            </fieldset>
+            <div class="new-game" new-game-section>
+                <fieldset class="new-game-fieldset">
+                    <label class="fieldset-header">Create new game:</label>
+                    <br /><br />
+                    <label>Game name:</label>
+                    <input type="text" name="game-name" placeholder="Enter game name." game-name>
+                    <label class="fieldset-label">Rules set:</label>
+                    <select class="" name="rules-set" rules-set-select>
+                        <option disabled selected>select rules set</option>
+                    </select>
+                    <br />
+                    <label class="fieldset-label">White player:</label>
+                    <select class="" name="white-player-select" white-player-select>
+                        <option selected>Human</option>
+                        <option>Computer</option>
+                    </select>
+                    <label class="fieldset-label">Black player:</label>
+                    <select class="" name="black-player-select" black-player-select>
+                        <option selected>Human</option>
+                        <option>Computer</option>
+                    </select>
+                    <br />
+                    <button create-game-button class="">Create game</button>
+                </fieldset>
+            </div>
+            <div class="created-game" created-game-section>
+                <fieldset class="new-game-fieldset">
+                    <br /><br />
+                    <label class="fieldset-header">"</label>
+                    <label class="fieldset-header" created-game-name>no name</label>
+                    <label class="fieldset-header">"</label>
+                    <br /><br />
+                    <label class="fieldset-label">game in progress</label>
+                </fieldset>
+            </div>
+            <div class="rules">
+                <fieldset class="rules-fieldset">
+                    <label class="fieldset-header">Rules set: </label>
+                    <label class="fieldset-header" rules-set-name>select rules set</label>
+                    <br /><br />
+                          <label class="fieldset-label" rules-set-description>select rules set</label>
+                    <div class="empty-line"></div>
+                    <div class="rules-details-col">
+                        <label class="fieldset-label">Victory conditions: </label>
+                        <label class="fieldset-label" victory-conditions>n/a</label>
+                        <br />
+                        <label class="fieldset-label">Capture: </label>
+                        <label class="fieldset-label" capture>n/a</label>
+                    </div>
+                    <div class="rules-details-col">
+                        <label class="fieldset-label">Man move backward: </label>
+                        <label class="fieldset-label" man-move-backward>n/a</label>
+                        <br />
+                        <label class="fieldset-label">Man capture backward: </label>
+                        <label class="fieldset-label" man-capture-backward>n/a</label>
+                    </div>
+                    <div class="rules-details-col">
+                        <label class="fieldset-label">King range: </label>
+                        <label class="fieldset-label" king-range>n/a</label>
+                        <br />
+                        <label class="fieldset-label">King move after capture: </label>
+                        <label class="fieldset-label" king-move-after-capture>n/a</label>
+                    </div>
+                </fieldset>
+            </div>
         </div>
         <div class="board">
             <div class="row-board-top">

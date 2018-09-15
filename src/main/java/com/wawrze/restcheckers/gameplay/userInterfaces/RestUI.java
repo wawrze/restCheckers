@@ -26,7 +26,7 @@ public class RestUI implements UserInterface {
 
     @Override
     public String[] getMoveOrOption(String captures, boolean simplePrint, boolean isItAITurn) {
-        String[] options = {"h", "p", "s", "x"};
+        String[] options = {};
         String s;
         if(inQueue.isEmpty())
             return null;

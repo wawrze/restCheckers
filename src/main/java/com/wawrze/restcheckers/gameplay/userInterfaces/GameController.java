@@ -2,10 +2,7 @@ package com.wawrze.restcheckers.gameplay.userInterfaces;
 
 import com.wawrze.restcheckers.gameplay.Game;
 import com.wawrze.restcheckers.gameplay.RulesSet;
-import com.wawrze.restcheckers.gameplay.userInterfaces.dtos.BoardDto;
-import com.wawrze.restcheckers.gameplay.userInterfaces.dtos.GameDto;
-import com.wawrze.restcheckers.gameplay.userInterfaces.dtos.MoveDto;
-import com.wawrze.restcheckers.gameplay.userInterfaces.dtos.RulesSetsDto;
+import com.wawrze.restcheckers.gameplay.userInterfaces.dtos.*;
 import com.wawrze.restcheckers.gameplay.userInterfaces.mappers.BoardMapper;
 import com.wawrze.restcheckers.gameplay.userInterfaces.mappers.RulesSetsMapper;
 import com.wawrze.restcheckers.moves.RulesSets;
@@ -89,6 +86,17 @@ public class GameController {
     public RulesSetsDto getRulesSets() {
         LOGGER.info("Rules sets sent.");
         return rulesSetsMapper.mapToRulesSetsDto(rules);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "getRulesSet")
+    public RulesSetDto getRulesSet(@RequestParam String rulesSetName) {
+        RulesSet rulesSet = null;
+        for(RulesSet r : rules.getRules()) {
+            if(r.getName().equals(rulesSetName))
+                rulesSet = r;
+        }
+        LOGGER.info("Rules set sent.");
+        return rulesSetsMapper.mapToRulesSetDto(rulesSet);
     }
 
 }

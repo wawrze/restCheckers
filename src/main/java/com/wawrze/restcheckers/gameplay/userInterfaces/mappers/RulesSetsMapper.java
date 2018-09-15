@@ -18,7 +18,7 @@ public class RulesSetsMapper {
         return rulesSetsDto;
     }
 
-    private RulesSetDto mapToRulesSetDto(RulesSet rulesSet) {
+    public RulesSetDto mapToRulesSetDto(RulesSet rulesSet) {
         id++;
         return new RulesSetDto(
                 rulesSet.isVictoryConditionsReversed(),

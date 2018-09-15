@@ -49,6 +49,26 @@
         }
     }
 
+    function getSelectedRulesSet() {
+        var gameRulesName = $('[rules-set-select]').val()
+        var requestUrl = apiRoot + 'getRulesSet?rulesSetName=' + gameRulesName;
+
+        $.ajax({
+            url: requestUrl,
+            method: 'GET',
+            success: function (rules) {
+                $('[rules-set-name]').text(rules.name);
+                $('[rules-set-description]').text(rules.description);
+                $('[victory-conditions]').text(rules.victoryConditionsReversed ? "reversed" : "standard");
+                $('[capture]').text(rules.captureAny ? "any" : "longest");
+                $('[man-move-backward]').text(rules.pawnMoveBackward ? "yes" : "no");
+                $('[man-capture-backward]').text(rules.pawnCaptureBackward ? "yes" : "no");
+                $('[king-range]').text(rules.queenRangeOne ? "one field" : "any");
+                $('[king-move-after-capture]').text(rules.queenRangeOneAfterCapture ? "one field" : "any");
+            }
+        });
+    }
+
     function createGame() {
         const requestUrl = apiRoot + 'newGame';
         
@@ -67,7 +87,6 @@
             gStatus.text("You have to enter game name!");
             return;
         }
-        gStatus.text("Game started.");
 
         $.ajax({
             url: requestUrl,
@@ -86,7 +105,12 @@
             }
         });
 
+        gStatus.text("Game started.");
+        $('[created-game-name]').text(gameName);
+        $('[new-game-section]')[0].style.display = 'none';
+        $('[created-game-section]')[0].style.display = 'block';
         getBoard();
+
     }
 
     function sendMove() {
@@ -197,5 +221,8 @@
     $('[create-game-button]').click(createGame);
     $('[get-board]').click(getBoard);
     $('[send-move-button]').click(sendMove);
+    $('[rules-set-select]').change(function () {
+        getSelectedRulesSet();
+    });
         
 });
