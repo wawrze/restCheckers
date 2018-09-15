@@ -65,7 +65,7 @@ public class GameController {
         String s = moveDto.getMove();
         restUI.getInQueue().push(s);
         TimeUnit.MILLISECONDS.sleep(200);
-        LOGGER.info("New move served. Board sent.");
+        LOGGER.info("New move served.");
         return boardMapper.mapToBoardDto(game.getBoard(), restUI.getGameStatus(), game.isActivePlayer(),
                 game.isWhiteAIPlayer(), game.isBlackAIPlayer(), game.getMoves());
     }

@@ -90,12 +90,12 @@ public class BoardMapper {
         }
         else {
             int i = moves.size() - 1;
-            movesHistory = moves.get(i);
+            movesHistory = (i + 1) + ". " + moves.get(i);
             for (i--; i >= 0; i--) {
                 if (moves.get(i).charAt(0) == moves.get(i + 1).charAt(0)) {
-                    movesHistory += ("\n" + moves.get(i));
+                    movesHistory += ("\n" + (i + 1) + ". " + moves.get(i));
                 } else {
-                    movesHistory += ("\n\n" + moves.get(i));
+                    movesHistory += ("\n\n" + (i + 1) + ". " + moves.get(i));
                 }
             }
         }
