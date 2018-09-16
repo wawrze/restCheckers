@@ -19,7 +19,7 @@
     });
 
     //init
-    gStatus.text("Game not started.");
+    gStatus.text("Not connected to application.");
     getAllAvailableRulesSets();
 
     function getAllAvailableRulesSets() {
@@ -35,6 +35,7 @@
                     availableRulesSets[i] = list.rules[i];
                 }
                 prepareRulesSelectOptions();
+                gStatus.text("Game not started.");
             }
         });
     }
@@ -89,6 +90,11 @@
             return;
         }
 
+        if (gameRulesName == null) {
+            gStatus.text("You have to select rules set!");
+            return;
+        }
+
         $.ajax({
             url: requestUrl,
             method: 'POST',
@@ -102,16 +108,31 @@
                 isWhiteAIPlayer: whitePlayer
             }),
             error: function () {
-                gStatus.text("Application error.");
+                if(blackPlayer == "false" || whitePlayer == "false")
+                    gStatus.text("Application error.");
             }
         });
 
-        gStatus.text("Game started.");
         $('[created-game-name]').text(gameName);
         $('[new-game-section]')[0].style.display = 'none';
         $('[created-game-section]')[0].style.display = 'block';
-        getBoard();
-        $('[next-move]').focus();
+
+        if (blackPlayer == "true" && whitePlayer == "true") {
+            gStatus.text("Game in progress, please wait for a while...");
+            var start = new Date().getTime();
+            for (var i = 0; i < 1e7; i++) {
+                if ((new Date().getTime() - start) > 2000) {
+                    break;
+                }
+            }
+            getBoard();
+        }
+        else {
+            gStatus.text("Game started.");
+            $('[next-move-section]')[0].style.display = 'block';
+            getBoard();
+            $('[next-move]').focus();
+        }
     }
 
     function sendMove() {
@@ -206,11 +227,15 @@
                 }
                 if (chessboard.activePlayer) {
                     status.children()[0].style.background = 'black';
+                    status.children()[1].style.background = 'black';
                     status.children()[0].style.color = 'white';
+                    status.children()[1].style.color = 'white';
                 }
                 else {
                     status.children()[0].style.background = "white";
+                    status.children()[1].style.background = "white";
                     status.children()[0].style.color = 'black';
+                    status.children()[1].style.color = 'black';
                 }
                 updateGameDetails();
             },
@@ -231,6 +256,7 @@
                 if (gameDetails.finished) {
                     $('[game-in-progress]')[0].style.display = 'none';
                     $('[game-finished]')[0].style.display = 'block';
+                    $('[next-move-section]')[0].style.display = 'block';
                     if (gameDetails.draw) {
                         $('[game-finished]')[0].style.background = 'grey';
                         $('[game-finished]')[0].style.color = 'black';
@@ -253,7 +279,7 @@
                             $('[winner-or-draw]').text("WHITE WINS");
                             $('[game-finished]')[0].style.background = 'white';
                             $('[game-finished]')[0].style.color = 'black';
-                            if (gameDetails.whitePawns == 0 && gameDetails.whiteQueens == 0) {
+                            if (gameDetails.blackPawns == 0 && gameDetails.blackQueens == 0) {
                                 $('[type-of-game-finish]').text("(Black player lost all his figures.)");
                             }
                             else {

@@ -243,19 +243,18 @@ img {
     height: 430px;
     width: 218px;
     float: left;
+    font-weight: 600;
+    text-align: center;
 }
 
 .status {
-    border-bottom: 3px solid black;
     height: 75px;
-    text-align: center;
-    font-weight: 600;
 }
 
 .next-move {
     border-bottom: 3px solid black;
     height: 80px;
-    text-align: center;
+    display: none;
 }
 
 .empty-line {
