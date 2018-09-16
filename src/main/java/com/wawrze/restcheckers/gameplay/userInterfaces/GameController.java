@@ -24,9 +24,6 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 public class GameController {
 
     @Autowired
-    RestUI restUI;
-
-    @Autowired
     BoardMapper boardMapper;
 
     @Autowired
@@ -38,11 +35,12 @@ public class GameController {
     @Autowired
     GameProgressDetailsMapper gameProgressDetailsMapper;
 
-    private Game game;
     private static final Logger LOGGER = LoggerFactory.getLogger(GameController.class);
 
     @RequestMapping(method = RequestMethod.POST, value = "newGame", consumes = APPLICATION_JSON_VALUE)
     public void startNewGame(@RequestBody GameDto gameDto) throws IncorrectMoveException, IncorrectMoveFormat {
+        Game game;
+        RestUI restUI = new RestUI();
         RulesSet rulesSet = null;
         for(RulesSet r : rules.getRules()) {
             if(r.getName().equals(gameDto.getRulesName()))
@@ -60,23 +58,29 @@ public class GameController {
             LOGGER.warn("Game not created!");
             return;
         }
+        RestUI.getGames().put(gameDto.getName(), game);
+        RestUI.getRestUIs().put(gameDto.getName(), restUI);
         LOGGER.info("Game created.");
         game.play(restUI);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "sendMove")
-    public BoardDto sendMove(@RequestBody MoveDto moveDto) throws InterruptedException {
+    public BoardDto sendMove(@RequestParam String gameName, @RequestBody MoveDto moveDto) throws InterruptedException {
         String s = moveDto.getMove();
+        RestUI restUI = RestUI.getRestUIs().get(gameName);
+        Game game = RestUI.getGames().get(gameName);
+        LOGGER.info("New move request (game: " + gameName + ", move: " + moveDto.getMove() + ")");
         restUI.getInQueue().push(s);
         TimeUnit.MILLISECONDS.sleep(200);
-        LOGGER.info("New move served.");
+        LOGGER.info("New move (game: " + gameName + ", move: " + moveDto.getMove() + ") served.");
         return boardMapper.mapToBoardDto(game.getBoard(), restUI.getGameStatus(), game.isActivePlayer(),
                 game.isWhiteAIPlayer(), game.isBlackAIPlayer(), game.getMoves());
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getBoard")
-    public BoardDto getBoard() throws InterruptedException {
-        TimeUnit.MILLISECONDS.sleep(200);
+    public BoardDto getBoard(@RequestParam String gameName) {
+        RestUI restUI = RestUI.getRestUIs().get(gameName);
+        Game game = RestUI.getGames().get(gameName);
         if(game == null) {
             LOGGER.warn("Board not sent - no game started!");
             return null;
@@ -104,7 +108,8 @@ public class GameController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getGameProgressDetails")
-    public GameProgressDetailsDto getGameProgressDetails() {
+    public GameProgressDetailsDto getGameProgressDetails(@RequestParam String gameName) {
+        Game game = RestUI.getGames().get(gameName);
         LOGGER.info("Game details sent.");
         return gameProgressDetailsMapper.mapToGameProgressDetailsDto(game);
     }

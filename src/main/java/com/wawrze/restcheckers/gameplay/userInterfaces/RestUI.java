@@ -1,20 +1,18 @@
 package com.wawrze.restcheckers.gameplay.userInterfaces;
 
 import com.wawrze.restcheckers.board.Board;
+import com.wawrze.restcheckers.gameplay.Game;
 import com.wawrze.restcheckers.gameplay.RulesSet;
 import exceptions.IncorrectMoveFormat;
-import org.springframework.stereotype.Component;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.List;
+import java.util.*;
 
-@Component
 public class RestUI implements UserInterface {
 
     private Deque<String> inQueue = new ArrayDeque<>();
     private String gameStatus = "Game started.";
-
+    private static Map<String, RestUI> restUIs = new HashMap<>();
+    private static Map<String, Game> games = new HashMap<>();
 
     public Deque<String> getInQueue() {
         return inQueue;
@@ -87,12 +85,12 @@ public class RestUI implements UserInterface {
 
     @Override
     public void printMoveDone(boolean simplePrint, boolean isItAITurn) {
-        gameStatus = "Move done.";
+        gameStatus = "Your opponent has made his move.";
     }
 
     @Override
     public void printCaptureDone(boolean simplePrint, boolean isItAITurn) {
-        gameStatus = "Capture done.";
+        gameStatus = "Your opponent has captured.";
     }
 
     @Override
@@ -137,6 +135,14 @@ public class RestUI implements UserInterface {
         for (String t : sArray)
             if (t.length() != 2)
                 throw new IncorrectMoveFormat();
+    }
+
+    public static Map<String, RestUI> getRestUIs() {
+        return restUIs;
+    }
+
+    public static Map<String, Game> getGames() {
+        return games;
     }
 
 }

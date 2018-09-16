@@ -10,6 +10,7 @@
 
     var availableRulesSets = {};
     var availableRulesSetsLength;
+    var gameName;
 
     $('[next-move]').on('keydown', function () {
         if (event.keyCode == 13) {
@@ -72,7 +73,7 @@
     function createGame() {
         const requestUrl = apiRoot + 'newGame';
         
-        var gameName = $('[game-name]').val();
+        gameName = $('[game-name]').val();
         var gameRulesName = $('[rules-set-select]').val();
         var blackPlayer = "false";
         if ($('[black-player-select]').val() == "Computer") {
@@ -114,7 +115,7 @@
     }
 
     function sendMove() {
-        var requestUrl = apiRoot + 'sendMove';
+        var requestUrl = apiRoot + 'sendMove?gameName=' + gameName;
         var moveToSend = $('[next-move]').val();
 
         $.ajax({
@@ -138,7 +139,7 @@
     }
 
     function getBoard() {
-        const requestUrl = apiRoot + 'getBoard';
+        const requestUrl = apiRoot + 'getBoard?gameName=' + gameName;
         
         $.ajax({
             url: requestUrl,
@@ -220,7 +221,7 @@
     }
 
     function updateGameDetails() {
-        const requestUrl = apiRoot + 'getGameProgressDetails';
+        const requestUrl = apiRoot + 'getGameProgressDetails?gameName=' + gameName;
 
         $.ajax({
             url: requestUrl,
@@ -274,6 +275,9 @@
                     $('[white-kings-moves]').text(gameDetails.whiteQueenMoves);
                     $('[black-kings-moves]').text(gameDetails.blackQueenMoves);
                 }
+            },
+            error: function (xhr, textStatus, err) {
+                gStatus.text("Application error.");
             }
         });
     }
