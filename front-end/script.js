@@ -77,6 +77,7 @@
         gameName = $('[game-name]').val();
         var gameRulesName = $('[rules-set-select]').val();
         var blackPlayer = "false";
+
         if ($('[black-player-select]').val() == "Computer") {
             blackPlayer = "true";
         }
@@ -106,11 +107,7 @@
                 rulesName: gameRulesName,
                 isBlackAIPlayer: blackPlayer,
                 isWhiteAIPlayer: whitePlayer
-            }),
-            error: function () {
-                if(blackPlayer == "false" || whitePlayer == "false")
-                    gStatus.text("Application error.");
-            }
+            })
         });
 
         $('[created-game-name]').text(gameName);
@@ -121,22 +118,28 @@
         $('[status]')[1].style.display = 'block';
         $('[next-move]')[0].style.display = 'inline-block';
         $('[send-move-button]')[0].style.display = 'inline-block';
-
+        
         if (blackPlayer == "true" && whitePlayer == "true") {
             gStatus[0].style.display = 'none';
             $('[next-move-input]').text("Enter button to see next move:");
             $('[next-move]')[0].style.display = 'none';
             $('[send-move-button]').text("Next move");
-            getBoard();
             $('[send-move-button]').focus();
         }
         else {
             gStatus.text("Game started.");
             $('[next-move-input]').text("Enter your next move:");
             $('[send-move-button]').text("Send move");
-            getBoard();
             $('[next-move]').focus();
         }
+
+        var start = new Date().getTime();
+        for (var i = 0; i < 1e7; i++) {
+            if ((new Date().getTime() - start) > 500) {
+                break;
+            }
+        }
+        getBoard();
     }
 
     function sendMove() {

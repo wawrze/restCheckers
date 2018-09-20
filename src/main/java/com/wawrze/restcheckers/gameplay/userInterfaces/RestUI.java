@@ -11,8 +11,6 @@ public class RestUI implements UserInterface {
 
     private Deque<String> inQueue = new ArrayDeque<>();
     private String gameStatus = "Game started.";
-    private static Map<String, RestUI> restUIs = new HashMap<>();
-    private static Map<String, Game> games = new HashMap<>();
 
     public Deque<String> getInQueue() {
         return inQueue;
@@ -135,14 +133,6 @@ public class RestUI implements UserInterface {
         for (String t : sArray)
             if (t.length() != 2)
                 throw new IncorrectMoveFormat();
-    }
-
-    public static Map<String, RestUI> getRestUIs() {
-        return restUIs;
-    }
-
-    public static Map<String, Game> getGames() {
-        return games;
     }
 
 }
