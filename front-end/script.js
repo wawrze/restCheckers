@@ -116,20 +116,24 @@
         $('[created-game-name]').text(gameName);
         $('[new-game-section]')[0].style.display = 'none';
         $('[created-game-section]')[0].style.display = 'block';
+        $('[next-move-section]')[0].style.display = 'block';
+        $('[next-move-input]')[0].style.display = 'inline-block';
+        $('[status]')[1].style.display = 'block';
+        $('[next-move]')[0].style.display = 'inline-block';
+        $('[send-move-button]')[0].style.display = 'inline-block';
 
         if (blackPlayer == "true" && whitePlayer == "true") {
-            gStatus.text("Game in progress, please wait for a while...");
-            var start = new Date().getTime();
-            for (var i = 0; i < 1e7; i++) {
-                if ((new Date().getTime() - start) > 2000) {
-                    break;
-                }
-            }
+            gStatus[0].style.display = 'none';
+            $('[next-move-input]').text("Enter button to see next move:");
+            $('[next-move]')[0].style.display = 'none';
+            $('[send-move-button]').text("Next move");
             getBoard();
+            $('[send-move-button]').focus();
         }
         else {
             gStatus.text("Game started.");
-            $('[next-move-section]')[0].style.display = 'block';
+            $('[next-move-input]').text("Enter your next move:");
+            $('[send-move-button]').text("Send move");
             getBoard();
             $('[next-move]').focus();
         }
@@ -137,7 +141,14 @@
 
     function sendMove() {
         var requestUrl = apiRoot + 'sendMove?gameName=' + gameName;
-        var moveToSend = $('[next-move]').val();
+        var moveToSend;
+
+        if ($('[black-player-select]').val() == "Computer" && $('[white-player-select]').val() == "Computer") {
+            moveToSend = "next";
+        }
+        else {
+            moveToSend = $('[next-move]').val();
+        }
 
         $.ajax({
             url: requestUrl,
@@ -260,6 +271,8 @@
                     if (gameDetails.draw) {
                         $('[game-finished]')[0].style.background = 'grey';
                         $('[game-finished]')[0].style.color = 'black';
+                        $('[status]')[1].style.background = 'grey';
+                        $('[next-move-section]')[0].style.background = 'grey';
                         $('[winner-or-draw]').text("DRAW");
                         $('[type-of-game-finish]').text("(Each player has done 15 moves in the row by a king.)");
                     }
@@ -268,6 +281,8 @@
                             $('[winner-or-draw]').text("BLACK WINS");
                             $('[game-finished]')[0].style.background = 'black';
                             $('[game-finished]')[0].style.color = 'white';
+                            $('[status]')[1].style.background = 'black';
+                            $('[next-move-section]')[0].style.background = 'black';
                             if (gameDetails.whitePawns == 0 && gameDetails.whiteQueens == 0) {
                                 $('[type-of-game-finish]').text("(White player lost all his figures.)");
                             }
@@ -279,6 +294,8 @@
                             $('[winner-or-draw]').text("WHITE WINS");
                             $('[game-finished]')[0].style.background = 'white';
                             $('[game-finished]')[0].style.color = 'black';
+                            $('[status]')[1].style.background = 'white';
+                            $('[next-move-section]')[0].style.background = 'white';
                             if (gameDetails.blackPawns == 0 && gameDetails.blackQueens == 0) {
                                 $('[type-of-game-finish]').text("(Black player lost all his figures.)");
                             }
@@ -289,6 +306,9 @@
                     }
                     $('[new-game-section]')[0].style.display = 'block';
                     $('[created-game-section]')[0].style.display = 'none';
+                    $('[next-move-input]')[0].style.display = 'none';
+                    $('[next-move]')[0].style.display = 'none';
+                    $('[send-move-button]')[0].style.display = 'none';
                 }
                 else {
                     $('[game-in-progress]')[0].style.display = 'block';

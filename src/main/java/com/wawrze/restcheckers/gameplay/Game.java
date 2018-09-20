@@ -133,10 +133,26 @@ public class Game implements Serializable {
             inGameUI.printCapture(captures, simplePrint, isItAITurn);
         }
         String[] s;
-        if(isBlackAIPlayer && activePlayer)
+        if(isBlackAIPlayer && activePlayer) {
             s = (new AIPlayer1(board, activePlayer, rulesSet, whiteQueenMoves, blackQueenMoves)).getAIMove();
-        else if(isWhiteAIPlayer && !activePlayer)
+            if(isBlackAIPlayer && isWhiteAIPlayer) {
+                String[] t;
+                do {
+                    t = inGameUI.getMoveOrOption(captures, simplePrint, isItAITurn);
+                }
+                while (t == null);
+            }
+        }
+        else if(isWhiteAIPlayer && !activePlayer) {
             s = (new AIPlayer2(board, activePlayer, rulesSet, whiteQueenMoves, blackQueenMoves)).getAIMove();
+            if(isBlackAIPlayer && isWhiteAIPlayer) {
+                String[] t;
+                do {
+                    t = inGameUI.getMoveOrOption(captures, simplePrint, isItAITurn);
+                }
+                while (t == null);
+            }
+        }
         else {
             s = inGameUI.getMoveOrOption(captures, simplePrint, isItAITurn);
         }
@@ -153,7 +169,7 @@ public class Game implements Serializable {
                 this.makeMove(s);
                 return true;
             }
-            catch(IncorrectMoveFormat e){
+            catch(IncorrectMoveFormat e) {
                 inGameUI.printIncorrectMoveFormat(simplePrint, isItAITurn);
                 return true;
             }

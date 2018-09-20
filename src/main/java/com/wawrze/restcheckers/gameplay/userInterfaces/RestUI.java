@@ -24,7 +24,7 @@ public class RestUI implements UserInterface {
 
     @Override
     public String[] getMoveOrOption(String captures, boolean simplePrint, boolean isItAITurn) {
-        String[] options = {};
+        String[] options = {"next"};
         String s;
         if(inQueue.isEmpty())
             return null;
@@ -39,7 +39,7 @@ public class RestUI implements UserInterface {
             }
         }
         s = s.toUpperCase();
-        try{
+        try {
             validate(s);
             if(captures.isEmpty() || captures.contains(s)) {
                 String[] sArray = s.split("-");
@@ -53,7 +53,7 @@ public class RestUI implements UserInterface {
                 result[2] = "" + x2;
                 result[3] = "" + y2;
             }
-            else{
+            else {
                 printCaptureObligatory(simplePrint, isItAITurn);
                 return null;
             }
