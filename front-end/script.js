@@ -331,8 +331,32 @@
         });
     }
 
+    function surrender() {
+        $('[game-in-progress]')[0].style.display = 'none';
+        $('[game-finished]')[0].style.display = 'block';
+        $('[next-move-section]')[0].style.display = 'block';
+        $('[game-finished]')[0].style.background = 'grey';
+        $('[game-finished]')[0].style.color = 'black';
+        $('[status]')[1].style.background = 'grey';
+        $('[next-move-section]')[0].style.background = 'grey';
+        $('[winner-or-draw]').text("GAME ENDED");
+        $('[type-of-game-finish]').text("(Game ended with no winner.)");
+        $('[new-game-section]')[0].style.display = 'block';
+        $('[created-game-section]')[0].style.display = 'none';
+        $('[next-move-input]')[0].style.display = 'none';
+        $('[next-move]')[0].style.display = 'none';
+        $('[send-move-button]')[0].style.display = 'none';
+
+        var requestUrl = apiRoot + 'deleteGame?gameName=' + gameName;
+
+        $.ajax({
+            url: requestUrl,
+            method: 'DELETE'
+        });
+    }
+
     $('[create-game-button]').click(createGame);
-    $('[get-board]').click(getBoard);
+    $('[surrender]').click(surrender);
     $('[send-move-button]').click(sendMove);
     $('[rules-set-select]').change(function () {
         getSelectedRulesSet();

@@ -17,7 +17,6 @@ public class GameController {
     GameEnvelope gameEnvelope;
 
     @RequestMapping(method = RequestMethod.POST, value = "newGame", consumes = APPLICATION_JSON_VALUE)
-    @ResponseBody
     public void startNewGame(@RequestBody GameDto gameDto) throws IncorrectMoveException, IncorrectMoveFormat {
         gameEnvelope.startNewGame(gameDto);
     }
@@ -45,6 +44,16 @@ public class GameController {
     @RequestMapping(method = RequestMethod.GET, value = "getGameProgressDetails")
     public GameProgressDetailsDto getGameProgressDetails(@RequestParam String gameName) {
         return gameEnvelope.getGameProgressDetails(gameName);
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "deleteGame")
+    public void deleteGame(@RequestParam String gameName) {
+        gameEnvelope.deleteGame(gameName);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "getGames")
+    public GameListDto getGames() {
+        return gameEnvelope.getGameList();
     }
 
 }

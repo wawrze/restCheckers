@@ -4,11 +4,13 @@ import com.wawrze.restcheckers.gameplay.Game;
 import com.wawrze.restcheckers.gameplay.RulesSet;
 import com.wawrze.restcheckers.gameplay.userInterfaces.dtos.*;
 import com.wawrze.restcheckers.gameplay.userInterfaces.mappers.BoardMapper;
+import com.wawrze.restcheckers.gameplay.userInterfaces.mappers.GameListMapper;
 import com.wawrze.restcheckers.gameplay.userInterfaces.mappers.GameProgressDetailsMapper;
 import com.wawrze.restcheckers.gameplay.userInterfaces.mappers.RulesSetsMapper;
 import com.wawrze.restcheckers.moves.RulesSets;
 import exceptions.IncorrectMoveException;
 import exceptions.IncorrectMoveFormat;
+import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Service
+@Getter
 public class GameEnvelope {
 
     @Autowired
@@ -32,6 +35,9 @@ public class GameEnvelope {
 
     @Autowired
     GameProgressDetailsMapper gameProgressDetailsMapper;
+
+    @Autowired
+    GameListMapper gameListMapper;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GameEnvelope.class);
 
@@ -66,7 +72,7 @@ public class GameEnvelope {
         }
         games.put(gameDto.getName(), game);
         restUIs.put(gameDto.getName(), restUI);
-        LOGGER.info("Game created.");
+        LOGGER.info("Game \"" + game.getName() + "\"created.");
         game.play(restUI);
     }
 
@@ -92,7 +98,7 @@ public class GameEnvelope {
             LOGGER.warn("There is no game named \"" + gameName + "\"! Board not sent!");
             return null;
         }
-        LOGGER.info("Board sent.");
+        LOGGER.info("Board (game \"" + gameName + "\") sent.");
         return boardMapper.mapToBoardDto(game.getBoard(), restUI.getGameStatus(), game.isActivePlayer(),
                 game.isWhiteAIPlayer(), game.isBlackAIPlayer(), game.getMoves());
     }
@@ -112,7 +118,7 @@ public class GameEnvelope {
             LOGGER.warn("There is no rules set named \"" + rulesSetName + "\"! Rules set not sent!");
             return null;
         }
-        LOGGER.info("Rules set sent.");
+        LOGGER.info("Rules set \"" + rulesSetName + "\" sent.");
         return rulesSetsMapper.mapToRulesSetDto(rulesSet);
     }
 
@@ -125,12 +131,29 @@ public class GameEnvelope {
         GameProgressDetailsDto gameProgressDetailsDto = gameProgressDetailsMapper.mapToGameProgressDetailsDto(game);
         if(game.isFinished()) {
             games.remove(gameName);
-            LOGGER.info("Game finish details sent. Game removed.");
+            restUIs.remove(gameName);
+            LOGGER.info("Game \"" + gameName + "\" finish details sent. Game removed.");
         }
         else {
-            LOGGER.info("Game details sent.");
+            LOGGER.info("Game \"" + gameName + "\" details sent.");
         }
         return gameProgressDetailsDto;
+    }
+
+    public void deleteGame(String gameName) {
+        Game game = games.get(gameName);
+        if(game == null) {
+            LOGGER.warn("There is no game named \"" + gameName + "\"! Game not removed!");
+            return;
+        }
+        games.remove(gameName);
+        restUIs.remove(gameName);
+        LOGGER.info("Game  \"" + gameName + "\" removed.");
+    }
+
+    public GameListDto getGameList() {
+        LOGGER.info("Game list sent.");
+        return gameListMapper.mapToGameListDto();
     }
 
 }

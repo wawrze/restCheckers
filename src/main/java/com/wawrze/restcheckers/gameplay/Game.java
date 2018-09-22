@@ -383,7 +383,7 @@ public class Game implements Serializable {
         return time;
     }
 
-    private RulesSet getRulesSet() {
+    public RulesSet getRulesSet() {
         return rulesSet;
     }
 

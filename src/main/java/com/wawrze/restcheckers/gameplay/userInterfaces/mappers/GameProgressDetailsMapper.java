@@ -3,8 +3,15 @@ package com.wawrze.restcheckers.gameplay.userInterfaces.mappers;
 import com.wawrze.restcheckers.figures.Pawn;
 import com.wawrze.restcheckers.figures.Queen;
 import com.wawrze.restcheckers.gameplay.Game;
+import com.wawrze.restcheckers.gameplay.userInterfaces.GameEnvelope;
+import com.wawrze.restcheckers.gameplay.userInterfaces.dtos.GameListDto;
 import com.wawrze.restcheckers.gameplay.userInterfaces.dtos.GameProgressDetailsDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Component
 public class GameProgressDetailsMapper {
