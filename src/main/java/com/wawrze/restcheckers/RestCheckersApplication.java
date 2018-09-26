@@ -6,15 +6,10 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class RestCheckersApplication extends SpringBootServletInitializer {
+public class RestCheckersApplication {
 
-    /*public static void main(String[] args) {
+    public static void main(String[] args) {
         SpringApplication.run(RestCheckersApplication.class, args);
-    }*/
-
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(RestCheckersApplication.class);
     }
 
 }
