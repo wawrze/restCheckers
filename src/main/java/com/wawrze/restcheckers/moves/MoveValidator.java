@@ -3,7 +3,6 @@ package com.wawrze.restcheckers.moves;
 import com.wawrze.restcheckers.board.*;
 import com.wawrze.restcheckers.figures.*;
 import com.wawrze.restcheckers.gameplay.RulesSet;
-import com.sun.javafx.css.Rule;
 import exceptions.*;
 
 public class MoveValidator {
