@@ -2,7 +2,6 @@ package com.wawrze.restcheckers.gameplay;
 
 import com.wawrze.restcheckers.board.*;
 import com.wawrze.restcheckers.figures.*;
-import com.wawrze.restcheckers.gameplay.userInterfaces.InGameUI;
 import com.wawrze.restcheckers.gameplay.userInterfaces.UserInterface;
 import com.wawrze.restcheckers.moves.*;
 import exceptions.*;
@@ -33,26 +32,6 @@ public class Game implements Serializable {
     private boolean isBlackAIPlayer;
     private boolean isWhiteAIPlayer;
     UserInterface inGameUI;
-
-    public Game(Game game) {
-        this.board = new Board(game.getBoard());
-        this.moves = new LinkedList<>(game.getMoves());
-        this.activePlayer = game.isActivePlayer();
-        this.simplePrint = game.isSimplePrint();
-        this.whiteQueenMoves = game.getWhiteQueenMoves();
-        this.blackQueenMoves = game.getBlackQueenMoves();
-        this.isFinished = game.isFinished();
-        this.isDraw = game.isDraw();
-        this.winner = game.isWinner();
-        this.name = game.getName();
-        this.save = game.isSave();
-        this.date = game.getDate();
-        this.time = game.getTime();
-        this.rulesSet = game.getRulesSet();
-        this.isBlackAIPlayer = game.isBlackAIPlayer();
-        this.isWhiteAIPlayer = game.isWhiteAIPlayer();
-        this.inGameUI = game.getInGameUI();
-    }
 
     public Game(String name, RulesSet rulesSet, boolean isBlackAIPlayer, boolean isWhiteAIPlayer) {
         board = new Board();
@@ -347,10 +326,6 @@ public class Game implements Serializable {
         return activePlayer;
     }
 
-    private boolean isSimplePrint() {
-        return simplePrint;
-    }
-
     public int getWhiteQueenMoves() {
         return whiteQueenMoves;
     }
@@ -371,18 +346,6 @@ public class Game implements Serializable {
         return winner;
     }
 
-    private boolean isSave() {
-        return save;
-    }
-
-    private LocalDate getDate() {
-        return date;
-    }
-
-    private LocalTime getTime() {
-        return time;
-    }
-
     public RulesSet getRulesSet() {
         return rulesSet;
     }
@@ -394,7 +357,5 @@ public class Game implements Serializable {
     public boolean isWhiteAIPlayer() {
         return isWhiteAIPlayer;
     }
-
-    private UserInterface getInGameUI() {return inGameUI;}
 
 }

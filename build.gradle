@@ -29,4 +29,6 @@ dependencies {
     compile('org.projectlombok:lombok')
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.powermock:powermock-api-mockito:1.7.4')
+    testCompile('org.powermock:powermock-module-junit4:1.6.4')
 }

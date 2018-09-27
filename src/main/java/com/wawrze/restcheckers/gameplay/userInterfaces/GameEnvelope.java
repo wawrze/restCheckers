@@ -80,7 +80,7 @@ public class GameEnvelope {
         String s = moveDto.getMove();
         RestUI restUI = restUIs.get(gameName);
         Game game = games.get(gameName);
-        restUI.getInQueue().push(s);
+        restUI.getInQueue().offer(s);
         TimeUnit.MILLISECONDS.sleep(200);
         if(game == null) {
             LOGGER.warn("There is no game named \"" + gameName + "\"! Move not served!");

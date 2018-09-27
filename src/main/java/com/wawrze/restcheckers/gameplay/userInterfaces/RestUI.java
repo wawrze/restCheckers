@@ -22,11 +22,11 @@ public class RestUI implements UserInterface {
 
     @Override
     public String[] getMoveOrOption(String captures, boolean simplePrint, boolean isItAITurn) {
-        String[] options = {"next"};
+        String[] options = {"next", "x"};
         String s;
         if(inQueue.isEmpty())
             return null;
-        s = inQueue.pop();
+        s = inQueue.poll();
         s = s.toLowerCase();
         String[] result;
         for(String o : options) {
