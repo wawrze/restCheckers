@@ -3,7 +3,7 @@ package com.wawrze.restcheckers.gameplay.userInterface.mappers;
 import com.wawrze.restcheckers.gameplay.RulesSet;
 import com.wawrze.restcheckers.gameplay.userInterface.dtos.RulesSetDto;
 import com.wawrze.restcheckers.gameplay.userInterface.dtos.RulesSetsDto;
-import com.wawrze.restcheckers.moves.RulesSets;
+import com.wawrze.restcheckers.gameplay.RulesSets;
 import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;

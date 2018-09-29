@@ -1,6 +1,5 @@
-package com.wawrze.restcheckers.moves;
+package com.wawrze.restcheckers.gameplay;
 
-import com.wawrze.restcheckers.gameplay.RulesSet;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 

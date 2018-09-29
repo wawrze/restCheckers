@@ -5,11 +5,10 @@ import com.wawrze.restcheckers.figures.*;
 import com.wawrze.restcheckers.gameplay.RulesSet;
 import exceptions.*;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CapturePossibilityValidator implements Serializable {
+public class CapturePossibilityValidator {
 
     private List<String> listOfCaptures;
     private Board board;

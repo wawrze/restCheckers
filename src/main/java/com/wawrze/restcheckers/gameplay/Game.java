@@ -6,13 +6,12 @@ import com.wawrze.restcheckers.gameplay.userInterface.UserInterface;
 import com.wawrze.restcheckers.moves.*;
 import exceptions.*;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Game implements Serializable {
+public class Game {
 
     private Board board;
     private List<String> moves;

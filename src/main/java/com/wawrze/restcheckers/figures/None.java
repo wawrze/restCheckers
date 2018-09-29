@@ -1,8 +1,6 @@
 package com.wawrze.restcheckers.figures;
 
-import java.io.Serializable;
-
-public class None extends Figure implements Serializable {
+public class None extends Figure {
 
     public None(boolean color){
         this.color = color;

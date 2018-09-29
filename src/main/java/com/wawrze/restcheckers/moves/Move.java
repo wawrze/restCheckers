@@ -4,9 +4,7 @@ import com.wawrze.restcheckers.board.*;
 import com.wawrze.restcheckers.figures.*;
 import exceptions.*;
 
-import java.io.Serializable;
-
-public class Move implements Serializable {
+public class Move {
 
 	private char row1;
 	private char row2;

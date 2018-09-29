@@ -3,10 +3,9 @@ package com.wawrze.restcheckers.gameplay.userInterface;
 import com.wawrze.restcheckers.board.Board;
 import com.wawrze.restcheckers.gameplay.RulesSet;
 
-import java.io.Serializable;
 import java.util.List;
 
-public interface UserInterface extends Serializable {
+public interface UserInterface {
 
     void printMoveHistory(List<String> moves);
 

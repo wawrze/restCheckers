@@ -1,8 +1,6 @@
 package com.wawrze.restcheckers.gameplay;
 
-import java.io.Serializable;
-
-public class RulesSet implements Serializable {
+public final class RulesSet {
 
     private final boolean isVictoryConditionsReversed;
     private final boolean isQueenRangeOne;

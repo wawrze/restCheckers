@@ -2,11 +2,10 @@ package com.wawrze.restcheckers.board;
 
 import com.wawrze.restcheckers.figures.*;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BoardRow implements Serializable {
+public class BoardRow {
 
 	private List<Figure> figures;
 

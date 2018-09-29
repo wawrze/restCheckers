@@ -1,8 +1,8 @@
 package com.wawrze.restcheckers.gameplay.userInterface;
 
 import com.wawrze.restcheckers.gameplay.userInterface.dtos.*;
-import exceptions.ForbiddenException;
-import exceptions.MethodFailureException;
+import exceptions.httpExceptions.ForbiddenException;
+import exceptions.httpExceptions.MethodFailureException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

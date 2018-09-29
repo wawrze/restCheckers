@@ -2,11 +2,10 @@ package com.wawrze.restcheckers.board;
 
 import com.wawrze.restcheckers.figures.Figure;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Board implements Serializable {
+public class Board {
 
 	private Map<Character, BoardRow> rows;
 

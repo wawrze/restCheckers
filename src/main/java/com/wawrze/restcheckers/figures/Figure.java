@@ -1,8 +1,6 @@
 package com.wawrze.restcheckers.figures;
 
-import java.io.Serializable;
-
-public abstract class Figure implements Serializable {
+public abstract class Figure {
 
 	//true - black, false - white
 	protected boolean color;

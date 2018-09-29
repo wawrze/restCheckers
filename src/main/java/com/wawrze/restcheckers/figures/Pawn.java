@@ -1,8 +1,6 @@
 package com.wawrze.restcheckers.figures;
 
-import java.io.Serializable;
-
-public class Pawn extends Figure implements Serializable {
+public class Pawn extends Figure {
 	
 	public Pawn(boolean color) {
 		this.color = color;

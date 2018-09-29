@@ -1,8 +1,6 @@
 package com.wawrze.restcheckers.figures;
 
-import java.io.Serializable;
-
-public class Queen extends Figure implements Serializable {
+public class Queen extends Figure {
 
 	public Queen(boolean color) {
 		this.color = color;
