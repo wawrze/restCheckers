@@ -11,6 +11,8 @@ public class RestCheckersApplicationTests {
 
     @Test
     public void contextLoads() {
+        String[] args = {};
+        RestCheckersApplication.main(args);
     }
 
 }

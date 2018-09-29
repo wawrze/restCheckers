@@ -1,16 +1,17 @@
-package com.wawrze.restcheckers.gameplay.userInterfaces.mappers;
+package com.wawrze.restcheckers.gameplay.userInterface.mappers;
 
 import com.wawrze.restcheckers.board.Board;
 import com.wawrze.restcheckers.figures.Figure;
 import com.wawrze.restcheckers.figures.Pawn;
 import com.wawrze.restcheckers.figures.Queen;
-import com.wawrze.restcheckers.gameplay.userInterfaces.dtos.BoardDto;
-import com.wawrze.restcheckers.gameplay.userInterfaces.dtos.FigureDto;
-import com.wawrze.restcheckers.gameplay.userInterfaces.dtos.RowDto;
+import com.wawrze.restcheckers.gameplay.userInterface.dtos.BoardDto;
+import com.wawrze.restcheckers.gameplay.userInterface.dtos.FigureDto;
+import com.wawrze.restcheckers.gameplay.userInterface.dtos.RowDto;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Component
 public class BoardMapper {
@@ -25,48 +26,50 @@ public class BoardMapper {
         List<FigureDto> listRowF = new ArrayList<>();
         List<FigureDto> listRowG = new ArrayList<>();
         List<FigureDto> listRowH = new ArrayList<>();
-        for(int i = 1;i < 9;i++) {
-            listRowA.add(new FigureDto(
-                    figureName(board.getFigure('A', i)),
-                    i,
-                    (board.getFigure('A', i).getColor()) ? "true" : "false")
-            );
-            listRowB.add(new FigureDto(
-                    figureName(board.getFigure('B', i)),
-                    i,
-                    (board.getFigure('B', i).getColor()) ? "true" : "false")
-            );
-            listRowC.add(new FigureDto(
-                    figureName(board.getFigure('C', i)),
-                    i,
-                    (board.getFigure('C', i).getColor()) ? "true" : "false")
-            );
-            listRowD.add(new FigureDto(
-                    figureName(board.getFigure('D', i)),
-                    i,
-                    (board.getFigure('D', i).getColor()) ? "true" : "false")
-            );
-            listRowE.add(new FigureDto(
-                    figureName(board.getFigure('E', i)),
-                    i,
-                    (board.getFigure('E', i).getColor()) ? "true" : "false")
-            );
-            listRowF.add(new FigureDto(
-                    figureName(board.getFigure('F', i)),
-                    i,
-                    (board.getFigure('F', i).getColor()) ? "true" : "false")
-            );
-            listRowG.add(new FigureDto(
-                    figureName(board.getFigure('G', i)),
-                    i,
-                    (board.getFigure('G', i).getColor()) ? "true" : "false")
-            );
-            listRowH.add(new FigureDto(
-                    figureName(board.getFigure('H', i)),
-                    i,
-                    (board.getFigure('H', i).getColor()) ? "true" : "false")
-            );
-        }
+        Stream.iterate(1, i -> ++i)
+                .limit(8)
+                .forEach(i -> {
+                    listRowA.add(new FigureDto(
+                            figureName(board.getFigure('A', i)),
+                            i,
+                            (board.getFigure('A', i).getColor()) ? "true" : "false")
+                    );
+                    listRowB.add(new FigureDto(
+                            figureName(board.getFigure('B', i)),
+                            i,
+                            (board.getFigure('B', i).getColor()) ? "true" : "false")
+                    );
+                    listRowC.add(new FigureDto(
+                            figureName(board.getFigure('C', i)),
+                            i,
+                            (board.getFigure('C', i).getColor()) ? "true" : "false")
+                    );
+                    listRowD.add(new FigureDto(
+                            figureName(board.getFigure('D', i)),
+                            i,
+                            (board.getFigure('D', i).getColor()) ? "true" : "false")
+                    );
+                    listRowE.add(new FigureDto(
+                            figureName(board.getFigure('E', i)),
+                            i,
+                            (board.getFigure('E', i).getColor()) ? "true" : "false")
+                    );
+                    listRowF.add(new FigureDto(
+                            figureName(board.getFigure('F', i)),
+                            i,
+                            (board.getFigure('F', i).getColor()) ? "true" : "false")
+                    );
+                    listRowG.add(new FigureDto(
+                            figureName(board.getFigure('G', i)),
+                            i,
+                            (board.getFigure('G', i).getColor()) ? "true" : "false")
+                    );
+                    listRowH.add(new FigureDto(
+                            figureName(board.getFigure('H', i)),
+                            i,
+                            (board.getFigure('H', i).getColor()) ? "true" : "false")
+                    );
+                });
         RowDto rowA = new RowDto(0, listRowA);
         RowDto rowB = new RowDto(1, listRowB);
         RowDto rowC = new RowDto(2, listRowC);

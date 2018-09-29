@@ -4,7 +4,7 @@ import com.wawrze.restcheckers.board.Board;
 import com.wawrze.restcheckers.figures.None;
 import com.wawrze.restcheckers.figures.Pawn;
 import com.wawrze.restcheckers.figures.Queen;
-import com.wawrze.restcheckers.gameplay.userInterfaces.RestUI;
+import com.wawrze.restcheckers.gameplay.userInterface.RestUI;
 import exceptions.IncorrectMoveException;
 import exceptions.IncorrectMoveFormat;
 import org.junit.*;
@@ -41,8 +41,7 @@ public class AIPlayerTestSuite {
         RulesSet rulesSet = new RulesSet(false, false, false,
                 false, true, false,
                 "", "");
-        AIPlayer1 aiPlayer1;
-        AIPlayer2 aiPlayer2;
+        AIPlayer aiPlayer;
         //When
         for(int i = 1;i < 9;i++) {
             for(int j = 1;j < 9;j++)
@@ -50,10 +49,8 @@ public class AIPlayerTestSuite {
         }
         board.setFigure('A', 8, new Queen(true));
         board.setFigure('H', 7, new Queen(false));
-        aiPlayer1 = new AIPlayer1(board, true, rulesSet, 14, 14);
-        aiPlayer2 = new AIPlayer2(board, false, rulesSet, 14, 14);
-        aiPlayer1.getAIMove();
-        aiPlayer2.getAIMove();
+        aiPlayer = new AIPlayer(board, true, rulesSet, 14, 14);
+        aiPlayer.getAIMove();
         //Then
     }
 

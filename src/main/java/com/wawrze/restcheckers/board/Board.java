@@ -58,4 +58,8 @@ public class Board implements Serializable {
 		this.rows.get(row).setFigure(col, figure);
 	}
 
+    public Map<Character, BoardRow> getRows() {
+        return rows;
+    }
+
 }

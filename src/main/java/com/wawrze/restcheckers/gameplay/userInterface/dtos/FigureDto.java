@@ -1,4 +1,4 @@
-package com.wawrze.restcheckers.gameplay.userInterfaces.dtos;
+package com.wawrze.restcheckers.gameplay.userInterface.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

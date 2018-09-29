@@ -1,6 +1,6 @@
-package com.wawrze.restcheckers.gameplay.userInterfaces;
+package com.wawrze.restcheckers.gameplay.userInterface;
 
-import com.wawrze.restcheckers.gameplay.userInterfaces.dtos.*;
+import com.wawrze.restcheckers.gameplay.userInterface.dtos.*;
 import exceptions.IncorrectMoveException;
 import exceptions.IncorrectMoveFormat;
 import org.springframework.beans.factory.annotation.Autowired;

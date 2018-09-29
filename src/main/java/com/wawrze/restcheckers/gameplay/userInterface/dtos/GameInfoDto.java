@@ -1,4 +1,4 @@
-package com.wawrze.restcheckers.gameplay.userInterfaces.dtos;
+package com.wawrze.restcheckers.gameplay.userInterface.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,12 +16,5 @@ public class GameInfoDto {
     private boolean isFinished;
     private boolean isDraw;
     private boolean winner;
-    private int moves;
-    private int blackQueenMoves;
-    private int whiteQueenMoves;
-    private int whitePawns;
-    private int blackPawns;
-    private int whiteQueens;
-    private int blackQueens;
 
 }

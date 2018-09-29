@@ -1,4 +1,4 @@
-package com.wawrze.restcheckers.gameplay.userInterfaces;
+package com.wawrze.restcheckers.gameplay.userInterface;
 
 import com.wawrze.restcheckers.board.Board;
 import com.wawrze.restcheckers.gameplay.RulesSet;

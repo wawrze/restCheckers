@@ -1,4 +1,4 @@
-package com.wawrze.restcheckers.gameplay.userInterfaces.dtos;
+package com.wawrze.restcheckers.gameplay.userInterface.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,6 +17,5 @@ public class RulesSetDto {
     private boolean isQueenRangeOneAfterCapture;
     private String name;
     private String description;
-    private int id;
 
 }

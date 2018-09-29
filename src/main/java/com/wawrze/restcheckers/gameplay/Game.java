@@ -2,7 +2,7 @@ package com.wawrze.restcheckers.gameplay;
 
 import com.wawrze.restcheckers.board.*;
 import com.wawrze.restcheckers.figures.*;
-import com.wawrze.restcheckers.gameplay.userInterfaces.UserInterface;
+import com.wawrze.restcheckers.gameplay.userInterface.UserInterface;
 import com.wawrze.restcheckers.moves.*;
 import exceptions.*;
 
@@ -112,18 +112,8 @@ public class Game implements Serializable {
             inGameUI.printCapture(captures, simplePrint, isItAITurn);
         }
         String[] s;
-        if(isBlackAIPlayer && activePlayer) {
-            s = (new AIPlayer1(board, activePlayer, rulesSet, whiteQueenMoves, blackQueenMoves)).getAIMove();
-            if(isBlackAIPlayer && isWhiteAIPlayer) {
-                String[] t;
-                do {
-                    t = inGameUI.getMoveOrOption(captures, simplePrint, isItAITurn);
-                }
-                while (t == null);
-            }
-        }
-        else if(isWhiteAIPlayer && !activePlayer) {
-            s = (new AIPlayer2(board, activePlayer, rulesSet, whiteQueenMoves, blackQueenMoves)).getAIMove();
+        if((isBlackAIPlayer && activePlayer) || (isWhiteAIPlayer && !activePlayer)) {
+            s = (new AIPlayer(board, activePlayer, rulesSet, whiteQueenMoves, blackQueenMoves)).getAIMove();
             if(isBlackAIPlayer && isWhiteAIPlayer) {
                 String[] t;
                 do {
@@ -230,12 +220,8 @@ public class Game implements Serializable {
                 inGameUI.printBoard(board, simplePrint, activePlayer, moves, rulesSet, isItAITurn);
                 inGameUI.printMultiCapture(e.getMessage(), simplePrint, isItAITurn);
                 String[] s;
-                if(isBlackAIPlayer && activePlayer) {
-                    s = (new AIPlayer1(board, activePlayer, rulesSet, whiteQueenMoves, blackQueenMoves,
-                            move.getRow2(), move.getCol2())).getAIMove();
-                }
-                else if(isWhiteAIPlayer && !activePlayer) {
-                    s = (new AIPlayer2(board, activePlayer, rulesSet, whiteQueenMoves, blackQueenMoves,
+                if((isBlackAIPlayer && activePlayer) || (isWhiteAIPlayer && !activePlayer)) {
+                    s = (new AIPlayer(board, activePlayer, rulesSet, whiteQueenMoves, blackQueenMoves,
                             move.getRow2(), move.getCol2())).getAIMove();
                 }
                 else {

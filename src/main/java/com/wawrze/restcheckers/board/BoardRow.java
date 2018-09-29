@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-class BoardRow implements Serializable {
+public class BoardRow implements Serializable {
 
 	private List<Figure> figures;
 
@@ -27,5 +27,9 @@ class BoardRow implements Serializable {
 	public void setFigure(int col, Figure figure) {
 		figures.set(col, figure);
 	}
+
+    public List<Figure> getFigures() {
+        return figures;
+    }
 
 }

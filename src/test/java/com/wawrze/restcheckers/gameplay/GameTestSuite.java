@@ -3,15 +3,10 @@ package com.wawrze.restcheckers.gameplay;
 import com.wawrze.restcheckers.figures.None;
 import com.wawrze.restcheckers.figures.Pawn;
 import com.wawrze.restcheckers.figures.Queen;
-import com.wawrze.restcheckers.gameplay.userInterfaces.RestUI;
+import com.wawrze.restcheckers.gameplay.userInterface.RestUI;
 import exceptions.IncorrectMoveException;
 import exceptions.IncorrectMoveFormat;
 import org.junit.*;
-
-import java.io.ByteArrayInputStream;
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.Scanner;
 
 public class GameTestSuite {
 
@@ -82,6 +77,7 @@ public class GameTestSuite {
         }
         game.getBoard().setFigure('A', 8, new Queen(true));
         game.getBoard().setFigure('H', 1, new Queen(false));
+        restUI.getInQueue().offer("H1-G22");
         restUI.getInQueue().offer("H1-G2");
         restUI.getInQueue().offer("A8-B7");
         restUI.getInQueue().offer("x");

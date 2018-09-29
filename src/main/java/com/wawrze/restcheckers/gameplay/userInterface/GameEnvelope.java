@@ -1,12 +1,12 @@
-package com.wawrze.restcheckers.gameplay.userInterfaces;
+package com.wawrze.restcheckers.gameplay.userInterface;
 
 import com.wawrze.restcheckers.gameplay.Game;
 import com.wawrze.restcheckers.gameplay.RulesSet;
-import com.wawrze.restcheckers.gameplay.userInterfaces.dtos.*;
-import com.wawrze.restcheckers.gameplay.userInterfaces.mappers.BoardMapper;
-import com.wawrze.restcheckers.gameplay.userInterfaces.mappers.GameListMapper;
-import com.wawrze.restcheckers.gameplay.userInterfaces.mappers.GameProgressDetailsMapper;
-import com.wawrze.restcheckers.gameplay.userInterfaces.mappers.RulesSetsMapper;
+import com.wawrze.restcheckers.gameplay.userInterface.dtos.*;
+import com.wawrze.restcheckers.gameplay.userInterface.mappers.BoardMapper;
+import com.wawrze.restcheckers.gameplay.userInterface.mappers.GameListMapper;
+import com.wawrze.restcheckers.gameplay.userInterface.mappers.GameProgressDetailsMapper;
+import com.wawrze.restcheckers.gameplay.userInterface.mappers.RulesSetsMapper;
 import com.wawrze.restcheckers.moves.RulesSets;
 import exceptions.IncorrectMoveException;
 import exceptions.IncorrectMoveFormat;
@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Service
 @Getter
@@ -45,22 +46,18 @@ public class GameEnvelope {
     private Map<String, Game> games = new HashMap<>();
 
     public void startNewGame(GameDto gameDto) throws IncorrectMoveException, IncorrectMoveFormat {
-        for(Map.Entry<String, Game> g : games.entrySet()) {
-            if(g.getKey().equalsIgnoreCase(gameDto.getName())) {
-                LOGGER.warn("Game " + gameDto.getName() + " already exist! Game not created.");
-                return;
-            }
+        if(games.entrySet().stream()
+                .filter(entry -> entry.getKey().equalsIgnoreCase(gameDto.getName()))
+                .count() != 0) {
+            LOGGER.warn("Game \"" + gameDto.getName() + "\" already exist! Game not created.");
+            return;
         }
-        Game game;
-        RestUI restUI = new RestUI();
-        RulesSet rulesSet = null;
-        for(RulesSet r : rules.getRules()) {
-            if(r.getName().equals(gameDto.getRulesName()))
-                rulesSet = r;
-        }
+        RulesSet rulesSet = rules.getRules().stream()
+                .filter(rule -> rule.getName().equals(gameDto.getRulesName()))
+                .collect(Collectors.toList()).get(0);
         boolean isBlackAIPlayer = gameDto.getIsBlackAIPlayer().equals("true");
         boolean isWhiteAIPlayer = gameDto.getIsWhiteAIPlayer().equals("true");
-        game = new Game(
+        Game game = new Game(
                 gameDto.getName(),
                 rulesSet,
                 isBlackAIPlayer,
@@ -71,6 +68,7 @@ public class GameEnvelope {
             return;
         }
         games.put(gameDto.getName(), game);
+        RestUI restUI = new RestUI();
         restUIs.put(gameDto.getName(), restUI);
         LOGGER.info("Game \"" + game.getName() + "\"created.");
         game.play(restUI);
@@ -109,11 +107,9 @@ public class GameEnvelope {
     }
 
     public RulesSetDto getRulesSet(String rulesSetName) {
-        RulesSet rulesSet = null;
-        for(RulesSet r : rules.getRules()) {
-            if(r.getName().equals(rulesSetName))
-                rulesSet = r;
-        }
+        RulesSet rulesSet = rules.getRules().stream()
+                .filter(rule -> rule.getName().equals(rulesSetName))
+                .collect(Collectors.toList()).get(0);
         if(rulesSet == null) {
             LOGGER.warn("There is no rules set named \"" + rulesSetName + "\"! Rules set not sent!");
             return null;
