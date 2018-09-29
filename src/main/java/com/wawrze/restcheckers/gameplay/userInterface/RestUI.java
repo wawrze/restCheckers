@@ -125,6 +125,10 @@ public class RestUI implements UserInterface {
     public void waitForEnter() {
     }
 
+    public void gameAlreadyExist(String gameName) {
+        gameStatus = "Game \"" + gameName + "\" already exist. Game resumed.";
+    }
+
     private void validate(String s) throws IncorrectMoveFormat {
         String[] sArray = s.split("-");
         if (sArray.length != 2)

@@ -1,12 +1,10 @@
 package com.wawrze.restcheckers.gameplay.userInterface;
 
 import com.wawrze.restcheckers.gameplay.userInterface.dtos.*;
-import exceptions.IncorrectMoveException;
-import exceptions.IncorrectMoveFormat;
+import exceptions.ForbiddenException;
+import exceptions.MethodFailureException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping("/game")
@@ -16,18 +14,18 @@ public class GameController {
     @Autowired
     GameEnvelope gameEnvelope;
 
-    @RequestMapping(method = RequestMethod.POST, value = "newGame", consumes = APPLICATION_JSON_VALUE)
-    public void startNewGame(@RequestBody GameDto gameDto) throws IncorrectMoveException, IncorrectMoveFormat {
+    @RequestMapping(method = RequestMethod.POST, value = "newGame")
+    public void startNewGame(@RequestBody GameDto gameDto) throws ForbiddenException, MethodFailureException {
         gameEnvelope.startNewGame(gameDto);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "sendMove")
-    public BoardDto sendMove(@RequestParam String gameName, @RequestBody MoveDto moveDto) throws InterruptedException {
+    public BoardDto sendMove(@RequestParam String gameName, @RequestBody MoveDto moveDto) throws ForbiddenException {
         return gameEnvelope.sendMove(gameName, moveDto);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getBoard")
-    public BoardDto getBoard(@RequestParam String gameName) {
+    public BoardDto getBoard(@RequestParam String gameName) throws ForbiddenException {
         return gameEnvelope.getBoard(gameName);
     }
 
@@ -37,22 +35,22 @@ public class GameController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getRulesSet")
-    public RulesSetDto getRulesSet(@RequestParam String rulesSetName) {
+    public RulesSetDto getRulesSet(@RequestParam String rulesSetName) throws ForbiddenException {
         return gameEnvelope.getRulesSet(rulesSetName);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getGameProgressDetails")
-    public GameProgressDetailsDto getGameProgressDetails(@RequestParam String gameName) {
+    public GameProgressDetailsDto getGameProgressDetails(@RequestParam String gameName) throws ForbiddenException {
         return gameEnvelope.getGameProgressDetails(gameName);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteGame")
-    public void deleteGame(@RequestParam String gameName) {
+    public void deleteGame(@RequestParam String gameName) throws ForbiddenException {
         gameEnvelope.deleteGame(gameName);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getGames")
-    public GameListDto getGames() {
+    public GameListDto getGames() throws ForbiddenException {
         return gameEnvelope.getGameList();
     }
 

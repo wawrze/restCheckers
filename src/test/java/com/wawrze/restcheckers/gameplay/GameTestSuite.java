@@ -34,34 +34,56 @@ public class GameTestSuite {
     }
 
     @Test
-    public void testNullOrIncorrectMove() throws IncorrectMoveFormat, IncorrectMoveException {
+    public void testNullOrIncorrectMove() {
         //Given
         RulesSet rulesSet = new RulesSet(true, true, true,
                 true, true, true,
                 "", "");
         Game game = new Game("", rulesSet, false, false);
         RestUI restUI;
+        boolean result = false;
         //When
         restUI = new RestUI();
         restUI.getInQueue().offer("x");
-        game.play(restUI);
+        try {
+            game.play(restUI);
+        }
+        catch(Exception e) {
+            result = true;
+        }
         restUI = new RestUI();
         restUI.getInQueue().offer("A1-Q9");
         restUI.getInQueue().offer("x");
-        game.play(restUI);
+        try {
+            game.play(restUI);
+        }
+        catch(Exception e) {
+            result = true;
+        }
         restUI = new RestUI();
         restUI.getInQueue().offer("Abc");
         restUI.getInQueue().offer("x");
-        game.play(restUI);
+        try {
+            game.play(restUI);
+        }
+        catch(Exception e) {
+            result = true;
+        }
         restUI = new RestUI();
         restUI.getInQueue().offer("A1-A2");
         restUI.getInQueue().offer("x");
-        game.play(restUI);
+        try {
+            game.play(restUI);
+        }
+        catch(Exception e) {
+            result = true;
+        }
         //Then
+        Assert.assertFalse(result);
     }
 
     @Test
-    public void testQueenMovesCounter() throws IncorrectMoveFormat, IncorrectMoveException {
+    public void testQueenMovesCounter() {
         //Given
         RulesSet rulesSet = new RulesSet(true, true, true,
                 true, true, true,
@@ -70,6 +92,7 @@ public class GameTestSuite {
         RestUI restUI = new RestUI();
         int blackQueenMovesCounter;
         int whiteQueenMovesCounter;
+        boolean result = false;
         //When
         for(int i = 1;i < 9;i++) {
             for(int j = 1;j < 9;j++)
@@ -81,22 +104,29 @@ public class GameTestSuite {
         restUI.getInQueue().offer("H1-G2");
         restUI.getInQueue().offer("A8-B7");
         restUI.getInQueue().offer("x");
-        game.play(restUI);
+        try {
+            game.play(restUI);
+        }
+        catch(Exception e) {
+            result = true;
+        }
         blackQueenMovesCounter = game.getBlackQueenMoves();
         whiteQueenMovesCounter = game.getWhiteQueenMoves();
         //Then
         Assert.assertEquals(1, whiteQueenMovesCounter);
         Assert.assertEquals(1, blackQueenMovesCounter);
+        Assert.assertFalse(result);
     }
 
     @Test
-    public void testPawnToQueen() throws IncorrectMoveException, IncorrectMoveFormat {
+    public void testPawnToQueen() {
         //Given
         RulesSet rulesSet = new RulesSet(true, true, true,
                 true, true, true,
                 "", "");
         Game game = new Game("", rulesSet, false, false);
         RestUI restUI = new RestUI();
+        boolean result = false;
         //When
         for(int i = 1;i < 9;i++) {
             for(int j = 1;j < 9;j++)
@@ -107,20 +137,27 @@ public class GameTestSuite {
         restUI.getInQueue().offer("B7-A8");
         restUI.getInQueue().offer("G2-H1");
         restUI.getInQueue().offer("x");
-        game.play(restUI);
+        try {
+            game.play(restUI);
+        }
+        catch(Exception e) {
+            result = true;
+        }
         //Then
         Assert.assertTrue(game.getBoard().getFigure('A', 8) instanceof Queen);
         Assert.assertTrue(game.getBoard().getFigure('H', 1) instanceof Queen);
+        Assert.assertFalse(result);
     }
 
     @Test
-    public void testMultiCapture() throws IncorrectMoveException, IncorrectMoveFormat {
+    public void testMultiCapture() {
         //Given
         RulesSet rulesSet = new RulesSet(false, false, false,
                 false, true, false,
                 "", "");
         Game game = new Game("", rulesSet, false, true);
         RestUI restUI = new RestUI();
+        boolean result = false;
         //When
         for(int i = 1;i < 9;i++) {
             for(int j = 1;j < 9;j++)
@@ -137,18 +174,25 @@ public class GameTestSuite {
         restUI.getInQueue().offer("c6-d5");
         restUI.getInQueue().offer("c6-a8");
         restUI.getInQueue().offer("x");
-        game.play(restUI);
+        try {
+            game.play(restUI);
+        }
+        catch(Exception e) {
+            result = true;
+        }
         //Then
+        Assert.assertFalse(result);
     }
 
     @Test
-    public void testMultiCapture2() throws IncorrectMoveException, IncorrectMoveFormat {
+    public void testMultiCapture2() {
         //Given
         RulesSet rulesSet = new RulesSet(false, false, false,
                 false, true, false,
                 "", "");
         Game game = new Game("", rulesSet, true, false);
         RestUI restUI = new RestUI();
+        boolean result = false;
         //When
         for(int i = 1;i < 9;i++) {
             for(int j = 1;j < 9;j++)
@@ -167,8 +211,14 @@ public class GameTestSuite {
         restUI.getInQueue().offer("c6-b7");
         restUI.getInQueue().offer("c6-a4");
         restUI.getInQueue().offer("x");
-        game.play(restUI);
+        try {
+            game.play(restUI);
+        }
+        catch(Exception e) {
+            result = true;
+        }
         //Then
+        Assert.assertFalse(result);
     }
 
 }

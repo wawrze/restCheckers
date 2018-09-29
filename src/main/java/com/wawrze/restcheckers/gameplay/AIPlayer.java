@@ -24,8 +24,7 @@ public class AIPlayer {
     private int depth;
     private Map<Move,Integer> possibleMoves;
 
-    public AIPlayer(Board board, boolean player, RulesSet rulesSet, int whiteQueenMoves, int blackQueenMoves)
-            throws IncorrectMoveFormat, IncorrectMoveException {
+    public AIPlayer(Board board, boolean player, RulesSet rulesSet, int whiteQueenMoves, int blackQueenMoves) {
         this.board = board;
         this.AIPlayer = player;
         this.activePlayer = player;
@@ -39,7 +38,7 @@ public class AIPlayer {
     }
 
     public AIPlayer(Board board, boolean player, RulesSet rulesSet, int whiteQueenMoves, int blackQueenMoves, char row,
-                    int col) throws IncorrectMoveFormat, IncorrectMoveException {
+                    int col) {
         this.board = board;
         this.AIPlayer = player;
         this.activePlayer = player;
@@ -53,7 +52,7 @@ public class AIPlayer {
     }
 
     private AIPlayer(Board board, boolean AIPlayer, boolean activePlayer, RulesSet rulesSet, int whiteQueenMoves,
-                     int blackQueenMoves, int depth) throws IncorrectMoveFormat, IncorrectMoveException {
+                     int blackQueenMoves, int depth) {
         this.board = board;
         this.AIPlayer = AIPlayer;
         this.activePlayer = activePlayer;
@@ -67,8 +66,7 @@ public class AIPlayer {
     }
 
     private AIPlayer(Board board, boolean AIPlayer, boolean activePlayer, RulesSet rulesSet, int whiteQueenMoves,
-                     int blackQueenMoves, int depth, char row, int col)
-            throws IncorrectMoveFormat, IncorrectMoveException {
+                     int blackQueenMoves, int depth, char row, int col) {
         this.board = board;
         this.AIPlayer = AIPlayer;
         this.activePlayer = activePlayer;
@@ -81,7 +79,7 @@ public class AIPlayer {
         evaluateMoves();
     }
 
-    private void evaluateMoves() throws IncorrectMoveFormat, IncorrectMoveException {
+    private void evaluateMoves() {
         Map<Move,Integer> moves = new HashMap<>(possibleMoves);
         boolean capture;
         int value;
@@ -123,6 +121,9 @@ public class AIPlayer {
                     capture = true;
                 }
             }
+            catch(IncorrectMoveException e) {
+                value = 0;
+            }
             if(activePlayer != AIPlayer)
                 value *= -1;
             value += getFigureSetEvaluation(tmpBoard);
@@ -157,7 +158,7 @@ public class AIPlayer {
             return -10000;
     }
 
-    private void getPossibleMovesMultiCapture(char row, int col) throws IncorrectMoveFormat, IncorrectMoveException {
+    private void getPossibleMovesMultiCapture(char row, int col) {
         try {
             (new CapturePossibilityValidator(board, activePlayer, rulesSet))
                     .validateCapturePossibilityForOneFigure(row, col);
@@ -184,7 +185,7 @@ public class AIPlayer {
         }
     }
 
-    private void getPossibleMoves() throws IncorrectMoveFormat, IncorrectMoveException {
+    private void getPossibleMoves() {
         try {
             (new CapturePossibilityValidator(board, activePlayer, rulesSet)).validateCapturePossibility();
             for(int i = 1;i<9;i++) {

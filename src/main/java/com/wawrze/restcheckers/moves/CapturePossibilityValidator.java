@@ -18,7 +18,7 @@ public class CapturePossibilityValidator implements Serializable {
     private int maxDepth;
     private RulesSet rulesSet;
 
-    private void findMaxCaptures() throws IncorrectMoveFormat,IncorrectMoveException {
+    private void findMaxCaptures() {
         counter = new int[listOfCaptures.size()];
         for(String s : listOfCaptures){
             Board tmpBoard = new Board(this.board);
@@ -26,13 +26,18 @@ public class CapturePossibilityValidator implements Serializable {
             int y1 = Character.getNumericValue(sArray[0].charAt(1));
             char x2 = sArray[1].charAt(0);
             int y2 = Character.getNumericValue(sArray[1].charAt(1));
-            Move move = new Move(x1, y1, x2, y2);
+            Move move = null;
+            try {
+                move = new Move(x1, y1, x2, y2);
+            }
+            catch (IncorrectMoveFormat e) {}
             try {
                 MoveValidator.validateMove(move, tmpBoard, player, rulesSet);
             }
             catch (CaptureException e) {
                 move.makeCapture(tmpBoard,e.getRow(),e.getCol());
             }
+            catch (IncorrectMoveException e) {}
             finally {}
             CapturePossibilityValidator validator = new CapturePossibilityValidator(tmpBoard, this.player, rulesSet);
             try {
@@ -66,7 +71,7 @@ public class CapturePossibilityValidator implements Serializable {
     }
 
     public void validateCapturePossibility()
-            throws CapturePossibleException, IncorrectMoveException, IncorrectMoveFormat {
+            throws CapturePossibleException {
         for(int i = 65;i<73;i++){
             for (int j = 1; j < 9; j++){
                 if (board.getFigure((char) i, j) instanceof Pawn
@@ -86,7 +91,7 @@ public class CapturePossibilityValidator implements Serializable {
     }
 
     public void validateCapturePossibilityForOneFigure(char row,int col)
-            throws CapturePossibleException, IncorrectMoveException, IncorrectMoveFormat {
+            throws CapturePossibleException {
         if(board.getFigure(row,col) instanceof Pawn)
             validatePawnCapture(row,col,board);
         else

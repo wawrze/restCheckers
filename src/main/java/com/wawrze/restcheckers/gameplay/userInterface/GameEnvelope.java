@@ -8,8 +8,8 @@ import com.wawrze.restcheckers.gameplay.userInterface.mappers.GameListMapper;
 import com.wawrze.restcheckers.gameplay.userInterface.mappers.GameProgressDetailsMapper;
 import com.wawrze.restcheckers.gameplay.userInterface.mappers.RulesSetsMapper;
 import com.wawrze.restcheckers.moves.RulesSets;
-import exceptions.IncorrectMoveException;
-import exceptions.IncorrectMoveFormat;
+import exceptions.ForbiddenException;
+import exceptions.MethodFailureException;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,12 +45,13 @@ public class GameEnvelope {
     private Map<String, RestUI> restUIs = new HashMap<>();
     private Map<String, Game> games = new HashMap<>();
 
-    public void startNewGame(GameDto gameDto) throws IncorrectMoveException, IncorrectMoveFormat {
+    public void startNewGame(GameDto gameDto) throws ForbiddenException, MethodFailureException {
         if(games.entrySet().stream()
                 .filter(entry -> entry.getKey().equalsIgnoreCase(gameDto.getName()))
                 .count() != 0) {
+            restUIs.get(gameDto.getName()).gameAlreadyExist(gameDto.getName());
             LOGGER.warn("Game \"" + gameDto.getName() + "\" already exist! Game not created.");
-            return;
+            throw new ForbiddenException();
         }
         RulesSet rulesSet = rules.getRules().stream()
                 .filter(rule -> rule.getName().equals(gameDto.getRulesName()))
@@ -65,7 +66,7 @@ public class GameEnvelope {
         );
         if(game == null) {
             LOGGER.warn("Unknown error! Game not created!");
-            return;
+            throw new MethodFailureException();
         }
         games.put(gameDto.getName(), game);
         RestUI restUI = new RestUI();
@@ -74,27 +75,32 @@ public class GameEnvelope {
         game.play(restUI);
     }
 
-    public BoardDto sendMove(String gameName, MoveDto moveDto) throws InterruptedException {
+    public BoardDto sendMove(String gameName, MoveDto moveDto) throws ForbiddenException {
         String s = moveDto.getMove();
         RestUI restUI = restUIs.get(gameName);
         Game game = games.get(gameName);
-        restUI.getInQueue().offer(s);
-        TimeUnit.MILLISECONDS.sleep(200);
         if(game == null) {
             LOGGER.warn("There is no game named \"" + gameName + "\"! Move not served!");
-            return null;
+            throw new ForbiddenException();
+        }
+        restUI.getInQueue().offer(s);
+        try {
+            TimeUnit.MILLISECONDS.sleep(200);
+        }
+        catch(InterruptedException e) {
+            LOGGER.warn("SLEEP Exception: " + e.getMessage());
         }
         LOGGER.info("New move (game: " + gameName + ", move: " + moveDto.getMove() + ") served.");
         return boardMapper.mapToBoardDto(game.getBoard(), restUI.getGameStatus(), game.isActivePlayer(),
                 game.isWhiteAIPlayer(), game.isBlackAIPlayer(), game.getMoves());
     }
 
-    public BoardDto getBoard(String gameName) {
+    public BoardDto getBoard(String gameName) throws ForbiddenException {
         RestUI restUI = restUIs.get(gameName);
         Game game = games.get(gameName);
         if(game == null) {
             LOGGER.warn("There is no game named \"" + gameName + "\"! Board not sent!");
-            return null;
+            throw new ForbiddenException();
         }
         LOGGER.info("Board (game \"" + gameName + "\") sent.");
         return boardMapper.mapToBoardDto(game.getBoard(), restUI.getGameStatus(), game.isActivePlayer(),
@@ -106,23 +112,23 @@ public class GameEnvelope {
         return rulesSetsMapper.mapToRulesSetsDto(rules);
     }
 
-    public RulesSetDto getRulesSet(String rulesSetName) {
+    public RulesSetDto getRulesSet(String rulesSetName) throws ForbiddenException {
         RulesSet rulesSet = rules.getRules().stream()
                 .filter(rule -> rule.getName().equals(rulesSetName))
                 .collect(Collectors.toList()).get(0);
         if(rulesSet == null) {
             LOGGER.warn("There is no rules set named \"" + rulesSetName + "\"! Rules set not sent!");
-            return null;
+            throw new ForbiddenException();
         }
         LOGGER.info("Rules set \"" + rulesSetName + "\" sent.");
         return rulesSetsMapper.mapToRulesSetDto(rulesSet);
     }
 
-    public GameProgressDetailsDto getGameProgressDetails(String gameName) {
+    public GameProgressDetailsDto getGameProgressDetails(String gameName) throws ForbiddenException {
         Game game = games.get(gameName);
         if(game == null) {
             LOGGER.warn("There is no game named \"" + gameName + "\"! Game details not sent!");
-            return null;
+            throw new ForbiddenException();
         }
         GameProgressDetailsDto gameProgressDetailsDto = gameProgressDetailsMapper.mapToGameProgressDetailsDto(game);
         if(game.isFinished()) {
@@ -136,11 +142,11 @@ public class GameEnvelope {
         return gameProgressDetailsDto;
     }
 
-    public void deleteGame(String gameName) {
+    public void deleteGame(String gameName) throws ForbiddenException {
         Game game = games.get(gameName);
         if(game == null) {
             LOGGER.warn("There is no game named \"" + gameName + "\"! Game not removed!");
-            return;
+            throw new ForbiddenException();
         }
         games.remove(gameName);
         restUIs.remove(gameName);

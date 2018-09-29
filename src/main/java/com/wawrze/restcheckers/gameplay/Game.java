@@ -75,7 +75,7 @@ public class Game implements Serializable {
         board.setFigure('H', 7, new Pawn(false));
     }
 
-    public boolean play(UserInterface inGameUI) throws IncorrectMoveFormat, IncorrectMoveException {
+    public boolean play(UserInterface inGameUI) {
         this.inGameUI = inGameUI;
         boolean b;
         do {
@@ -96,7 +96,7 @@ public class Game implements Serializable {
         return save;
     }
 
-    private boolean waitForMove() throws IncorrectMoveFormat, IncorrectMoveException {
+    private boolean waitForMove() {
         String captures = "";
         boolean isItAITurn = false;
         if(isBlackAIPlayer && activePlayer)
@@ -145,7 +145,7 @@ public class Game implements Serializable {
         }
     }
 
-    private void makeMove(String[] s) throws IncorrectMoveFormat, IncorrectMoveException {
+    private void makeMove(String[] s) throws IncorrectMoveFormat {
         char x1 = s[0].charAt(0);
         int y1 = Character.getNumericValue(s[1].charAt(0));
         char x2 = s[2].charAt(0);
@@ -180,7 +180,10 @@ public class Game implements Serializable {
         catch (CaptureException e) {
             moves.add((activePlayer ? "black: " : "white: ") + move);
             move.makeCapture(board,e.getRow(),e.getCol());
-            multiCapture(move);
+            try {
+                multiCapture(move);
+            }
+            catch(IncorrectMoveException e1) {}
             inGameUI.printCaptureDone(simplePrint, isItAITurn);
             if(activePlayer)
                 blackQueenMoves = 0;

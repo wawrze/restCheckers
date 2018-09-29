@@ -19,7 +19,7 @@
     });
 
     //init
-    gStatus.text("Not connected to application.");
+    gStatus.text("Not connected to application. Please, wait for a while...");
     getAllAvailableRulesSets();
 
     function getAllAvailableRulesSets() {
@@ -67,16 +67,22 @@
                 $('[man-capture-backward]').text(rules.pawnCaptureBackward ? "yes" : "no");
                 $('[king-range]').text(rules.queenRangeOne ? "one field" : "any");
                 $('[king-move-after-capture]').text(rules.queenRangeOneAfterCapture ? "one field" : "any");
+            },
+            statusCode: {
+                403: function () {
+                    gStatus.text("There is no rules set named \"" + gameRulesName + "\" - possible application error.");
+                }
             }
         });
     }
-
+    
     function createGame() {
         const requestUrl = apiRoot + 'newGame';
         
         gameName = $('[game-name]').val();
         var gameRulesName = $('[rules-set-select]').val();
         var blackPlayer = "false";
+        var error = 0;
 
         if ($('[black-player-select]').val() == "Computer") {
             blackPlayer = "true";
@@ -96,10 +102,11 @@
             return;
         }
 
+        gStatus.text("Game started.");
+        
         $.ajax({
             url: requestUrl,
             method: 'POST',
-            processData: false,
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
             data: JSON.stringify({
@@ -107,9 +114,12 @@
                 rulesName: gameRulesName,
                 isBlackAIPlayer: blackPlayer,
                 isWhiteAIPlayer: whitePlayer
-            })
+            }),
+            error: function () {
+                gStatus.text("Application error.");
+            }
         });
-
+        
         $('[created-game-name]').text(gameName);
         $('[new-game-section]')[0].style.display = 'none';
         $('[created-game-section]')[0].style.display = 'block';
@@ -127,7 +137,6 @@
             $('[send-move-button]').focus();
         }
         else {
-            gStatus.text("Game started.");
             $('[next-move-input]').text("Enter your next move:");
             $('[send-move-button]').text("Send move");
             $('[next-move]').focus();
@@ -169,6 +178,11 @@
             },
             error: function (xhr, textStatus, err) {
                 gStatus.text("Application error.");
+            },
+            statusCode: {
+                403: function () {
+                    gStatus.text("There is no game named \"" + gameName + "\" - possible application error.");
+                }
             }
         });
     }
@@ -255,6 +269,11 @@
             },
             error: function (xhr, textStatus, err) {
                 gStatus.text("Application error.");
+            },
+            statusCode: {
+                403: function () {
+                    gStatus.text("There is no game named \"" + gameName + "\" - possible application error.");
+                }
             }
         });
     }
@@ -327,6 +346,11 @@
             },
             error: function (xhr, textStatus, err) {
                 gStatus.text("Application error.");
+            },
+            statusCode: {
+                403: function () {
+                    gStatus.text("There is no game named \"" + gameName + "\" - possible application error.");
+                }
             }
         });
     }
@@ -351,7 +375,12 @@
 
         $.ajax({
             url: requestUrl,
-            method: 'DELETE'
+            method: 'DELETE',
+            statusCode: {
+                403: function () {
+                    gStatus.text("There is no game named \"" + gameName + "\" - possible application error.");
+                }
+            }
         });
     }
 
