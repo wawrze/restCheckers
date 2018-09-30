@@ -5,6 +5,7 @@ import com.wawrze.restcheckers.figures.Pawn;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 public class Board {
 
@@ -45,30 +46,14 @@ public class Board {
 
     public Board(Board board){
         rows = new HashMap<>();
-        rows.put('A', new BoardRow(true));
-        for(int i = 1;i<9;i++)
-            rows.get('A').setFigure(i, board.getFigure('A',i));
-        rows.put('B', new BoardRow(false));
-        for(int i = 1;i<9;i++)
-            rows.get('B').setFigure(i, board.getFigure('B',i));
-        rows.put('C', new BoardRow(true));
-        for(int i = 1;i<9;i++)
-            rows.get('C').setFigure(i, board.getFigure('C',i));
-        rows.put('D', new BoardRow(false));
-        for(int i = 1;i<9;i++)
-            rows.get('D').setFigure(i, board.getFigure('D',i));
-        rows.put('E', new BoardRow(true));
-        for(int i = 1;i<9;i++)
-            rows.get('E').setFigure(i, board.getFigure('E',i));
-        rows.put('F', new BoardRow(false));
-        for(int i = 1;i<9;i++)
-            rows.get('F').setFigure(i, board.getFigure('F',i));
-        rows.put('G', new BoardRow(true));
-        for(int i = 1;i<9;i++)
-            rows.get('G').setFigure(i, board.getFigure('G',i));
-        rows.put('H', new BoardRow(false));
-        for(int i = 1;i<9;i++)
-            rows.get('H').setFigure(i, board.getFigure('H',i));
+        IntStream.iterate(65, i -> ++i)
+                .limit(8)
+                .forEach(i -> {
+                    rows.put((char) i, new BoardRow((i % 2) == 1));
+                    IntStream.iterate(1, j -> ++j)
+                            .limit(8)
+                            .forEach(j -> rows.get((char) i).setFigure(j, board.getFigure((char) i, j)));
+                });
     }
 
     public static class BoardBuilder {
