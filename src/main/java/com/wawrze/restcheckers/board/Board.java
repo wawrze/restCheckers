@@ -1,7 +1,7 @@
 package com.wawrze.restcheckers.board;
 
 import com.wawrze.restcheckers.figures.Figure;
-import com.wawrze.restcheckers.figures.Pawn;
+import com.wawrze.restcheckers.figures.FigureFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,38 +9,41 @@ import java.util.stream.IntStream;
 
 public class Board {
 
+    private FigureFactory figureFactory = new FigureFactory();
+
     private Map<Character, BoardRow> rows;
 
     private Board(Map<Character, BoardRow> rows) {
         this.rows = rows;
     }
 
-    public static Board getNewBoard() {
+    public Board getNewBoard() {
         return new BoardBuilder()
-                .addFigure('A', 2, new Pawn(true))
-                .addFigure('A', 4, new Pawn(true))
-                .addFigure('A', 6, new Pawn(true))
-                .addFigure('A', 8, new Pawn(true))
-                .addFigure('B', 1, new Pawn(true))
-                .addFigure('B', 3, new Pawn(true))
-                .addFigure('B', 5, new Pawn(true))
-                .addFigure('B', 7, new Pawn(true))
-                .addFigure('C', 2, new Pawn(true))
-                .addFigure('C', 4, new Pawn(true))
-                .addFigure('C', 6, new Pawn(true))
-                .addFigure('C', 8, new Pawn(true))
-                .addFigure('F', 1, new Pawn(false))
-                .addFigure('F', 3, new Pawn(false))
-                .addFigure('F', 5, new Pawn(false))
-                .addFigure('F', 7, new Pawn(false))
-                .addFigure('G', 2, new Pawn(false))
-                .addFigure('G', 4, new Pawn(false))
-                .addFigure('G', 6, new Pawn(false))
-                .addFigure('G', 8, new Pawn(false))
-                .addFigure('H', 1, new Pawn(false))
-                .addFigure('H', 3, new Pawn(false))
-                .addFigure('H', 5, new Pawn(false))
-                .addFigure('H', 7, new Pawn(false))
+                .addFigure('A', 2, figureFactory.getNewFigure(true, Figure.PAWN))
+                .addFigure('A', 2, figureFactory.getNewFigure(true, Figure.PAWN))
+                .addFigure('A', 4, figureFactory.getNewFigure(true, Figure.PAWN))
+                .addFigure('A', 6, figureFactory.getNewFigure(true, Figure.PAWN))
+                .addFigure('A', 8, figureFactory.getNewFigure(true, Figure.PAWN))
+                .addFigure('B', 1, figureFactory.getNewFigure(true, Figure.PAWN))
+                .addFigure('B', 3, figureFactory.getNewFigure(true, Figure.PAWN))
+                .addFigure('B', 5, figureFactory.getNewFigure(true, Figure.PAWN))
+                .addFigure('B', 7, figureFactory.getNewFigure(true, Figure.PAWN))
+                .addFigure('C', 2, figureFactory.getNewFigure(true, Figure.PAWN))
+                .addFigure('C', 4, figureFactory.getNewFigure(true, Figure.PAWN))
+                .addFigure('C', 6, figureFactory.getNewFigure(true, Figure.PAWN))
+                .addFigure('C', 8, figureFactory.getNewFigure(true, Figure.PAWN))
+                .addFigure('F', 1, figureFactory.getNewFigure(false, Figure.PAWN))
+                .addFigure('F', 3, figureFactory.getNewFigure(false, Figure.PAWN))
+                .addFigure('F', 5, figureFactory.getNewFigure(false, Figure.PAWN))
+                .addFigure('F', 7, figureFactory.getNewFigure(false, Figure.PAWN))
+                .addFigure('G', 2, figureFactory.getNewFigure(false, Figure.PAWN))
+                .addFigure('G', 4, figureFactory.getNewFigure(false, Figure.PAWN))
+                .addFigure('G', 6, figureFactory.getNewFigure(false, Figure.PAWN))
+                .addFigure('G', 8, figureFactory.getNewFigure(false, Figure.PAWN))
+                .addFigure('H', 1, figureFactory.getNewFigure(false, Figure.PAWN))
+                .addFigure('H', 3, figureFactory.getNewFigure(false, Figure.PAWN))
+                .addFigure('H', 5, figureFactory.getNewFigure(false, Figure.PAWN))
+                .addFigure('H', 7, figureFactory.getNewFigure(false, Figure.PAWN))
                 .build();
     }
 

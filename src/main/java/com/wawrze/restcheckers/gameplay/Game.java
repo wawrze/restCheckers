@@ -2,17 +2,17 @@ package com.wawrze.restcheckers.gameplay;
 
 import com.wawrze.restcheckers.board.*;
 import com.wawrze.restcheckers.figures.Figure;
-import com.wawrze.restcheckers.figures.Queen;
+import com.wawrze.restcheckers.figures.FigureFactory;
 import com.wawrze.restcheckers.gameplay.userInterface.UserInterface;
 import com.wawrze.restcheckers.moves.*;
 import exceptions.*;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Game {
+
+    private FigureFactory figureFactory = new FigureFactory();
 
     private Board board;
     private List<String> moves;
@@ -44,7 +44,7 @@ public class Game {
         this.name = name;
         this.rulesSet = rulesSet;
 
-        board = Board.getNewBoard();
+        board = new Board.BoardBuilder().build().getNewBoard();
     }
 
     public void play(UserInterface inGameUI) {
@@ -163,11 +163,11 @@ public class Game {
             if((board.getFigure(move.getRow2(), move.getCol2()).getFigureName().equals(Figure.PAWN))
                     && board.getFigure(move.getRow2(), move.getCol2()).getColor()
                     && (move.getRow2()) == 'H')
-                board.setFigure('H', move.getCol2(), new Queen(true));
+                board.setFigure('H', move.getCol2(), figureFactory.getNewFigure(true, Figure.QUEEN));
             if((board.getFigure(move.getRow2(), move.getCol2()).getFigureName().equals(Figure.PAWN))
                     && !board.getFigure(move.getRow2(), move.getCol2()).getColor()
                     && (move.getRow2()) == 'A')
-                board.setFigure('A', move.getCol2(), new Queen(false));
+                board.setFigure('A', move.getCol2(), figureFactory.getNewFigure(false, Figure.QUEEN));
             if(!isItAITurn)
                 inGameUI.waitForEnter(); }
     }
@@ -222,11 +222,11 @@ public class Game {
         if((board.getFigure(move.getRow2(), move.getCol2()).getFigureName().equals(Figure.PAWN))
                 && board.getFigure(move.getRow2(), move.getCol2()).getColor()
                 && (move.getRow2()) == 'H')
-            board.setFigure('H', move.getCol2(), new Queen(true));
+            board.setFigure('H', move.getCol2(), figureFactory.getNewFigure(true, Figure.QUEEN));
         if((board.getFigure(move.getRow2(), move.getCol2()).getFigureName().equals(Figure.PAWN))
                 && !board.getFigure(move.getRow2(), move.getCol2()).getColor()
                 && (move.getRow2()) == 'A')
-            board.setFigure('A', move.getCol2(), new Queen(false));
+            board.setFigure('A', move.getCol2(), figureFactory.getNewFigure(false, Figure.QUEEN));
     }
 
     private boolean inGameMenu(String s) {
