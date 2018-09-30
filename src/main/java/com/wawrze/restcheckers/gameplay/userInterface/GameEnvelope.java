@@ -73,6 +73,8 @@ public class GameEnvelope {
         RestUI restUI = new RestUI();
         if(restUIs.get(gameDto.getName()) != null)
             restUI = restUIs.get(gameDto.getName());
+        else
+            restUIs.put(gameDto.getName(), restUI);
         LOGGER.info("Game \"" + game.getName() + "\" created.");
         game.play(restUI);
     }
