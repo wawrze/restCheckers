@@ -1,7 +1,7 @@
 package com.wawrze.restcheckers.moves;
 
 import com.wawrze.restcheckers.board.*;
-import com.wawrze.restcheckers.figures.*;
+import com.wawrze.restcheckers.figures.Figure;
 import com.wawrze.restcheckers.gameplay.RulesSet;
 import exceptions.*;
 
@@ -73,11 +73,11 @@ public class CapturePossibilityValidator {
             throws CapturePossibleException {
         for(int i = 65;i<73;i++){
             for (int j = 1; j < 9; j++){
-                if (board.getFigure((char) i, j) instanceof Pawn
+                if (board.getFigure((char) i, j).getFigureName().equals(Figure.PAWN)
                         && board.getFigure((char) i, j).getColor() == player) {
                     validatePawnCapture((char) i, j, board);
                 }
-                else if (board.getFigure((char) i, j) instanceof Queen
+                else if (board.getFigure((char) i, j).getFigureName().equals(Figure.QUEEN)
                         && board.getFigure((char) i, j).getColor() == player) {
                     validateQueenCapture((char) i, j, board);
                 }
@@ -91,7 +91,7 @@ public class CapturePossibilityValidator {
 
     public void validateCapturePossibilityForOneFigure(char row,int col)
             throws CapturePossibleException {
-        if(board.getFigure(row,col) instanceof Pawn)
+        if(board.getFigure(row,col).getFigureName().equals(Figure.PAWN))
             validatePawnCapture(row,col,board);
         else
             validateQueenCapture(row,col,board);
@@ -231,9 +231,9 @@ public class CapturePossibilityValidator {
     }
 
     private boolean validate(char row1,int col1,char row2, int col2, char row3, int col3, Board board){
-        if(!(board.getFigure(row3,col3) instanceof None)
+        if(!(board.getFigure(row3,col3).getFigureName().equals(Figure.NONE))
                 && board.getFigure(row1,col1).getColor() != board.getFigure(row3,col3).getColor()
-                && board.getFigure(row2,col2) instanceof None) {
+                && board.getFigure(row2,col2).getFigureName().equals(Figure.NONE)) {
             return true;
         }
         else {

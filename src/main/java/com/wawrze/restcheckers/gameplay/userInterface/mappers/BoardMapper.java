@@ -1,9 +1,6 @@
 package com.wawrze.restcheckers.gameplay.userInterface.mappers;
 
 import com.wawrze.restcheckers.board.Board;
-import com.wawrze.restcheckers.figures.Figure;
-import com.wawrze.restcheckers.figures.Pawn;
-import com.wawrze.restcheckers.figures.Queen;
 import com.wawrze.restcheckers.gameplay.userInterface.dtos.BoardDto;
 import com.wawrze.restcheckers.gameplay.userInterface.dtos.FigureDto;
 import com.wawrze.restcheckers.gameplay.userInterface.dtos.RowDto;
@@ -12,7 +9,6 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 @Component
 public class BoardMapper {
@@ -27,7 +23,7 @@ public class BoardMapper {
                     IntStream.iterate(1, j -> ++j)
                             .limit(8)
                             .forEach(j -> listRow.add(new FigureDto(
-                                    figureName(board.getFigure((char) (i + 65), j)),
+                                    board.getFigure((char) (i + 65), j).getFigureName(),
                                     j,
                                     board.getFigure((char) (i + 65), j).getColor() ? "true" : "false"
                             )));
@@ -49,13 +45,6 @@ public class BoardMapper {
             }
         }
         return new BoardDto(rowDtos, gameStatus, activePlayer, isWhiteAIPlayer, isBlackAIPlayer, movesHistory);
-    }
-    private String figureName(Figure figure) {
-        if(figure instanceof Pawn)
-            return "pawn";
-        else if(figure instanceof Queen)
-            return "queen";
-        return "none";
     }
 
 }

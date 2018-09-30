@@ -2,9 +2,6 @@ package com.wawrze.restcheckers.figures;
 
 import org.junit.*;
 
-import java.util.LinkedList;
-import java.util.List;
-
 public class FiguresTestSuite {
 
     private static int counter = 1;
@@ -31,63 +28,19 @@ public class FiguresTestSuite {
     }
 
     @Test
-    public void testNoneToString() {
+    public void testGetFigureName() {
         //Given
-        Figure none = new None(true);
-        String s;
+        Pawn pawn = new Pawn(true);
+        Queen queen = new Queen(true);
+        None none = new None(true);
         //When
-        s = "" + none;
+        String result1 = pawn.getFigureName();
+        String result2 = queen.getFigureName();
+        String result3 = none.getFigureName();
         //Then
-        Assert.assertEquals("  ",s);
-    }
-
-    @Test
-    public void testPawnToString() {
-        //Given
-        Figure pawn1 = new Pawn(true);
-        Figure pawn2 = new Pawn(false);
-        String s1,s2;
-        //When
-        s1 = "" + pawn1;
-        s2 = "" + pawn2;
-        //Then
-        Assert.assertEquals("PP",s1);
-        Assert.assertEquals("pp",s2);
-    }
-
-    @Test
-    public void testQueenToString() {
-        //Given
-        Figure queen1 = new Queen(true);
-        Figure queen2 = new Queen(false);
-        String s1,s2;
-        //When
-        s1 = "" + queen1;
-        s2 = "" + queen2;
-        //Then
-        Assert.assertEquals("QQ",s1);
-        Assert.assertEquals("qq",s2);
-    }
-
-    @Test
-    public void testPrint() {
-        //Given
-        Figure pawn1 = new Pawn(true);
-        Figure pawn2 = new Pawn(false);
-        Figure queen1 = new Queen(true);
-        Figure queen2 = new Queen(false);
-        List<Figure> list = new LinkedList<>();
-        //When
-        list.add(pawn1);
-        list.add(pawn2);
-        list.add(queen1);
-        list.add(queen2);
-        for(Figure f : list) {
-            for (int i = 0; i < 3; i++) {
-                f.print(i);
-            }
-        }
-        //Then
+        Assert.assertEquals(result1, "pawn");
+        Assert.assertEquals(result2, "queen");
+        Assert.assertEquals(result3, "none");
     }
 
 }

@@ -1,7 +1,8 @@
 package com.wawrze.restcheckers.gameplay;
 
 import com.wawrze.restcheckers.board.*;
-import com.wawrze.restcheckers.figures.*;
+import com.wawrze.restcheckers.figures.Figure;
+import com.wawrze.restcheckers.figures.Queen;
 import com.wawrze.restcheckers.gameplay.userInterface.UserInterface;
 import com.wawrze.restcheckers.moves.*;
 import exceptions.*;
@@ -24,9 +25,6 @@ public class Game {
     private boolean isDraw;
     private boolean winner;
     private String name;
-    private boolean save;
-    private LocalDate date;
-    private LocalTime time;
     private RulesSet rulesSet;
     private boolean isBlackAIPlayer;
     private boolean isWhiteAIPlayer;
@@ -44,31 +42,23 @@ public class Game {
         this.isBlackAIPlayer = isBlackAIPlayer;
         this.isWhiteAIPlayer = isWhiteAIPlayer;
         this.name = name;
-        save = false;
         this.rulesSet = rulesSet;
 
         board = Board.getNewBoard();
     }
 
-    public boolean play(UserInterface inGameUI) {
+    public void play(UserInterface inGameUI) {
         this.inGameUI = inGameUI;
         boolean b;
         do {
             isFinished = VictoryValidator.validateEndOfGame(board, whiteQueenMoves, blackQueenMoves, activePlayer, rulesSet);
             if (isFinished) {
-                save = inGameUI.endOfGame(board, simplePrint, moves, activePlayer);
                 isDraw = VictoryValidator.isDraw();
                 winner = VictoryValidator.getWinner();
                 break;
             }
             b = this.waitForMove();
         } while (b);
-        if(save && name.isEmpty()) {
-            name = inGameUI.getGameName();
-        }
-        date = LocalDate.now();
-        time = LocalTime.now();
-        return save;
     }
 
     private boolean waitForMove() {
@@ -136,7 +126,7 @@ public class Game {
             MoveValidator.validateMove(move, this.board, this.activePlayer, rulesSet);
             moves.add((activePlayer ? "black: " : "white: ") + move);
             move.makeMove(board);
-            if(board.getFigure(move.getRow2(),move.getCol2()) instanceof Queen){
+            if(board.getFigure(move.getRow2(),move.getCol2()).getFigureName().equals(Figure.QUEEN)){
                 if(activePlayer)
                     blackQueenMoves++;
                 else
@@ -170,11 +160,11 @@ public class Game {
             inGameUI.printIncorrectMove(e.getMessage(), simplePrint, isItAITurn);
         }
         finally {
-            if((board.getFigure(move.getRow2(), move.getCol2()) instanceof Pawn)
+            if((board.getFigure(move.getRow2(), move.getCol2()).getFigureName().equals(Figure.PAWN))
                     && board.getFigure(move.getRow2(), move.getCol2()).getColor()
                     && (move.getRow2()) == 'H')
                 board.setFigure('H', move.getCol2(), new Queen(true));
-            if((board.getFigure(move.getRow2(), move.getCol2()) instanceof Pawn)
+            if((board.getFigure(move.getRow2(), move.getCol2()).getFigureName().equals(Figure.PAWN))
                     && !board.getFigure(move.getRow2(), move.getCol2()).getColor()
                     && (move.getRow2()) == 'A')
                 board.setFigure('A', move.getCol2(), new Queen(false));
@@ -229,11 +219,11 @@ public class Game {
                 continue;
             }
         } while(true);
-        if((board.getFigure(move.getRow2(), move.getCol2()) instanceof Pawn)
+        if((board.getFigure(move.getRow2(), move.getCol2()).getFigureName().equals(Figure.PAWN))
                 && board.getFigure(move.getRow2(), move.getCol2()).getColor()
                 && (move.getRow2()) == 'H')
             board.setFigure('H', move.getCol2(), new Queen(true));
-        if((board.getFigure(move.getRow2(), move.getCol2()) instanceof Pawn)
+        if((board.getFigure(move.getRow2(), move.getCol2()).getFigureName().equals(Figure.PAWN))
                 && !board.getFigure(move.getRow2(), move.getCol2()).getColor()
                 && (move.getRow2()) == 'A')
             board.setFigure('A', move.getCol2(), new Queen(false));
@@ -249,33 +239,14 @@ public class Game {
                 this.simplePrint = !this.simplePrint;
                 return true;
             case "s":
-                save = true;
                 return true;
             default:
-                save = false;
                 return true;
         }
     }
 
     public String getName() {
         return name;
-    }
-
-    @Override
-    public String toString(){
-        if(date == null || time == null)
-            return "";
-        String s = "";
-        s += (date.getDayOfMonth() < 10 ? ("0" + date.getDayOfMonth()) : date.getDayOfMonth());
-        s += ("." + (date.getMonthValue() < 10 ? ("0" + date.getMonthValue()) : date.getMonthValue()));
-        s += ("." + date.getYear());
-        s += (" " + (time.getHour() < 10 ? ("0" + time.getHour()) : time.getHour()));
-        s += (":" + (time.getMinute() < 10 ? ("0" + time.getMinute()) : time.getMinute()));
-        return name + " (\"" + rulesSet.getName() + "\" rules, " + moves.size() + " moves done, "
-                + (isBlackAIPlayer ? "black: computer opponent, " : "black: human opponent, ")
-                + (isWhiteAIPlayer ? "white: computer opponent, " : "white: human opponent, ")
-                + (isFinished ? ("finished, " + (isDraw ? "draw)" : ("winner: "
-                + (winner ? "black)" : "white)")))) : ("not finished)")) + ", date and time of save: " + s;
     }
 
     public Board getBoard() {

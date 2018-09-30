@@ -27,28 +27,32 @@ public class GameProgressDetailsMapper {
     private int countWhitePawns(Game game) {
         return (int) game.getBoard().getRows().entrySet().stream()
                 .flatMap(entry -> entry.getValue().getFigures().stream())
-                .filter(figure -> (figure instanceof Pawn && !figure.getColor()))
+                .filter(figure -> figure instanceof Pawn)
+                .filter(figure -> !figure.getColor())
                 .count();
     }
 
     private int countBlackPawns(Game game) {
         return (int) game.getBoard().getRows().entrySet().stream()
                 .flatMap(entry -> entry.getValue().getFigures().stream())
-                .filter(figure -> (figure instanceof Pawn && figure.getColor()))
+                .filter(figure -> figure instanceof Pawn)
+                .filter(figure -> figure.getColor())
                 .count();
     }
 
     private int countWhiteQueens(Game game) {
         return (int) game.getBoard().getRows().entrySet().stream()
                 .flatMap(entry -> entry.getValue().getFigures().stream())
-                .filter(figure -> (figure instanceof Queen && !figure.getColor()))
+                .filter(figure -> figure instanceof Queen)
+                .filter(figure -> !figure.getColor())
                 .count();
     }
 
     private int countBlackQueens(Game game) {
         return (int) game.getBoard().getRows().entrySet().stream()
                 .flatMap(entry -> entry.getValue().getFigures().stream())
-                .filter(figure -> (figure instanceof Queen && figure.getColor()))
+                .filter(figure -> figure instanceof Queen)
+                .filter(figure -> figure.getColor())
                 .count();
     }
 

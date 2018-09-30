@@ -1,7 +1,7 @@
 package com.wawrze.restcheckers.moves;
 
 import com.wawrze.restcheckers.board.*;
-import com.wawrze.restcheckers.figures.*;
+import com.wawrze.restcheckers.figures.Figure;
 import com.wawrze.restcheckers.gameplay.RulesSet;
 import exceptions.*;
 
@@ -13,19 +13,19 @@ public class MoveValidator {
         validateField1(move, board);
         validateField2(move, board);
         validatePlayer(move, board, player);
-        if (board.getFigure(move.getRow1(), move.getCol1()) instanceof Pawn)
+        if (board.getFigure(move.getRow1(), move.getCol1()).getFigureName().equals(Figure.PAWN))
             validatePawnMove(move, board, player, rulesSet);
-        else if (board.getFigure(move.getRow1(), move.getCol1()) instanceof Queen)
+        else if (board.getFigure(move.getRow1(), move.getCol1()).getFigureName().equals(Figure.QUEEN))
             validateQueenMove(move, board, player, rulesSet);
     }
 
     private static void validateField1(Move move, Board board) throws IncorrectMoveException {
-        if (board.getFigure(move.getRow1(), move.getCol1()) instanceof None)
+        if (board.getFigure(move.getRow1(), move.getCol1()).getFigureName().equals(Figure.NONE))
             throw new IncorrectMoveException("No figure to move!");
     }
 
     private static void validateField2(Move move, Board board) throws IncorrectMoveException {
-        if (!(board.getFigure(move.getRow2(), move.getCol2()) instanceof None))
+        if (!(board.getFigure(move.getRow2(), move.getCol2()).getFigureName().equals(Figure.NONE)))
             throw new IncorrectMoveException("Target field is occupied!");
     }
 
@@ -64,7 +64,7 @@ public class MoveValidator {
         if ((Math.abs(x1 - x2) == 2) && (Math.abs(y1 - y2) == 2)) {
             char x = (char) (((x1 + x2) / 2) + 64);
             int y = ((y1 + y2) / 2);
-            if (!(board.getFigure(x, y) instanceof None)
+            if (!(board.getFigure(x, y).getFigureName().equals(Figure.NONE))
                     && board.getFigure(x, y).getColor() != board.getFigure(move.getRow1(), move.getCol1()).getColor()) {
                 throw new CaptureException(x, y);
             }
@@ -106,7 +106,7 @@ public class MoveValidator {
         if (x1 > x2 && y1 > y2) {
             for (int i = 1; i < (x1 - x2 - 1); i++) {
                 figure = board.getFigure((char) (64 + x1 - i), y1 - i);
-                if (!(figure instanceof None)) {
+                if (!(figure.getFigureName().equals(Figure.NONE))) {
                     if (figure.getColor() == player)
                         throw new IncorrectMoveException("Some figure on the way!");
                     else {
@@ -118,7 +118,7 @@ public class MoveValidator {
             }
             if (y1 - y2 > 1) {
                 figure = board.getFigure((char) (64 + x2 + 1), y1 - x1 + x2 + 1);
-                if (!(figure instanceof None)) {
+                if (!(figure.getFigureName().equals(Figure.NONE))) {
                     if (figure.getColor() == player)
                         throw new IncorrectMoveException("Some figure on the way!");
                     else {
@@ -137,7 +137,7 @@ public class MoveValidator {
         else if (x1 > x2 && y1 < y2) {
             for (int i = 1; i < (x1 - x2 - 1); i++) {
                 figure = board.getFigure((char) (64 + x1 - i), y1 + i);
-                if (!(figure instanceof None)) {
+                if (!(figure.getFigureName().equals(Figure.NONE))) {
                     if (figure.getColor() == player)
                         throw new IncorrectMoveException("Some figure on the way!");
                     else {
@@ -149,7 +149,7 @@ public class MoveValidator {
             }
             if (y2 - y1 > 1) {
                 figure = board.getFigure((char) (64 + x2 + 1), y1 + x1 - x2 - 1);
-                if (!(figure instanceof None)) {
+                if (!(figure.getFigureName().equals(Figure.NONE))) {
                     if (figure.getColor() == player)
                         throw new IncorrectMoveException("Some figure on the way!");
                     else {
@@ -168,7 +168,7 @@ public class MoveValidator {
         else if (x1 < x2 && y1 > y2) {
             for (int i = 1; i < (x2 - x1 - 1); i++) {
                 figure = board.getFigure((char) (64 + x1 + i), y1 - i);
-                if (!(figure instanceof None)) {
+                if (!(figure.getFigureName().equals(Figure.NONE))) {
                     if (figure.getColor() == player)
                         throw new IncorrectMoveException("Some figure on the way!");
                     else {
@@ -180,7 +180,7 @@ public class MoveValidator {
             }
             if (y1 - y2 > 1) {
                 figure = board.getFigure((char) (64 + x2 - 1), y1 - x2 + x1 + 1);
-                if (!(figure instanceof None)) {
+                if (!(figure.getFigureName().equals(Figure.NONE))) {
                     if (figure.getColor() == player)
                         throw new IncorrectMoveException("Some figure on the way!");
                     else {
@@ -199,7 +199,7 @@ public class MoveValidator {
         else if (x1 < x2 && y1 < y2) {
             for (int i = 1; i < (x2 - x1 - 1); i++) {
                 figure = board.getFigure((char) (64 + x1 + i), y1 + i);
-                if (!(figure instanceof None)) {
+                if (!(figure.getFigureName().equals(Figure.NONE))) {
                     if (figure.getColor() == player)
                         throw new IncorrectMoveException("Some figure on the way!");
                     else {
@@ -211,7 +211,7 @@ public class MoveValidator {
             }
             if (y2 - y1 > 1) {
                 figure = board.getFigure((char) (64 + x2 - 1), y1 + x2 - x1 - 1);
-                if (!(figure instanceof None)) {
+                if (!(figure.getFigureName().equals(Figure.NONE))) {
                     if (figure.getColor() == player)
                         throw new IncorrectMoveException("Some figure on the way!");
                     else {

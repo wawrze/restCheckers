@@ -1,15 +1,14 @@
 package com.wawrze.restcheckers.gameplay;
 
 import com.wawrze.restcheckers.board.Board;
-import com.wawrze.restcheckers.figures.None;
-import com.wawrze.restcheckers.figures.Pawn;
-import com.wawrze.restcheckers.figures.Queen;
+import com.wawrze.restcheckers.figures.Figure;
 import com.wawrze.restcheckers.moves.CapturePossibilityValidator;
 import com.wawrze.restcheckers.moves.Move;
 import com.wawrze.restcheckers.moves.MoveValidator;
 import exceptions.*;
 
 import java.util.*;
+import java.util.stream.IntStream;
 
 public class AIPlayer {
 
@@ -89,7 +88,7 @@ public class AIPlayer {
             try{
                 MoveValidator.validateMove(entry.getKey(), tmpBoard, activePlayer, rulesSet);
                 entry.getKey().makeMove(tmpBoard);
-                if(tmpBoard.getFigure(entry.getKey().getRow2(), entry.getKey().getCol2()) instanceof Queen){
+                if(tmpBoard.getFigure(entry.getKey().getRow2(), entry.getKey().getCol2()).getFigureName().equals(Figure.QUEEN)){
                     if(activePlayer)
                         blackQueenMoves++;
                     else
@@ -188,32 +187,15 @@ public class AIPlayer {
     private void getPossibleMoves() {
         try {
             (new CapturePossibilityValidator(board, activePlayer, rulesSet)).validateCapturePossibility();
-            for(int i = 1;i<9;i++) {
-                if (!(board.getFigure('A', i) instanceof None) && board.getFigure('A', i).getColor() == activePlayer){
-                    getFigureMovePossibility('A', i);
-                }
-                if (!(board.getFigure('B', i) instanceof None) && board.getFigure('B', i).getColor() == activePlayer){
-                    getFigureMovePossibility('B', i);
-                }
-                if (!(board.getFigure('C', i) instanceof None) && board.getFigure('C', i).getColor() == activePlayer){
-                    getFigureMovePossibility('C', i);
-                }
-                if (!(board.getFigure('D', i) instanceof None) && board.getFigure('D', i).getColor() == activePlayer){
-                    getFigureMovePossibility('D', i);
-                }
-                if (!(board.getFigure('E', i) instanceof None) && board.getFigure('E', i).getColor() == activePlayer){
-                    getFigureMovePossibility('E', i);
-                }
-                if (!(board.getFigure('F', i) instanceof None) && board.getFigure('F', i).getColor() == activePlayer){
-                    getFigureMovePossibility('F', i);
-                }
-                if (!(board.getFigure('G', i) instanceof None) && board.getFigure('G', i).getColor() == activePlayer){
-                    getFigureMovePossibility('G', i);
-                }
-                if (!(board.getFigure('H', i) instanceof None) && board.getFigure('H', i).getColor() == activePlayer){
-                    getFigureMovePossibility('H', i);
-                }
-            }
+            IntStream.iterate(1, i -> ++i)
+                    .limit(8)
+                    .forEach(i ->
+                            IntStream.iterate(65, j -> ++j)
+                                    .limit(8)
+                                    .filter(j -> !(board.getFigure((char) j, i).getFigureName().equals(Figure.NONE)))
+                                    .filter(j -> board.getFigure((char) j, i).getColor() == activePlayer)
+                                    .forEach(j -> getFigureMovePossibility((char) j, i))
+                    );
         }
         catch(CapturePossibleException e) {
             moveListFromCaptures(e.getMessage());
@@ -222,56 +204,14 @@ public class AIPlayer {
 
     private int getFigureSetEvaluation(Board board) {
         int value = 0;
-        for(int i = 1;i<9;i++) {
-            if (!(board.getFigure('A', i) instanceof None)) {
-                if (board.getFigure('A', i) instanceof Queen)
-                    value += board.getFigure('A', i).getColor() ? -80 : 80;
-                else
-                    value += board.getFigure('A', i).getColor() ? -1 : 8;
-            }
-            if (!(board.getFigure('B', i) instanceof None)) {
-                if (board.getFigure('B', i) instanceof Queen)
-                    value += board.getFigure('B', i).getColor() ? -80 : 80;
-                else
-                    value += board.getFigure('B', i).getColor() ? -2 : 7;
-            }
-            if (!(board.getFigure('C', i) instanceof None)) {
-                if (board.getFigure('C', i) instanceof Queen)
-                    value += board.getFigure('C', i).getColor() ? -80 : 80;
-                else
-                    value += board.getFigure('C', i).getColor() ? -3 : 6;
-            }
-            if (!(board.getFigure('D', i) instanceof None)) {
-                if (board.getFigure('D', i) instanceof Queen)
-                    value += board.getFigure('D', i).getColor() ? -80 : 80;
-                else
-                    value += board.getFigure('D', i).getColor() ? -4 : 5;
-            }
-            if (!(board.getFigure('E', i) instanceof None)) {
-                if (board.getFigure('E', i) instanceof Queen)
-                    value += board.getFigure('E', i).getColor() ? -80 : 80;
-                else
-                    value += board.getFigure('E', i).getColor() ? -5 : 4;
-            }
-            if (!(board.getFigure('F', i) instanceof None)) {
-                if(board.getFigure('F', i) instanceof Queen)
-                    value += board.getFigure('F', i).getColor() ? -80 : 80;
-                else
-                    value += board.getFigure('F', i).getColor() ? -6 : 3;
-            }
-            if (!(board.getFigure('G', i) instanceof None)) {
-                if(board.getFigure('G', i) instanceof Queen)
-                    value += board.getFigure('G', i).getColor() ? -80 : 80;
-                else
-                    value += board.getFigure('G', i).getColor() ? -7 : 2;
-            }
-            if (!(board.getFigure('H', i) instanceof None)) {
-                if(board.getFigure('H', i) instanceof Queen)
-                    value += board.getFigure('H', i).getColor() ? -80 : 80;
-                else
-                    value += board.getFigure('H', i).getColor() ? -8 : 1;
-            }
-        }
+        for(int i = 1;i<9;i++)
+            for(int j = 65;j < 73;j++)
+                if (!(board.getFigure((char) j, i).getFigureName().equals(Figure.NONE))) {
+                    if (board.getFigure((char) j, i).getFigureName().equals(Figure.QUEEN))
+                        value += board.getFigure((char) j, i).getColor() ? -80 : 80;
+                    else
+                        value += board.getFigure((char) j, i).getColor() ? -(j - 64) : -(j - 73);
+                }
         if(activePlayer != AIPlayer)
             value *= -1;
         return value;
@@ -279,7 +219,7 @@ public class AIPlayer {
 
     private void getFigureMovePossibility(char row, int col) {
         int range = 8;
-        if(board.getFigure(row,col) instanceof Pawn || rulesSet.isQueenRangeOne())
+        if(board.getFigure(row,col).getFigureName().equals(Figure.PAWN) || rulesSet.isQueenRangeOne())
             range = 3;
         char row2;
         int col2;
