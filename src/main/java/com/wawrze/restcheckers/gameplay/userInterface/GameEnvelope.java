@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -26,19 +27,19 @@ import java.util.stream.Collectors;
 public class GameEnvelope {
 
     @Autowired
-    BoardMapper boardMapper;
+    private BoardMapper boardMapper;
 
     @Autowired
-    RulesSets rules;
+    private RulesSets rules;
 
     @Autowired
-    RulesSetsMapper rulesSetsMapper;
+    private RulesSetsMapper rulesSetsMapper;
 
     @Autowired
-    GameProgressDetailsMapper gameProgressDetailsMapper;
+    private GameProgressDetailsMapper gameProgressDetailsMapper;
 
     @Autowired
-    GameListMapper gameListMapper;
+    private GameListMapper gameListMapper;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GameEnvelope.class);
 
@@ -70,8 +71,9 @@ public class GameEnvelope {
         }
         games.put(gameDto.getName(), game);
         RestUI restUI = new RestUI();
-        restUIs.put(gameDto.getName(), restUI);
-        LOGGER.info("Game \"" + game.getName() + "\"created.");
+        if(restUIs.get(gameDto.getName()) != null)
+            restUI = restUIs.get(gameDto.getName());
+        LOGGER.info("Game \"" + game.getName() + "\" created.");
         game.play(restUI);
     }
 
@@ -113,9 +115,10 @@ public class GameEnvelope {
     }
 
     public RulesSetDto getRulesSet(String rulesSetName) throws ForbiddenException {
-        RulesSet rulesSet = rules.getRules().stream()
+        List<RulesSet> list = rules.getRules().stream()
                 .filter(rule -> rule.getName().equals(rulesSetName))
-                .collect(Collectors.toList()).get(0);
+                .collect(Collectors.toList());
+        RulesSet rulesSet = list.size() == 0 ? null : list.get(0);
         if(rulesSet == null) {
             LOGGER.warn("There is no rules set named \"" + rulesSetName + "\"! Rules set not sent!");
             throw new ForbiddenException();

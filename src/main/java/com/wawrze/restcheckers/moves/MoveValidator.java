@@ -89,11 +89,11 @@ public class MoveValidator {
             throws IncorrectMoveException, CaptureException {
         if(rulesSet.isQueenRangeOne())
             validateRange(move, board);
-        validateOnWay(move, board, player, rulesSet);
+        validateOnWay(move, board, player);
     }
 
-    private static void validateOnWay(Move move, Board board, boolean player, RulesSet rulesSet)
-            throws IncorrectMoveException, CaptureException {
+    private static void validateOnWay(Move move, Board board, boolean player) throws IncorrectMoveException,
+            CaptureException {
         int x1 = move.getRow1int();
         int y1 = move.getCol1();
         int x2 = move.getRow2int();

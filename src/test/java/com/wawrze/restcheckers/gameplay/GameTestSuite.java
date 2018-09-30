@@ -4,8 +4,6 @@ import com.wawrze.restcheckers.figures.None;
 import com.wawrze.restcheckers.figures.Pawn;
 import com.wawrze.restcheckers.figures.Queen;
 import com.wawrze.restcheckers.gameplay.userInterface.RestUI;
-import exceptions.IncorrectMoveException;
-import exceptions.IncorrectMoveFormat;
 import org.junit.*;
 
 public class GameTestSuite {

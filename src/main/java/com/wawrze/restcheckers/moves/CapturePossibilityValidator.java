@@ -33,10 +33,10 @@ public class CapturePossibilityValidator {
             try {
                 MoveValidator.validateMove(move, tmpBoard, player, rulesSet);
             }
-            catch (CaptureException e) {
-                move.makeCapture(tmpBoard,e.getRow(),e.getCol());
+            catch (CaptureException | IncorrectMoveException e) {
+                CaptureException exception = (CaptureException) e;
+                move.makeCapture(tmpBoard, exception.getRow(), exception.getCol());
             }
-            catch (IncorrectMoveException e) {}
             finally {}
             CapturePossibilityValidator validator = new CapturePossibilityValidator(tmpBoard, this.player, rulesSet);
             try {

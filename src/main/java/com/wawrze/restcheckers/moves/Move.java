@@ -37,16 +37,12 @@ public class Move {
             throw new IncorrectMoveFormat();
     }
 
-    private int rowCharToInt(char row){
-        return ((int) row) - 64;
-    }
-
     public char getRow1() {
         return this.row1;
     }
 
     public int getRow1int() {
-        return this.rowCharToInt(this.row1);
+        return ((int) row1) - 64;
     }
 
     public int getCol1() {
@@ -58,7 +54,7 @@ public class Move {
     }
 
     public int getRow2int() {
-        return this.rowCharToInt(this.row2);
+        return ((int) row2) - 64;
     }
 
     public int getCol2() {
@@ -72,7 +68,11 @@ public class Move {
 
     public void makeCapture(Board board, char row, int col){
         this.makeMove(board);
-        board.setFigure(row, col, figureFactory.getNewFigure(board.getFigure(this.row1,this.col1).getColor(), Figure.NONE));
+        board.setFigure(
+                row,
+                col,
+                figureFactory.getNewFigure(board.getFigure(this.row1,this.col1).getColor(), Figure.NONE)
+        );
     }
 
     @Override

@@ -51,7 +51,13 @@ public class Game {
         this.inGameUI = inGameUI;
         boolean b;
         do {
-            isFinished = VictoryValidator.validateEndOfGame(board, whiteQueenMoves, blackQueenMoves, activePlayer, rulesSet);
+            isFinished = VictoryValidator.validateEndOfGame(
+                    board,
+                    whiteQueenMoves,
+                    blackQueenMoves,
+                    activePlayer,
+                    rulesSet
+            );
             if (isFinished) {
                 isDraw = VictoryValidator.isDraw();
                 winner = VictoryValidator.getWinner();

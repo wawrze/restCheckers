@@ -65,8 +65,8 @@ public class AIPlayerTestSuite {
         RestUI restUI = new RestUI();
         boolean result = false;
         //When
-        for(int i=0;i < 200;i++)
-            restUI.getInQueue().push("next");
+        for(int i=0;i < 1000;i++)
+            restUI.getInQueue().offer("next");
         try {
             game.play(restUI);
         }

@@ -88,7 +88,10 @@ public class AIPlayer {
             try{
                 MoveValidator.validateMove(entry.getKey(), tmpBoard, activePlayer, rulesSet);
                 entry.getKey().makeMove(tmpBoard);
-                if(tmpBoard.getFigure(entry.getKey().getRow2(), entry.getKey().getCol2()).getFigureName().equals(Figure.QUEEN)){
+                if(tmpBoard.getFigure(
+                        entry.getKey().getRow2(),
+                        entry.getKey().getCol2()).getFigureName().equals(Figure.QUEEN)
+                        ) {
                     if(activePlayer)
                         blackQueenMoves++;
                     else
@@ -128,12 +131,12 @@ public class AIPlayer {
             value += getFigureSetEvaluation(tmpBoard);
             if(depth < MAX_DEPTH){
                 if(capture) {
-                    com.wawrze.restcheckers.gameplay.AIPlayer next_move = new AIPlayer(tmpBoard, AIPlayer, activePlayer, rulesSet, whiteQueenMoves,
+                    AIPlayer next_move = new AIPlayer(tmpBoard, AIPlayer, activePlayer, rulesSet, whiteQueenMoves,
                             blackQueenMoves, depth, entry.getKey().getRow2(), entry.getKey().getCol2());
                     value += next_move.getMovesMapValue();
                 }
                 else {
-                    com.wawrze.restcheckers.gameplay.AIPlayer next_move = new AIPlayer(tmpBoard, AIPlayer, !activePlayer, rulesSet, whiteQueenMoves,
+                    AIPlayer next_move = new AIPlayer(tmpBoard, AIPlayer, !activePlayer, rulesSet, whiteQueenMoves,
                             blackQueenMoves, depth);
                     value += next_move.getMovesMapValue();
                 }

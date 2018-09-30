@@ -14,16 +14,6 @@ public class GameController {
     @Autowired
     GameEnvelope gameEnvelope;
 
-    @RequestMapping(method = RequestMethod.POST, value = "newGame")
-    public void startNewGame(@RequestBody GameDto gameDto) throws ForbiddenException, MethodFailureException {
-        gameEnvelope.startNewGame(gameDto);
-    }
-
-    @RequestMapping(method = RequestMethod.POST, value = "sendMove")
-    public BoardDto sendMove(@RequestParam String gameName, @RequestBody MoveDto moveDto) throws ForbiddenException {
-        return gameEnvelope.sendMove(gameName, moveDto);
-    }
-
     @RequestMapping(method = RequestMethod.GET, value = "getBoard")
     public BoardDto getBoard(@RequestParam String gameName) throws ForbiddenException {
         return gameEnvelope.getBoard(gameName);
@@ -44,14 +34,24 @@ public class GameController {
         return gameEnvelope.getGameProgressDetails(gameName);
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "getGames")
+    public GameListDto getGames() {
+        return gameEnvelope.getGameList();
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "newGame")
+    public void startNewGame(@RequestBody GameDto gameDto) throws ForbiddenException, MethodFailureException {
+        gameEnvelope.startNewGame(gameDto);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "sendMove")
+    public BoardDto sendMove(@RequestParam String gameName, @RequestBody MoveDto moveDto) throws ForbiddenException {
+        return gameEnvelope.sendMove(gameName, moveDto);
+    }
+
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteGame")
     public void deleteGame(@RequestParam String gameName) throws ForbiddenException {
         gameEnvelope.deleteGame(gameName);
-    }
-
-    @RequestMapping(method = RequestMethod.GET, value = "getGames")
-    public GameListDto getGames() throws ForbiddenException {
-        return gameEnvelope.getGameList();
     }
 
 }
