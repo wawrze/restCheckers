@@ -189,11 +189,12 @@ public class MoveTestSuite {
     @Test
     public void testMakeMovePawn() throws IncorrectMoveFormat{
         //Given
-        Board board = new Board();
-        Move move = new Move('A',2,'B',3);
         Pawn pawn = new Pawn(true);
+        Board board = new Board.BoardBuilder()
+                .addFigure('A',2, pawn)
+                .build();
+        Move move = new Move('A',2,'B',3);
         //When
-        board.setFigure('A',2,pawn);
         move.makeMove(board);
         //Then
         Assert.assertEquals(pawn,board.getFigure('B',3));
@@ -203,78 +204,83 @@ public class MoveTestSuite {
     @Test
     public void testMakeMoveQueen() throws IncorrectMoveFormat{
         //Given
-        Board board = new Board();
-        Move move = new Move('A',2,'G',8);
         Queen queen = new Queen(true);
+        Board board = new Board.BoardBuilder()
+                .addFigure('A',2, queen)
+                .build();
+        Move move = new Move('A',2,'G',8);
         //When
-        board.setFigure('A',2,queen);
         move.makeMove(board);
         //Then
-        Assert.assertEquals(queen,board.getFigure('G',8));
+        Assert.assertEquals(queen, board.getFigure('G',8));
         Assert.assertTrue(board.getFigure('A',2) instanceof None);
     }
 
     @Test
     public void testMakeCaptureRightDown() throws IncorrectMoveFormat{
         //Given
-        Board board = new Board();
-        Move move = new Move('A',2,'C',4);
         Pawn pawn1 = new Pawn(true);
         Pawn pawn2 = new Pawn(false);
+        Board board = new Board.BoardBuilder()
+                .addFigure('A',2, pawn1)
+                .addFigure('B',3, pawn2)
+                .build();
+        Move move = new Move('A',2,'C',4);
         //When
-        board.setFigure('A',2,pawn1);
-        board.setFigure('B',3,pawn2);
         move.makeCapture(board,'B',3);
         //Then
-        Assert.assertEquals(pawn1,board.getFigure('C',4));
+        Assert.assertEquals(pawn1, board.getFigure('C',4));
         Assert.assertTrue(board.getFigure('B',3) instanceof None);
     }
 
     @Test
     public void testMakeCaptureRightUp() throws IncorrectMoveFormat{
         //Given
-        Board board = new Board();
-        Move move = new Move('C',2,'A',4);
         Pawn pawn1 = new Pawn(true);
         Pawn pawn2 = new Pawn(false);
+        Board board = new Board.BoardBuilder()
+                .addFigure('C',2, pawn1)
+                .addFigure('B',3, pawn2)
+                .build();
+        Move move = new Move('C',2,'A',4);
         //When
-        board.setFigure('C',2,pawn1);
-        board.setFigure('B',3,pawn2);
         move.makeCapture(board,'B',3);
         //Then
-        Assert.assertEquals(pawn1,board.getFigure('A',4));
+        Assert.assertEquals(pawn1, board.getFigure('A',4));
         Assert.assertTrue(board.getFigure('B',3) instanceof None);
     }
 
     @Test
     public void testMakeCaptureLeftUp() throws IncorrectMoveFormat{
         //Given
-        Board board = new Board();
-        Move move = new Move('C',4,'A',2);
         Pawn pawn1 = new Pawn(true);
         Pawn pawn2 = new Pawn(false);
+        Board board = new Board.BoardBuilder()
+                .addFigure('C',4, pawn1)
+                .addFigure('B',3, pawn2)
+                .build();
+        Move move = new Move('C',4,'A',2);
         //When
-        board.setFigure('C',4,pawn1);
-        board.setFigure('B',3,pawn2);
         move.makeCapture(board,'B',3);
         //Then
-        Assert.assertEquals(pawn1,board.getFigure('A',2));
+        Assert.assertEquals(pawn1, board.getFigure('A',2));
         Assert.assertTrue(board.getFigure('B',3) instanceof None);
     }
 
     @Test
     public void testMakeCaptureLeftDown() throws IncorrectMoveFormat{
         //Given
-        Board board = new Board();
-        Move move = new Move('A',4,'C',2);
         Pawn pawn1 = new Pawn(true);
         Pawn pawn2 = new Pawn(false);
+        Board board = new Board.BoardBuilder()
+                .addFigure('A',4, pawn1)
+                .addFigure('B',3, pawn2)
+                .build();
+        Move move = new Move('A',4,'C',2);
         //When
-        board.setFigure('A',4,pawn1);
-        board.setFigure('B',3,pawn2);
         move.makeCapture(board,'B',3);
         //Then
-        Assert.assertEquals(pawn1,board.getFigure('C',2));
+        Assert.assertEquals(pawn1, board.getFigure('C',2));
         Assert.assertTrue(board.getFigure('B',3) instanceof None);
     }
 

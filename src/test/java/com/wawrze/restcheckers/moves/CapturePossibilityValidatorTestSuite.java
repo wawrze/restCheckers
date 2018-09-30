@@ -32,30 +32,23 @@ public class CapturePossibilityValidatorTestSuite {
     }
 
     @Test
-    public void testNoCapturesOnBoardWhiteTurn() throws IncorrectMoveFormat, IncorrectMoveException {
+    public void testNoCapturesOnBoardWhiteTurn() {
         //Given
-        Board board = new Board();
-        Pawn pawn1 = new Pawn(true);
-        Pawn pawn2 = new Pawn(true);
-        Pawn pawn3 = new Pawn(true);
-        Pawn pawn4 = new Pawn(true);
-        Pawn pawn5 = new Pawn(false);
-        Pawn pawn6 = new Pawn(false);
-        Queen queen = new Queen(false);
-        Pawn pawn8 = new Pawn(false);
+        Board board = new Board.BoardBuilder()
+                .addFigure('A',2, new Pawn(true))
+                .addFigure('A',6, new Pawn(true))
+                .addFigure('C',2, new Pawn(true))
+                .addFigure('C',6, new Pawn(true))
+                .addFigure('F',3, new Pawn(false))
+                .addFigure('F',7, new Pawn(false))
+                .addFigure('H',3, new Queen(false))
+                .addFigure('H',7, new Pawn(false))
+                .build();
         RulesSet ruleSet = new RulesSet(false, false, false,
                 false, true, false,
                 "", "");
         boolean result;
         //When
-        board.setFigure('A',2,pawn1);
-        board.setFigure('A',6,pawn2);
-        board.setFigure('C',2,pawn3);
-        board.setFigure('C',6,pawn4);
-        board.setFigure('F',3,pawn5);
-        board.setFigure('F',7,pawn6);
-        board.setFigure('H',3,queen);
-        board.setFigure('H',7,pawn8);
         try{
             (new CapturePossibilityValidator(board,false, ruleSet)).validateCapturePossibility();
             result = true;
@@ -68,30 +61,23 @@ public class CapturePossibilityValidatorTestSuite {
     }
 
     @Test
-    public void testNoCapturesOnBoardBlackTurn() throws IncorrectMoveFormat, IncorrectMoveException {
+    public void testNoCapturesOnBoardBlackTurn() {
         //Given
-        Board board = new Board();
-        Pawn pawn1 = new Pawn(true);
-        Queen queen = new Queen(true);
-        Pawn pawn3 = new Pawn(true);
-        Pawn pawn4 = new Pawn(true);
-        Pawn pawn5 = new Pawn(false);
-        Pawn pawn6 = new Pawn(false);
-        Pawn pawn7 = new Pawn(false);
-        Pawn pawn8 = new Pawn(false);
+        Board board = new Board.BoardBuilder()
+                .addFigure('A',2, new Pawn(true))
+                .addFigure('A',6, new Queen(true))
+                .addFigure('C',2, new Pawn(true))
+                .addFigure('C',6, new Pawn(true))
+                .addFigure('F',3, new Pawn(false))
+                .addFigure('F',7, new Pawn(false))
+                .addFigure('H',3, new Pawn(false))
+                .addFigure('H',7, new Pawn(false))
+                .build();
         RulesSet ruleSet = new RulesSet(false, false, false,
                 false, true, false,
                 "", "");
         boolean result;
         //When
-        board.setFigure('A',2,pawn1);
-        board.setFigure('A',6,queen);
-        board.setFigure('C',2,pawn3);
-        board.setFigure('C',6,pawn4);
-        board.setFigure('F',3,pawn5);
-        board.setFigure('F',7,pawn6);
-        board.setFigure('H',3,pawn7);
-        board.setFigure('H',7,pawn8);
         try{
             (new CapturePossibilityValidator(board,true, ruleSet)).validateCapturePossibility();
             result = true;
@@ -104,30 +90,23 @@ public class CapturePossibilityValidatorTestSuite {
     }
 
     @Test
-    public void testOneCaptureForBlackPawns() throws IncorrectMoveFormat, IncorrectMoveException {
+    public void testOneCaptureForBlackPawns() {
         //Given
-        Board board = new Board();
-        Pawn pawn1 = new Pawn(true);
-        Pawn pawn2 = new Pawn(true);
-        Pawn pawn3 = new Pawn(true);
-        Pawn pawn4 = new Pawn(true);
-        Pawn pawn5 = new Pawn(false);
-        Pawn pawn6 = new Pawn(false);
-        Pawn pawn7 = new Pawn(false);
-        Pawn pawn8 = new Pawn(false);
+        Board board = new Board.BoardBuilder()
+                .addFigure('A',2, new Pawn(true))
+                .addFigure('A',6, new Pawn(true))
+                .addFigure('C',2, new Pawn(true))
+                .addFigure('C',6, new Pawn(true))
+                .addFigure('D',3, new Pawn(false))
+                .addFigure('F',7, new Pawn(false))
+                .addFigure('H',3, new Pawn(false))
+                .addFigure('H',7, new Pawn(false))
+                .build();
         RulesSet ruleSet = new RulesSet(false, false, false,
                 false, true, false,
                 "", "");
         int result;
         //When
-        board.setFigure('A',2,pawn1);
-        board.setFigure('A',6,pawn2);
-        board.setFigure('C',2,pawn3);
-        board.setFigure('C',6,pawn4);
-        board.setFigure('D',3,pawn5);
-        board.setFigure('F',7,pawn6);
-        board.setFigure('H',3,pawn7);
-        board.setFigure('H',7,pawn8);
         try{
             (new CapturePossibilityValidator(board,true, ruleSet)).validateCapturePossibility();
             result = 0;
@@ -141,30 +120,23 @@ public class CapturePossibilityValidatorTestSuite {
     }
 
     @Test
-    public void testTwoCapturesForBlackPawns() throws IncorrectMoveFormat, IncorrectMoveException {
+    public void testTwoCapturesForBlackPawns() {
         //Given
-        Board board = new Board();
-        Pawn pawn1 = new Pawn(true);
-        Pawn pawn2 = new Pawn(true);
-        Pawn pawn3 = new Pawn(true);
-        Pawn pawn4 = new Pawn(true);
-        Pawn pawn5 = new Pawn(false);
-        Pawn pawn6 = new Pawn(false);
-        Pawn pawn7 = new Pawn(false);
-        Pawn pawn8 = new Pawn(false);
+        Board board = new Board.BoardBuilder()
+                .addFigure('A',2, new Pawn(true))
+                .addFigure('A',6, new Pawn(true))
+                .addFigure('C',2, new Pawn(true))
+                .addFigure('C',6, new Pawn(true))
+                .addFigure('D',3, new Pawn(false))
+                .addFigure('D',7, new Pawn(false))
+                .addFigure('H',3, new Pawn(false))
+                .addFigure('H',7, new Pawn(false))
+                .build();
         RulesSet ruleSet = new RulesSet(false, false, false,
                 false, true, false,
                 "", "");
         int result;
         //When
-        board.setFigure('A',2,pawn1);
-        board.setFigure('A',6,pawn2);
-        board.setFigure('C',2,pawn3);
-        board.setFigure('C',6,pawn4);
-        board.setFigure('D',3,pawn5);
-        board.setFigure('D',7,pawn6);
-        board.setFigure('H',3,pawn7);
-        board.setFigure('H',7,pawn8);
         try{
             (new CapturePossibilityValidator(board,true, ruleSet)).validateCapturePossibility();
             result = 0;
@@ -178,30 +150,23 @@ public class CapturePossibilityValidatorTestSuite {
     }
 
     @Test
-    public void testThreeCapturesForBlackPawns() throws IncorrectMoveFormat, IncorrectMoveException {
+    public void testThreeCapturesForBlackPawns() {
         //Given
-        Board board = new Board();
-        Pawn pawn1 = new Pawn(true);
-        Pawn pawn2 = new Pawn(true);
-        Pawn pawn3 = new Pawn(true);
-        Pawn pawn4 = new Pawn(true);
-        Pawn pawn5 = new Pawn(false);
-        Pawn pawn6 = new Pawn(false);
-        Pawn pawn7 = new Pawn(false);
-        Pawn pawn8 = new Pawn(false);
+        Board board = new Board.BoardBuilder()
+                .addFigure('A',2, new Pawn(true))
+                .addFigure('A',6, new Pawn(true))
+                .addFigure('C',2, new Pawn(true))
+                .addFigure('C',6, new Pawn(true))
+                .addFigure('D',3, new Pawn(false))
+                .addFigure('D',7, new Pawn(false))
+                .addFigure('H',3, new Pawn(false))
+                .addFigure('D',5, new Pawn(false))
+                .build();
         RulesSet ruleSet = new RulesSet(false, false, false,
                 false, true, false,
                 "", "");
         int result;
         //When
-        board.setFigure('A',2,pawn1);
-        board.setFigure('A',6,pawn2);
-        board.setFigure('C',2,pawn3);
-        board.setFigure('C',6,pawn4);
-        board.setFigure('D',3,pawn5);
-        board.setFigure('D',7,pawn6);
-        board.setFigure('H',3,pawn7);
-        board.setFigure('D',5,pawn8);
         try{
             (new CapturePossibilityValidator(board,true, ruleSet)).validateCapturePossibility();
             result = 0;
@@ -215,30 +180,23 @@ public class CapturePossibilityValidatorTestSuite {
     }
 
     @Test
-    public void testOneCaptureForWhitePawns() throws IncorrectMoveFormat, IncorrectMoveException {
+    public void testOneCaptureForWhitePawns() {
         //Given
-        Board board = new Board();
-        Pawn pawn1 = new Pawn(true);
-        Pawn pawn2 = new Pawn(true);
-        Pawn pawn3 = new Pawn(true);
-        Pawn pawn4 = new Pawn(true);
-        Pawn pawn5 = new Pawn(false);
-        Pawn pawn6 = new Pawn(false);
-        Pawn pawn7 = new Pawn(false);
-        Pawn pawn8 = new Pawn(false);
+        Board board = new Board.BoardBuilder()
+                .addFigure('A',2, new Pawn(true))
+                .addFigure('A',6, new Pawn(true))
+                .addFigure('E',2, new Pawn(true))
+                .addFigure('C',6, new Pawn(true))
+                .addFigure('F',3, new Pawn(false))
+                .addFigure('F',7, new Pawn(false))
+                .addFigure('H',3, new Pawn(false))
+                .addFigure('H',7, new Pawn(false))
+                .build();
         RulesSet ruleSet = new RulesSet(false, false, false,
                 false, true, false,
                 "", "");
         int result;
         //When
-        board.setFigure('A',2,pawn1);
-        board.setFigure('A',6,pawn2);
-        board.setFigure('E',2,pawn3);
-        board.setFigure('C',6,pawn4);
-        board.setFigure('F',3,pawn5);
-        board.setFigure('F',7,pawn6);
-        board.setFigure('H',3,pawn7);
-        board.setFigure('H',7,pawn8);
         try{
             (new CapturePossibilityValidator(board,false, ruleSet)).validateCapturePossibility();
             result = 0;
@@ -252,30 +210,23 @@ public class CapturePossibilityValidatorTestSuite {
     }
 
     @Test
-    public void testTwoCapturesForWhitePawns() throws IncorrectMoveFormat, IncorrectMoveException {
+    public void testTwoCapturesForWhitePawns() {
         //Given
-        Board board = new Board();
-        Pawn pawn1 = new Pawn(true);
-        Pawn pawn2 = new Pawn(true);
-        Pawn pawn3 = new Pawn(true);
-        Pawn pawn4 = new Pawn(true);
-        Pawn pawn5 = new Pawn(false);
-        Pawn pawn6 = new Pawn(false);
-        Pawn pawn7 = new Pawn(false);
-        Pawn pawn8 = new Pawn(false);
+        Board board = new Board.BoardBuilder()
+                .addFigure('A',2, new Pawn(true))
+                .addFigure('A',6, new Pawn(true))
+                .addFigure('E',2, new Pawn(true))
+                .addFigure('E',6, new Pawn(true))
+                .addFigure('F',3, new Pawn(false))
+                .addFigure('F',7, new Pawn(false))
+                .addFigure('H',3, new Pawn(false))
+                .addFigure('H',7, new Pawn(false))
+                .build();
         RulesSet ruleSet = new RulesSet(false, false, false,
                 false, true, false,
                 "", "");
         int result;
         //When
-        board.setFigure('A',2,pawn1);
-        board.setFigure('A',6,pawn2);
-        board.setFigure('E',2,pawn3);
-        board.setFigure('E',6,pawn4);
-        board.setFigure('F',3,pawn5);
-        board.setFigure('F',7,pawn6);
-        board.setFigure('H',3,pawn7);
-        board.setFigure('H',7,pawn8);
         try{
             (new CapturePossibilityValidator(board,false, ruleSet)).validateCapturePossibility();
             result = 0;
@@ -289,30 +240,23 @@ public class CapturePossibilityValidatorTestSuite {
     }
 
     @Test
-    public void testThreeCapturesForWhitePawns() throws IncorrectMoveFormat, IncorrectMoveException {
+    public void testThreeCapturesForWhitePawns() {
         //Given
-        Board board = new Board();
-        Pawn pawn1 = new Pawn(true);
-        Pawn pawn2 = new Pawn(true);
-        Pawn pawn3 = new Pawn(true);
-        Pawn pawn4 = new Pawn(true);
-        Pawn pawn5 = new Pawn(false);
-        Pawn pawn6 = new Pawn(false);
-        Pawn pawn7 = new Pawn(false);
-        Pawn pawn8 = new Pawn(false);
+        Board board = new Board.BoardBuilder()
+                .addFigure('A',2, new Pawn(true))
+                .addFigure('E',4, new Pawn(true))
+                .addFigure('E',2, new Pawn(true))
+                .addFigure('E',6, new Pawn(true))
+                .addFigure('F',3, new Pawn(false))
+                .addFigure('F',7, new Pawn(false))
+                .addFigure('H',3, new Pawn(false))
+                .addFigure('H',7, new Pawn(false))
+                .build();
         RulesSet ruleSet = new RulesSet(false, false, false,
                 false, true, false,
                 "", "");
         int result;
         //When
-        board.setFigure('A',2,pawn1);
-        board.setFigure('E',4,pawn2);
-        board.setFigure('E',2,pawn3);
-        board.setFigure('E',6,pawn4);
-        board.setFigure('F',3,pawn5);
-        board.setFigure('F',7,pawn6);
-        board.setFigure('H',3,pawn7);
-        board.setFigure('H',7,pawn8);
         try{
             (new CapturePossibilityValidator(board,false, ruleSet)).validateCapturePossibility();
             result = 0;
@@ -326,30 +270,23 @@ public class CapturePossibilityValidatorTestSuite {
     }
 
     @Test
-    public void testCaptureForBlackPawnInWhiteTurn() throws IncorrectMoveFormat, IncorrectMoveException {
+    public void testCaptureForBlackPawnInWhiteTurn() {
         //Given
-        Board board = new Board();
-        Pawn pawn1 = new Pawn(true);
-        Pawn pawn2 = new Pawn(true);
-        Pawn pawn3 = new Pawn(true);
-        Pawn pawn4 = new Pawn(true);
-        Pawn pawn5 = new Pawn(false);
-        Pawn pawn6 = new Pawn(false);
-        Pawn pawn7 = new Pawn(false);
-        Pawn pawn8 = new Pawn(false);
+        Board board = new Board.BoardBuilder()
+                .addFigure('A',2, new Pawn(true))
+                .addFigure('A',6, new Pawn(true))
+                .addFigure('C',2, new Pawn(true))
+                .addFigure('C',6, new Pawn(true))
+                .addFigure('D',3, new Pawn(false))
+                .addFigure('D',7, new Pawn(false))
+                .addFigure('H',3, new Pawn(false))
+                .addFigure('D',5, new Pawn(false))
+                .build();
         RulesSet ruleSet = new RulesSet(false, false, false,
                 false, true, false,
                 "", "");
         int result;
         //When
-        board.setFigure('A',2,pawn1);
-        board.setFigure('A',6,pawn2);
-        board.setFigure('C',2,pawn3);
-        board.setFigure('C',6,pawn4);
-        board.setFigure('D',3,pawn5);
-        board.setFigure('D',7,pawn6);
-        board.setFigure('H',3,pawn7);
-        board.setFigure('D',5,pawn8);
         try{
             (new CapturePossibilityValidator(board,false, ruleSet)).validateCapturePossibility();
             result = 0;
@@ -363,67 +300,23 @@ public class CapturePossibilityValidatorTestSuite {
     }
 
     @Test
-    public void testCaptureForWhitePawnInBlackTurn() throws IncorrectMoveFormat, IncorrectMoveException {
+    public void testOneCaptureForWhiteQueen() {
         //Given
-        Board board = new Board();
-        Pawn pawn1 = new Pawn(true);
-        Pawn pawn2 = new Pawn(true);
-        Pawn pawn3 = new Pawn(true);
-        Pawn pawn4 = new Pawn(true);
-        Pawn pawn5 = new Pawn(false);
-        Pawn pawn6 = new Pawn(false);
-        Pawn pawn7 = new Pawn(false);
-        Pawn pawn8 = new Pawn(false);
+        Board board = new Board.BoardBuilder()
+                .addFigure('A',2, new Pawn(true))
+                .addFigure('A',6, new Pawn(true))
+                .addFigure('C',2, new Pawn(true))
+                .addFigure('C',6, new Pawn(true))
+                .addFigure('F',3, new Pawn(false))
+                .addFigure('F',5, new Queen(false))
+                .addFigure('H',3, new Pawn(false))
+                .addFigure('H',7, new Pawn(false))
+                .build();
         RulesSet ruleSet = new RulesSet(false, false, false,
                 false, true, false,
                 "", "");
         int result;
         //When
-        board.setFigure('A',2,pawn1);
-        board.setFigure('E',4,pawn2);
-        board.setFigure('E',2,pawn3);
-        board.setFigure('E',6,pawn4);
-        board.setFigure('F',3,pawn5);
-        board.setFigure('F',7,pawn6);
-        board.setFigure('H',3,pawn7);
-        board.setFigure('H',7,pawn8);
-        try{
-            (new CapturePossibilityValidator(board,false, ruleSet)).validateCapturePossibility();
-            result = 0;
-        }
-        catch(CapturePossibleException e){
-            String[] sArray = e.getMessage().split(" ");
-            result = sArray.length;
-        }
-        //Then
-        Assert.assertEquals(3,result);
-    }
-
-    @Test
-    public void testOneCaptureForWhiteQueen() throws IncorrectMoveFormat, IncorrectMoveException {
-        //Given
-        Board board = new Board();
-        Pawn pawn1 = new Pawn(true);
-        Pawn pawn2 = new Pawn(true);
-        Pawn pawn3 = new Pawn(true);
-        Pawn pawn4 = new Pawn(true);
-        Pawn pawn5 = new Pawn(false);
-        Queen queen = new Queen(false);
-        Pawn pawn7 = new Pawn(false);
-        Pawn pawn8 = new Pawn(false);
-        RulesSet ruleSet = new RulesSet(false, false, false,
-                false, true, false,
-                "", "");
-        int result;
-        //When
-        board.setFigure('A',2,pawn1);
-        board.setFigure('A',6,pawn2);
-        board.setFigure('C',2,pawn3);
-        board.setFigure('C',6,pawn4);
-        board.setFigure('F',3,pawn5);
-        board.setFigure('F',5,queen);
-        board.setFigure('H',3,pawn7);
-        board.setFigure('H',7,pawn8);
         try{
             (new CapturePossibilityValidator(board,false, ruleSet)).validateCapturePossibility();
             result = 0;
@@ -437,30 +330,23 @@ public class CapturePossibilityValidatorTestSuite {
     }
 
     @Test
-    public void testTwoCapturesForWhiteQueen() throws IncorrectMoveFormat, IncorrectMoveException {
+    public void testTwoCapturesForWhiteQueen() {
         //Given
-        Board board = new Board();
-        Pawn pawn1 = new Pawn(true);
-        Pawn pawn2 = new Pawn(true);
-        Pawn pawn3 = new Pawn(true);
-        Pawn pawn4 = new Pawn(true);
-        Queen queen1 = new Queen(false);
-        Queen queen2 = new Queen(false);
-        Pawn pawn7 = new Pawn(false);
-        Pawn pawn8 = new Pawn(false);
+        Board board = new Board.BoardBuilder()
+                .addFigure('A',2, new Pawn(true))
+                .addFigure('A',6, new Pawn(true))
+                .addFigure('C',2, new Pawn(true))
+                .addFigure('C',6, new Pawn(true))
+                .addFigure('F',3, new Queen(false))
+                .addFigure('F',5, new Queen(false))
+                .addFigure('H',3, new Pawn(false))
+                .addFigure('H',7, new Pawn(false))
+                .build();
         RulesSet ruleSet = new RulesSet(false, false, false,
                 false, true, false,
                 "", "");
         int result;
         //When
-        board.setFigure('A',2,pawn1);
-        board.setFigure('A',6,pawn2);
-        board.setFigure('C',2,pawn3);
-        board.setFigure('C',6,pawn4);
-        board.setFigure('F',3,queen1);
-        board.setFigure('F',5,queen2);
-        board.setFigure('H',3,pawn7);
-        board.setFigure('H',7,pawn8);
         try{
             (new CapturePossibilityValidator(board,false, ruleSet)).validateCapturePossibility();
             result = 0;
@@ -474,30 +360,23 @@ public class CapturePossibilityValidatorTestSuite {
     }
 
     @Test
-    public void testCaptureForWhiteQueenAndWhitePawn() throws IncorrectMoveFormat, IncorrectMoveException {
+    public void testCaptureForWhiteQueenAndWhitePawn() {
         //Given
-        Board board = new Board();
-        Pawn pawn1 = new Pawn(true);
-        Pawn pawn2 = new Pawn(true);
-        Pawn pawn3 = new Pawn(true);
-        Pawn pawn4 = new Pawn(true);
-        Pawn pawn5 = new Pawn(false);
-        Queen queen = new Queen(false);
-        Pawn pawn7 = new Pawn(false);
-        Pawn pawn8 = new Pawn(false);
+        Board board = new Board.BoardBuilder()
+                .addFigure('E',2, new Pawn(true))
+                .addFigure('A',6, new Pawn(true))
+                .addFigure('C',2, new Pawn(true))
+                .addFigure('C',6, new Pawn(true))
+                .addFigure('F',3, new Pawn(false))
+                .addFigure('F',5, new Queen(false))
+                .addFigure('H',3, new Pawn(false))
+                .addFigure('H',7, new Pawn(false))
+                .build();
         RulesSet ruleSet = new RulesSet(false, false, false,
                 false, true, false,
                 "", "");
         int result;
         //When
-        board.setFigure('E',2,pawn1);
-        board.setFigure('A',6,pawn2);
-        board.setFigure('C',2,pawn3);
-        board.setFigure('C',6,pawn4);
-        board.setFigure('F',3,pawn5);
-        board.setFigure('F',5,queen);
-        board.setFigure('H',3,pawn7);
-        board.setFigure('H',7,pawn8);
         try{
             (new CapturePossibilityValidator(board,false, ruleSet)).validateCapturePossibility();
             result = 0;
@@ -511,30 +390,23 @@ public class CapturePossibilityValidatorTestSuite {
     }
 
     @Test
-    public void testOneCaptureForBlackQueen() throws IncorrectMoveFormat, IncorrectMoveException {
+    public void testOneCaptureForBlackQueen() {
         //Given
-        Board board = new Board();
-        Pawn pawn1 = new Pawn(true);
-        Pawn pawn2 = new Pawn(true);
-        Pawn pawn3 = new Pawn(true);
-        Queen queen = new Queen(true);
-        Pawn pawn5 = new Pawn(false);
-        Pawn pawn6 = new Pawn(false);
-        Pawn pawn7 = new Pawn(false);
-        Pawn pawn8 = new Pawn(false);
+        Board board = new Board.BoardBuilder()
+                .addFigure('A',2, new Pawn(true))
+                .addFigure('A',6, new Pawn(true))
+                .addFigure('C',2, new Pawn(true))
+                .addFigure('C',6, new Queen(true))
+                .addFigure('G',2, new Pawn(false))
+                .addFigure('F',7, new Pawn(false))
+                .addFigure('H',3, new Pawn(false))
+                .addFigure('H',7, new Pawn(false))
+                .build();
         RulesSet ruleSet = new RulesSet(false, false, false,
                 false, true, false,
                 "", "");
         int result;
         //When
-        board.setFigure('A',2,pawn1);
-        board.setFigure('A',6,pawn2);
-        board.setFigure('C',2,pawn3);
-        board.setFigure('C',6,queen);
-        board.setFigure('G',2,pawn5);
-        board.setFigure('F',7,pawn6);
-        board.setFigure('H',3,pawn7);
-        board.setFigure('H',7,pawn8);
         try{
             (new CapturePossibilityValidator(board,true, ruleSet)).validateCapturePossibility();
             result = 0;
@@ -548,30 +420,23 @@ public class CapturePossibilityValidatorTestSuite {
     }
 
     @Test
-    public void testTwoCapturesForBlackQueen() throws IncorrectMoveFormat, IncorrectMoveException {
+    public void testTwoCapturesForBlackQueen() {
         //Given
-        Board board = new Board();
-        Pawn pawn1 = new Pawn(true);
-        Pawn pawn2 = new Pawn(true);
-        Queen queen1 = new Queen(true);
-        Queen queen2 = new Queen(true);
-        Pawn pawn5 = new Pawn(false);
-        Pawn pawn6 = new Pawn(false);
-        Pawn pawn7 = new Pawn(false);
-        Pawn pawn8 = new Pawn(false);
+        Board board = new Board.BoardBuilder()
+                .addFigure('A',2, new Pawn(true))
+                .addFigure('A',6, new Pawn(true))
+                .addFigure('C',2, new Queen(true))
+                .addFigure('C',6, new Queen(true))
+                .addFigure('F',3, new Pawn(false))
+                .addFigure('F',7, new Pawn(false))
+                .addFigure('H',3, new Pawn(false))
+                .addFigure('D',3, new Pawn(false))
+                .build();
         RulesSet ruleSet = new RulesSet(false, false, false,
                 false, true, false,
                 "", "");
         int result;
         //When
-        board.setFigure('A',2,pawn1);
-        board.setFigure('A',6,pawn2);
-        board.setFigure('C',2,queen1);
-        board.setFigure('C',6,queen2);
-        board.setFigure('F',3,pawn5);
-        board.setFigure('F',7,pawn6);
-        board.setFigure('H',3,pawn7);
-        board.setFigure('D',3,pawn8);
         try{
             (new CapturePossibilityValidator(board,true, ruleSet)).validateCapturePossibility();
             result = 0;
@@ -585,30 +450,23 @@ public class CapturePossibilityValidatorTestSuite {
     }
 
     @Test
-    public void testCaptureForBlackQueenAndBlackPawn() throws IncorrectMoveFormat, IncorrectMoveException {
+    public void testCaptureForBlackQueenAndBlackPawn() {
         //Given
-        Board board = new Board();
-        Pawn pawn1 = new Pawn(true);
-        Pawn pawn2 = new Pawn(true);
-        Pawn pawn3 = new Pawn(true);
-        Queen queen = new Queen(true);
-        Pawn pawn5 = new Pawn(false);
-        Pawn pawn6 = new Pawn(false);
-        Pawn pawn7 = new Pawn(false);
-        Pawn pawn8 = new Pawn(false);
+        Board board = new Board.BoardBuilder()
+                .addFigure('A',2, new Pawn(true))
+                .addFigure('A',6, new Pawn(true))
+                .addFigure('C',2, new Pawn(true))
+                .addFigure('C',6, new Queen(true))
+                .addFigure('F',3, new Pawn(false))
+                .addFigure('F',7, new Pawn(false))
+                .addFigure('H',3, new Pawn(false))
+                .addFigure('D',3, new Pawn(false))
+                .build();
         RulesSet ruleSet = new RulesSet(false, false, false,
                 false, true, false,
                 "", "");
         int result;
         //When
-        board.setFigure('A',2,pawn1);
-        board.setFigure('A',6,pawn2);
-        board.setFigure('C',2,pawn3);
-        board.setFigure('C',6,queen);
-        board.setFigure('F',3,pawn5);
-        board.setFigure('F',7,pawn6);
-        board.setFigure('H',3,pawn7);
-        board.setFigure('D',3,pawn8);
         try{
             (new CapturePossibilityValidator(board,true, ruleSet)).validateCapturePossibility();
             result = 0;
@@ -622,30 +480,23 @@ public class CapturePossibilityValidatorTestSuite {
     }
 
     @Test
-    public void testOneFigureValidator() throws IncorrectMoveFormat, IncorrectMoveException {
+    public void testOneFigureValidator() {
         //Given
-        Board board = new Board();
-        Pawn pawn1 = new Pawn(true);
-        Pawn pawn2 = new Pawn(true);
-        Pawn pawn3 = new Pawn(true);
-        Queen queen2 = new Queen(true);
-        Pawn pawn5 = new Pawn(false);
-        Pawn pawn6 = new Pawn(false);
-        Pawn pawn7 = new Pawn(false);
-        Pawn pawn8 = new Pawn(false);
+        Board board = new Board.BoardBuilder()
+                .addFigure('A',2, new Pawn(true))
+                .addFigure('A',6, new Pawn(true))
+                .addFigure('C',2, new Pawn(true))
+                .addFigure('C',6, new Queen(true))
+                .addFigure('F',3, new Pawn(false))
+                .addFigure('F',7, new Pawn(false))
+                .addFigure('H',3, new Pawn(false))
+                .addFigure('D',3, new Pawn(false))
+                .build();
         RulesSet ruleSet = new RulesSet(false, false, false,
                 false, true, false,
                 "", "");
         int result1, result2,result3;
         //When
-        board.setFigure('A',2,pawn1);
-        board.setFigure('A',6,pawn2);
-        board.setFigure('C',2,pawn3);
-        board.setFigure('C',6,queen2);
-        board.setFigure('F',3,pawn5);
-        board.setFigure('F',7,pawn6);
-        board.setFigure('H',3,pawn7);
-        board.setFigure('D',3,pawn8);
         try{
             (new CapturePossibilityValidator(board, true, ruleSet)).validateCapturePossibilityForOneFigure('C',6);
             result1 = 0;
@@ -677,30 +528,23 @@ public class CapturePossibilityValidatorTestSuite {
     }
 
     @Test
-    public void testMaxCaptures() throws IncorrectMoveFormat, IncorrectMoveException{
+    public void testMaxCaptures() {
         //Given
-        Board board = new Board();
-        Pawn pawn1 = new Pawn(false);
-        Pawn pawn2 = new Pawn(true);
-        Pawn pawn3 = new Pawn(true);
-        Pawn pawn4 = new Pawn(true);
-        Pawn pawn5 = new Pawn(true);
-        Pawn pawn6 = new Pawn(true);
-        Pawn pawn7 = new Pawn(true);
+        Board board = new Board.BoardBuilder()
+                .addFigure('F',5, new Pawn(false))
+                .addFigure('C',4, new Pawn(true))
+                .addFigure('C',6, new Pawn(true))
+                .addFigure('E',6, new Pawn(true))
+                .addFigure('G',2, new Pawn(true))
+                .addFigure('G',4, new Pawn(true))
+                .addFigure('G',6, new Pawn(true))
+                .build();
         RulesSet ruleSet = new RulesSet(false, false, false,
                 false, true, false,
                 "", "");
         String result1;
         int result2;
         //When
-        board.setFigure('F',5,pawn1);
-        board.setFigure('C',4,pawn2);
-        board.setFigure('C',6,pawn3);
-        board.setFigure('E',6,pawn4);
-        board.setFigure('G',2,pawn5);
-        board.setFigure('G',4,pawn6);
-        board.setFigure('G',6,pawn7);
-        board.setFigure('G',6,pawn7);
         try{
             (new CapturePossibilityValidator(board,false, ruleSet)).validateCapturePossibility();
             result1 = "";

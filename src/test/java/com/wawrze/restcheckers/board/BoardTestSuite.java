@@ -29,9 +29,10 @@ public class BoardTestSuite {
     }
 
     @Test
-    public void testConstructor(){
+    public void testBuilderEmpty(){
         //Given
-        Board board = new Board();
+        Board board = new Board.BoardBuilder()
+                .build();
         boolean result = true;
         //When
         for(int i = 65;i<73;i++)
@@ -41,22 +42,24 @@ public class BoardTestSuite {
     }
 
     @Test
-    public void testSetGetFigure(){
+    public void testBuilderSetGetFigure(){
         //Given
-        Board board = new Board();
         Pawn pawn1 = new Pawn(true);
         Pawn pawn2 = new Pawn(false);
         Queen queen = new Queen(false);
         None none = new None(true);
+        Board board;
         //When
-        board.setFigure('A',1, pawn1);
+        board = new Board.BoardBuilder()
+                .addFigure('A',1, pawn1)
+                .build();
         board.setFigure('B',2, pawn2);
         board.setFigure('C',3, queen);
         board.setFigure('B',2, none);
         //then
-        Assert.assertEquals(pawn1,board.getFigure('A',1));
-        Assert.assertEquals(none,board.getFigure('B',2));
-        Assert.assertEquals(queen,board.getFigure('C',3));
+        Assert.assertEquals(pawn1, board.getFigure('A',1));
+        Assert.assertEquals(none, board.getFigure('B',2));
+        Assert.assertEquals(queen, board.getFigure('C',3));
     }
 
 }

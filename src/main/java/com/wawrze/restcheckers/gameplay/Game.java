@@ -33,7 +33,7 @@ public class Game {
     UserInterface inGameUI;
 
     public Game(String name, RulesSet rulesSet, boolean isBlackAIPlayer, boolean isWhiteAIPlayer) {
-        board = new Board();
+
         moves = new LinkedList<>();
         activePlayer = false;
         simplePrint = false;
@@ -47,31 +47,32 @@ public class Game {
         save = false;
         this.rulesSet = rulesSet;
 
-        board.setFigure('A', 2, new Pawn(true));
-        board.setFigure('A', 4, new Pawn(true));
-        board.setFigure('A', 6, new Pawn(true));
-        board.setFigure('A', 8, new Pawn(true));
-        board.setFigure('B', 1, new Pawn(true));
-        board.setFigure('B', 3, new Pawn(true));
-        board.setFigure('B', 5, new Pawn(true));
-        board.setFigure('B', 7, new Pawn(true));
-        board.setFigure('C', 2, new Pawn(true));
-        board.setFigure('C', 4, new Pawn(true));
-        board.setFigure('C', 6, new Pawn(true));
-        board.setFigure('C', 8, new Pawn(true));
-
-        board.setFigure('F', 1, new Pawn(false));
-        board.setFigure('F', 3, new Pawn(false));
-        board.setFigure('F', 5, new Pawn(false));
-        board.setFigure('F', 7, new Pawn(false));
-        board.setFigure('G', 2, new Pawn(false));
-        board.setFigure('G', 4, new Pawn(false));
-        board.setFigure('G', 6, new Pawn(false));
-        board.setFigure('G', 8, new Pawn(false));
-        board.setFigure('H', 1, new Pawn(false));
-        board.setFigure('H', 3, new Pawn(false));
-        board.setFigure('H', 5, new Pawn(false));
-        board.setFigure('H', 7, new Pawn(false));
+        board = new Board.BoardBuilder()
+                .addFigure('A', 2, new Pawn(true))
+                .addFigure('A', 4, new Pawn(true))
+                .addFigure('A', 6, new Pawn(true))
+                .addFigure('A', 8, new Pawn(true))
+                .addFigure('B', 1, new Pawn(true))
+                .addFigure('B', 3, new Pawn(true))
+                .addFigure('B', 5, new Pawn(true))
+                .addFigure('B', 7, new Pawn(true))
+                .addFigure('C', 2, new Pawn(true))
+                .addFigure('C', 4, new Pawn(true))
+                .addFigure('C', 6, new Pawn(true))
+                .addFigure('C', 8, new Pawn(true))
+                .addFigure('F', 1, new Pawn(false))
+                .addFigure('F', 3, new Pawn(false))
+                .addFigure('F', 5, new Pawn(false))
+                .addFigure('F', 7, new Pawn(false))
+                .addFigure('G', 2, new Pawn(false))
+                .addFigure('G', 4, new Pawn(false))
+                .addFigure('G', 6, new Pawn(false))
+                .addFigure('G', 8, new Pawn(false))
+                .addFigure('H', 1, new Pawn(false))
+                .addFigure('H', 3, new Pawn(false))
+                .addFigure('H', 5, new Pawn(false))
+                .addFigure('H', 7, new Pawn(false))
+                .build();
     }
 
     public boolean play(UserInterface inGameUI) {

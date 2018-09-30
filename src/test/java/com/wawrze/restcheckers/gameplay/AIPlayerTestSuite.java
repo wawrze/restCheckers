@@ -35,19 +35,16 @@ public class AIPlayerTestSuite {
     @Test
     public void testEndOfGameDrawEvaluation() {
         //Given
-        Board board = new Board();
+        Board board = new Board.BoardBuilder()
+                .addFigure('A', 8, new Queen(true))
+                .addFigure('H', 7, new Queen(false))
+                .build();
         RulesSet rulesSet = new RulesSet(false, false, false,
                 false, true, false,
                 "", "");
         AIPlayer aiPlayer;
         boolean result = false;
         //When
-        for(int i = 1;i < 9;i++) {
-            for(int j = 1;j < 9;j++)
-                board.setFigure((char) (i + 64), j, new None(true));
-        }
-        board.setFigure('A', 8, new Queen(true));
-        board.setFigure('H', 7, new Queen(false));
         try {
             aiPlayer = new AIPlayer(board, true, rulesSet, 14, 14);
             aiPlayer.getAIMove();
