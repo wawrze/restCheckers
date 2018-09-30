@@ -47,32 +47,7 @@ public class Game {
         save = false;
         this.rulesSet = rulesSet;
 
-        board = new Board.BoardBuilder()
-                .addFigure('A', 2, new Pawn(true))
-                .addFigure('A', 4, new Pawn(true))
-                .addFigure('A', 6, new Pawn(true))
-                .addFigure('A', 8, new Pawn(true))
-                .addFigure('B', 1, new Pawn(true))
-                .addFigure('B', 3, new Pawn(true))
-                .addFigure('B', 5, new Pawn(true))
-                .addFigure('B', 7, new Pawn(true))
-                .addFigure('C', 2, new Pawn(true))
-                .addFigure('C', 4, new Pawn(true))
-                .addFigure('C', 6, new Pawn(true))
-                .addFigure('C', 8, new Pawn(true))
-                .addFigure('F', 1, new Pawn(false))
-                .addFigure('F', 3, new Pawn(false))
-                .addFigure('F', 5, new Pawn(false))
-                .addFigure('F', 7, new Pawn(false))
-                .addFigure('G', 2, new Pawn(false))
-                .addFigure('G', 4, new Pawn(false))
-                .addFigure('G', 6, new Pawn(false))
-                .addFigure('G', 8, new Pawn(false))
-                .addFigure('H', 1, new Pawn(false))
-                .addFigure('H', 3, new Pawn(false))
-                .addFigure('H', 5, new Pawn(false))
-                .addFigure('H', 7, new Pawn(false))
-                .build();
+        board = Board.getNewBoard();
     }
 
     public boolean play(UserInterface inGameUI) {
