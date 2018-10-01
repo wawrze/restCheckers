@@ -91,8 +91,6 @@ public class Game {
                     t = inGameUI.getMoveOrOption(captures, simplePrint, isItAITurn);
                 }
                 while (t == null);
-                System.out.println("LEFT DO-WHILE");
-                System.out.println("t: " + t[0]);
             }
         }
         else {
