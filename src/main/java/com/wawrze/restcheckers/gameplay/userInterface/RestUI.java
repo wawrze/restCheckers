@@ -26,7 +26,7 @@ public class RestUI implements UserInterface {
         if(inQueue.isEmpty())
             return null;
         s = inQueue.poll();
-//        System.out.println(s);
+        s.length();             //doesn't work without it when deployed on Heroku
         s = s.toLowerCase();
         String[] result;
         for(String o : options) {
