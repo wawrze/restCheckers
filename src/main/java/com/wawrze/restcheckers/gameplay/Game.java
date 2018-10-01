@@ -98,8 +98,8 @@ public class Game {
         }
         if(s == null)
             return true;
-        else if(s.length == 1 && inGameMenu(s[0])){
-            if (s[0].equals("x") || s[0].equals("s"))
+        else if(s.length == 1) {
+            if (s[0].equals("x"))
                 return false;
             else
                 return true;
@@ -203,9 +203,6 @@ public class Game {
                 }
                 if(s == null)
                     continue;
-                else if(s.length == 1 && inGameMenu(s[0])){
-                    continue;
-                }
                 else {
                     char x1 = s[0].charAt(0);
                     int y1 = Character.getNumericValue(s[1].charAt(0));
@@ -233,22 +230,6 @@ public class Game {
                 && !board.getFigure(move.getRow2(), move.getCol2()).getColor()
                 && (move.getRow2()) == 'A')
             board.setFigure('A', move.getCol2(), figureFactory.getNewFigure(false, Figure.QUEEN));
-    }
-
-    private boolean inGameMenu(String s) {
-        switch(s) {
-            case "h":
-                inGameUI.printMoveHistory(moves);
-                inGameUI.waitForEnter();
-                return true;
-            case "p":
-                this.simplePrint = !this.simplePrint;
-                return true;
-            case "s":
-                return true;
-            default:
-                return true;
-        }
     }
 
     public String getName() {
