@@ -26,7 +26,7 @@ public class RestUI implements UserInterface {
         if(inQueue.isEmpty())
             return null;
         s = inQueue.poll();
-        System.out.println(s);
+//        System.out.println(s);
         s = s.toLowerCase();
         String[] result;
         for(String o : options) {
