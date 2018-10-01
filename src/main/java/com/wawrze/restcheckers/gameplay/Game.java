@@ -89,10 +89,8 @@ public class Game {
                 String[] t;
                 do {
                     t = inGameUI.getMoveOrOption(captures, simplePrint, isItAITurn);
-                    System.out.printf("t = " + t[0] + ", ");
                 }
                 while (t == null);
-                System.out.println("LEFT DO-WHILE, t = " + t[0]);
             }
         }
         else {
