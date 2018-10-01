@@ -22,8 +22,8 @@ public class RestUI  {
         String s;
         if(inQueue.isEmpty())
             return null;
-        inQueue.peekLast();
         s = inQueue.poll();
+        s.length();
         s = s.toLowerCase();
         String[] result;
         for(String o : options) {
