@@ -23,7 +23,6 @@ public class RestUI  {
         if(inQueue.isEmpty())
             return null;
         s = inQueue.poll();
-        s.length();             //doesn't work without it when deployed on Heroku
         s = s.toLowerCase();
         String[] result;
         for(String o : options) {
