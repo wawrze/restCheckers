@@ -23,7 +23,7 @@ public class RestUI  {
         if(inQueue.isEmpty())
             return null;
         s = inQueue.poll();
-        s.length();
+
         s = s.toLowerCase();
         String[] result;
         for(String o : options) {
