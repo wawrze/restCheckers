@@ -22,6 +22,10 @@ public class RestUI  {
         String s;
         if(inQueue.isEmpty())
             return null;
+        /////////////////////////////////////
+        inQueue.stream()
+                .forEach(System.out::println);
+        /////////////////////////////////////
         s = inQueue.poll();
         s = s.toLowerCase();
         String[] result;
