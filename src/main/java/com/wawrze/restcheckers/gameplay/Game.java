@@ -86,8 +86,10 @@ public class Game {
                 String[] t;
                 do {
                     t = inGameUI.getMoveOrOption(captures);
+                    if(t != null)
+                        break;
                 }
-                while (t == null);
+                while(true);
             }
         }
         else {
