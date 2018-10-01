@@ -86,8 +86,6 @@ public class Game {
                 String[] t;
                 do {
                     t = inGameUI.getMoveOrOption(captures);
-                    if(t != null)
-                        System.out.println(t[0]);              //??? doesn't work without this line when deployed to Heroku
                 }
                 while(t == null);
             }
