@@ -1,12 +1,10 @@
 package com.wawrze.restcheckers.gameplay.userInterface;
 
-import com.wawrze.restcheckers.board.Board;
-import com.wawrze.restcheckers.gameplay.RulesSet;
 import exceptions.IncorrectMoveFormat;
 
 import java.util.*;
 
-public class RestUI implements UserInterface {
+public class RestUI  {
 
     private Deque<String> inQueue = new ArrayDeque<>();
     private String gameStatus = "Game started.";
@@ -19,8 +17,7 @@ public class RestUI implements UserInterface {
         return gameStatus;
     }
 
-    @Override
-    public String[] getMoveOrOption(String captures, boolean simplePrint, boolean isItAITurn) {
+    public String[] getMoveOrOption(String captures) {
         String[] options = {"next", "x"};
         String s;
         if(inQueue.isEmpty())
@@ -52,78 +49,43 @@ public class RestUI implements UserInterface {
                 result[3] = "" + y2;
             }
             else {
-                printCaptureObligatory(simplePrint, isItAITurn);
+                printCaptureObligatory();
                 return null;
             }
         }
         catch(IncorrectMoveFormat e){
-            printIncorrectMoveFormat(simplePrint, isItAITurn);
+            printIncorrectMoveFormat();
             return null;
         }
         return result;
     }
 
-    @Override
-    public void printMoveHistory(List<String> moves) {}
-
-    @Override
-    public String getGameName() {return null;}
-
-    @Override
-    public String sideMenu(int line,List<String> moves, boolean player) {return null;}
-
-    @Override
-    public void printBoard(Board board, boolean simplePrint, boolean player, List<String> moves,
-                    RulesSet rulesSet, boolean isItAITurn) {}
-
-    @Override
-    public void printMakingMove(boolean simplePrint, char x1, int y1, char x2, int y2, boolean isItAITurn) {
-        gameStatus = " Making move: " + x1 + y1 + "-" + x2 + y2;
-    }
-
-    @Override
-    public void printMoveDone(boolean simplePrint, boolean isItAITurn) {
+    public void printMoveDone() {
         gameStatus = "Your opponent has made his move.";
     }
 
-    @Override
-    public void printCaptureDone(boolean simplePrint, boolean isItAITurn) {
+    public void printCaptureDone() {
         gameStatus = "Your opponent has captured.";
     }
 
-    @Override
-    public void printIncorrectMove(String s, boolean simplePrint, boolean isItAITurn) {
+    public void printIncorrectMove(String s) {
         gameStatus = "Incorrect move: " + s;
     }
 
-    @Override
-    public void printCapture(String captures, boolean simplePrint, boolean isItAITurn) {
+    public void printCapture(String captures) {
         gameStatus = "You have to capture: " + captures;
     }
 
-    @Override
-    public void printMultiCapture(String captures, boolean simplePrint, boolean isItAITurn) {
+    public void printMultiCapture(String captures) {
         gameStatus = "Possible captures: " + captures;
     }
 
-    @Override
-    public void printCaptureObligatory(boolean simplePrint, boolean isItAITurn) {
+    public void printCaptureObligatory() {
         gameStatus = "Capture is obligatory!";
     }
 
-    @Override
-    public void printIncorrectMoveFormat(boolean simplePrint, boolean isItAITurn) {
+    public void printIncorrectMoveFormat() {
         gameStatus = "Incorrect move format! Proper format example: E4-D5";
-    }
-
-    @Override
-    public boolean endOfGame(Board board, boolean simplePrint, List<String> moves, boolean player) {
-        gameStatus = "Game finished.";
-        return false;
-    }
-
-    @Override
-    public void waitForEnter() {
     }
 
     public void gameAlreadyExist(String gameName) {

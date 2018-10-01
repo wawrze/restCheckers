@@ -6,7 +6,6 @@ public abstract class Figure {
     public static final String QUEEN = "queen";
     public static final String NONE = "none";
 
-	//true - black, false - white
 	protected boolean color;
 
 	public boolean getColor() {

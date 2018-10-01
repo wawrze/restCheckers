@@ -194,7 +194,8 @@ public class GameControllerTest {
                 false,
                 false,
                 false,
-                false
+                false,
+                new DateTimeDto()
         ));
         gameList.add(new GameInfoDto(
                 "some other name",
@@ -203,7 +204,8 @@ public class GameControllerTest {
                 true,
                 true,
                 true,
-                true
+                true,
+                new DateTimeDto()
         ));
         gameList.add(new GameInfoDto());
         GameListDto gameListDto = new GameListDto(gameList);

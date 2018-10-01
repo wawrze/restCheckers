@@ -3,13 +3,16 @@ package com.wawrze.restcheckers.gameplay;
 import com.wawrze.restcheckers.board.*;
 import com.wawrze.restcheckers.figures.Figure;
 import com.wawrze.restcheckers.figures.FigureFactory;
-import com.wawrze.restcheckers.gameplay.userInterface.UserInterface;
+import com.wawrze.restcheckers.gameplay.userInterface.RestUI;
 import com.wawrze.restcheckers.moves.*;
 import exceptions.*;
+import lombok.Getter;
 
+import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
+@Getter
 public class Game {
 
     private FigureFactory figureFactory = new FigureFactory();
@@ -18,7 +21,6 @@ public class Game {
     private List<String> moves;
 
     private boolean activePlayer;
-    private boolean simplePrint;
     private int whiteQueenMoves;
     private int blackQueenMoves;
     private boolean isFinished;
@@ -28,13 +30,13 @@ public class Game {
     private RulesSet rulesSet;
     private boolean isBlackAIPlayer;
     private boolean isWhiteAIPlayer;
-    UserInterface inGameUI;
+    private RestUI inGameUI;
+    private LocalDateTime startTime;
 
     public Game(String name, RulesSet rulesSet, boolean isBlackAIPlayer, boolean isWhiteAIPlayer) {
 
         moves = new LinkedList<>();
         activePlayer = false;
-        simplePrint = false;
         whiteQueenMoves = 0;
         blackQueenMoves = 0;
         isFinished = false;
@@ -43,11 +45,12 @@ public class Game {
         this.isWhiteAIPlayer = isWhiteAIPlayer;
         this.name = name;
         this.rulesSet = rulesSet;
+        this.startTime = LocalDateTime.now();
 
         board = new Board.BoardBuilder().build().getNewBoard();
     }
 
-    public void play(UserInterface inGameUI) {
+    public void play(RestUI inGameUI) {
         this.inGameUI = inGameUI;
         boolean b;
         do {
@@ -69,18 +72,12 @@ public class Game {
 
     private boolean waitForMove() {
         String captures = "";
-        boolean isItAITurn = false;
-        if(isBlackAIPlayer && activePlayer)
-            isItAITurn = true;
-        if(isWhiteAIPlayer && !activePlayer)
-            isItAITurn = true;
-        inGameUI.printBoard(board, simplePrint, activePlayer, moves, rulesSet, isItAITurn);
         try {
             (new CapturePossibilityValidator(board, activePlayer, rulesSet)).validateCapturePossibility();
         }
         catch(CapturePossibleException e){
             captures = e.getMessage();
-            inGameUI.printCapture(captures, simplePrint, isItAITurn);
+            inGameUI.printCapture(captures);
         }
         String[] s;
         if((isBlackAIPlayer && activePlayer) || (isWhiteAIPlayer && !activePlayer)) {
@@ -88,13 +85,13 @@ public class Game {
             if(isBlackAIPlayer && isWhiteAIPlayer) {
                 String[] t;
                 do {
-                    t = inGameUI.getMoveOrOption(captures, simplePrint, isItAITurn);
+                    t = inGameUI.getMoveOrOption(captures);
                 }
                 while (t == null);
             }
         }
         else {
-            s = inGameUI.getMoveOrOption(captures, simplePrint, isItAITurn);
+            s = inGameUI.getMoveOrOption(captures);
         }
         if(s == null)
             return true;
@@ -110,7 +107,7 @@ public class Game {
                 return true;
             }
             catch(IncorrectMoveFormat e) {
-                inGameUI.printIncorrectMoveFormat(simplePrint, isItAITurn);
+                inGameUI.printIncorrectMoveFormat();
                 return true;
             }
         }
@@ -121,12 +118,6 @@ public class Game {
         int y1 = Character.getNumericValue(s[1].charAt(0));
         char x2 = s[2].charAt(0);
         int y2 = Character.getNumericValue(s[3].charAt(0));
-        boolean isItAITurn = false;
-        if(isBlackAIPlayer && activePlayer)
-            isItAITurn = true;
-        if(isWhiteAIPlayer && !activePlayer)
-            isItAITurn = true;
-        inGameUI.printMakingMove(simplePrint, x1, y1, x2, y2, isItAITurn);
         Move move = new Move(x1, y1, x2, y2);
         try {
             MoveValidator.validateMove(move, this.board, this.activePlayer, rulesSet);
@@ -145,7 +136,7 @@ public class Game {
                     whiteQueenMoves = 0;
             }
             this.activePlayer = !this.activePlayer;
-            inGameUI.printMoveDone(simplePrint, isItAITurn);
+            inGameUI.printMoveDone();
 
         }
         catch (CaptureException e) {
@@ -155,7 +146,7 @@ public class Game {
                 multiCapture(move);
             }
             catch(IncorrectMoveException e1) {}
-            inGameUI.printCaptureDone(simplePrint, isItAITurn);
+            inGameUI.printCaptureDone();
             if(activePlayer)
                 blackQueenMoves = 0;
             else
@@ -163,7 +154,7 @@ public class Game {
             this.activePlayer = !this.activePlayer;
         }
         catch (IncorrectMoveException e) {
-            inGameUI.printIncorrectMove(e.getMessage(), simplePrint, isItAITurn);
+            inGameUI.printIncorrectMove(e.getMessage());
         }
         finally {
             if((board.getFigure(move.getRow2(), move.getCol2()).getFigureName().equals(Figure.PAWN))
@@ -174,8 +165,7 @@ public class Game {
                     && !board.getFigure(move.getRow2(), move.getCol2()).getColor()
                     && (move.getRow2()) == 'A')
                 board.setFigure('A', move.getCol2(), figureFactory.getNewFigure(false, Figure.QUEEN));
-            if(!isItAITurn)
-                inGameUI.waitForEnter(); }
+        }
     }
 
     private void multiCapture(Move move) throws IncorrectMoveFormat, IncorrectMoveException {
@@ -186,20 +176,14 @@ public class Game {
                 break;
             }
             catch(CapturePossibleException e){
-                boolean isItAITurn = false;
-                if(isBlackAIPlayer && activePlayer)
-                    isItAITurn = true;
-                if(isWhiteAIPlayer && !activePlayer)
-                    isItAITurn = true;
-                inGameUI.printBoard(board, simplePrint, activePlayer, moves, rulesSet, isItAITurn);
-                inGameUI.printMultiCapture(e.getMessage(), simplePrint, isItAITurn);
+                inGameUI.printMultiCapture(e.getMessage());
                 String[] s;
                 if((isBlackAIPlayer && activePlayer) || (isWhiteAIPlayer && !activePlayer)) {
                     s = (new AIPlayer(board, activePlayer, rulesSet, whiteQueenMoves, blackQueenMoves,
                             move.getRow2(), move.getCol2())).getAIMove();
                 }
                 else {
-                    s = inGameUI.getMoveOrOption(e.getMessage(), simplePrint, isItAITurn);
+                    s = inGameUI.getMoveOrOption(e.getMessage());
                 }
                 if(s == null)
                     continue;
@@ -208,7 +192,6 @@ public class Game {
                     int y1 = Character.getNumericValue(s[1].charAt(0));
                     char x2 = s[2].charAt(0);
                     int y2 = Character.getNumericValue(s[3].charAt(0));
-                    inGameUI.printMakingMove(simplePrint, x1, y1, x2, y2, isItAITurn);
                     move = new Move(x1, y1, x2, y2);
                     try{
                         MoveValidator.validateMove(move, this.board, this.activePlayer, rulesSet);
@@ -230,54 +213,6 @@ public class Game {
                 && !board.getFigure(move.getRow2(), move.getCol2()).getColor()
                 && (move.getRow2()) == 'A')
             board.setFigure('A', move.getCol2(), figureFactory.getNewFigure(false, Figure.QUEEN));
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Board getBoard() {
-        return board;
-    }
-
-    public List<String> getMoves() {
-        return moves;
-    }
-
-    public boolean isActivePlayer() {
-        return activePlayer;
-    }
-
-    public int getWhiteQueenMoves() {
-        return whiteQueenMoves;
-    }
-
-    public int getBlackQueenMoves() {
-        return blackQueenMoves;
-    }
-
-    public boolean isFinished() {
-        return isFinished;
-    }
-
-    public boolean isDraw() {
-        return isDraw;
-    }
-
-    public boolean isWinner() {
-        return winner;
-    }
-
-    public RulesSet getRulesSet() {
-        return rulesSet;
-    }
-
-    public boolean isBlackAIPlayer() {
-        return isBlackAIPlayer;
-    }
-
-    public boolean isWhiteAIPlayer() {
-        return isWhiteAIPlayer;
     }
 
 }
