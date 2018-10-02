@@ -2,12 +2,19 @@ package com.wawrze.restcheckers.board;
 
 import com.wawrze.restcheckers.figures.Figure;
 import com.wawrze.restcheckers.figures.FigureFactory;
+import lombok.NoArgsConstructor;
 
+//import javax.persistence.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.IntStream;
 
+//@Entity
+//@Table(name = "boards")
+@NoArgsConstructor
 public class Board {
+
+    private Long id;
 
     private FigureFactory figureFactory = new FigureFactory();
 
@@ -17,6 +24,7 @@ public class Board {
         this.rows = rows;
     }
 
+//    @Transient
     public Board getNewBoard() {
         return new BoardBuilder()
                 .addFigure('A', 2, figureFactory.getNewFigure(true, Figure.PAWN))
@@ -47,7 +55,7 @@ public class Board {
                 .build();
     }
 
-    public Board(Board board){
+    public Board(Board board) {
         rows = new HashMap<>();
         IntStream.iterate(65, i -> ++i)
                 .limit(8)
@@ -83,6 +91,7 @@ public class Board {
 
     }
 
+//    @Transient
     public Figure getFigure(char row, int col) {
         return this.rows.get(row).getFigure(col);
     }
@@ -91,8 +100,29 @@ public class Board {
         this.rows.get(row).setFigure(col, figure);
     }
 
+//    @Transient
     public Map<Character, BoardRow> getRows() {
         return rows;
+    }
+
+//    @Column(name = "board")
+    public String getStringRepresentation() {
+        return "test";
+    }
+
+    public void setStringRepresentation(String stringRepresentation) {
+        System.out.println(stringRepresentation);
+    }
+
+//    @Column(name = "id")
+//    @GeneratedValue
+//    @Id
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
 }

@@ -1,29 +1,18 @@
 package com.wawrze.restcheckers.gameplay.userInterface;
 
+import com.wawrze.restcheckers.gameplay.Game;
 import exceptions.IncorrectMoveFormat;
+import org.springframework.stereotype.Service;
 
-import java.util.*;
-
+@Service
 public class RestUI  {
 
-    private Deque<String> inQueue = new ArrayDeque<>();
-    private String gameStatus = "Game started.";
-
-    public Deque<String> getInQueue() {
-        return inQueue;
-    }
-
-    public String getGameStatus() {
-        return gameStatus;
-    }
-
-    public String[] getMoveOrOption(String captures) {
+    public String[] getMoveOrOption(Game game, String captures) {
         String[] options = {"next", "x"};
         String s;
-        if(inQueue.isEmpty())
+        if(game.getInQueue().isEmpty())
             return null;
-        inQueue.stream().forEach(System.out::println);
-        s = inQueue.poll();
+        s = game.getInQueue().poll();
         s = s.toLowerCase();
         String[] result;
         for(String o : options) {
@@ -49,47 +38,47 @@ public class RestUI  {
                 result[3] = "" + y2;
             }
             else {
-                printCaptureObligatory();
+                printCaptureObligatory(game);
                 return null;
             }
         }
-        catch(IncorrectMoveFormat e){
-            printIncorrectMoveFormat();
+        catch(IncorrectMoveFormat e) {
+            printIncorrectMoveFormat(game);
             return null;
         }
         return result;
     }
 
-    public void printMoveDone() {
-        gameStatus = "Your opponent has made his move.";
+    public void printMoveDone(Game game) {
+        game.setGameStatus("Your opponent has made his move.");
     }
 
-    public void printCaptureDone() {
-        gameStatus = "Your opponent has captured.";
+    public void printCaptureDone(Game game) {
+        game.setGameStatus("Your opponent has captured.");
     }
 
-    public void printIncorrectMove(String s) {
-        gameStatus = "Incorrect move: " + s;
+    public void printIncorrectMove(Game game, String s) {
+        game.setGameStatus("Incorrect move: " + s);
     }
 
-    public void printCapture(String captures) {
-        gameStatus = "You have to capture: " + captures;
+    public void printCapture(Game game, String captures) {
+        game.setGameStatus("You have to capture: " + captures);
     }
 
-    public void printMultiCapture(String captures) {
-        gameStatus = "Possible captures: " + captures;
+    public void printMultiCapture(Game game, String captures) {
+        game.setGameStatus("Possible captures: " + captures);
     }
 
-    public void printCaptureObligatory() {
-        gameStatus = "Capture is obligatory!";
+    public void printCaptureObligatory(Game game) {
+        game.setGameStatus("Capture is obligatory!");
     }
 
-    public void printIncorrectMoveFormat() {
-        gameStatus = "Incorrect move format! Proper format example: E4-D5";
+    public void printIncorrectMoveFormat(Game game) {
+        game.setGameStatus("Incorrect move format! Proper format example: E4-D5");
     }
 
-    public void gameAlreadyExist(String gameName) {
-        gameStatus = "Game \"" + gameName + "\" already exist. Game resumed.";
+    public void gameAlreadyExist(Game game, String gameName) {
+        game.setGameStatus("Game \"" + gameName + "\" already exist. Game resumed.");
     }
 
     private void validate(String s) throws IncorrectMoveFormat {

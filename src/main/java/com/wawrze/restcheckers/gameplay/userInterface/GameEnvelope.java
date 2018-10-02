@@ -1,6 +1,7 @@
 package com.wawrze.restcheckers.gameplay.userInterface;
 
 import com.wawrze.restcheckers.gameplay.Game;
+import com.wawrze.restcheckers.gameplay.GameExecutor;
 import com.wawrze.restcheckers.gameplay.RulesSet;
 import com.wawrze.restcheckers.gameplay.userInterface.dtos.*;
 import com.wawrze.restcheckers.gameplay.userInterface.mappers.BoardMapper;
@@ -41,16 +42,20 @@ public class GameEnvelope {
     @Autowired
     private GameListMapper gameListMapper;
 
+    @Autowired
+    GameExecutor gameExecutor;
+
+    @Autowired
+    RestUI restUI;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(GameEnvelope.class);
 
-    private Map<String, RestUI> restUIs = new HashMap<>();
     private Map<String, Game> games = new HashMap<>();
 
     public void startNewGame(GameDto gameDto) throws ForbiddenException, MethodFailureException {
         if(games.entrySet().stream()
                 .filter(entry -> entry.getKey().equalsIgnoreCase(gameDto.getName()))
                 .count() != 0) {
-            restUIs.get(gameDto.getName()).gameAlreadyExist(gameDto.getName());
             LOGGER.warn("Game \"" + gameDto.getName() + "\" already exist! Game not created.");
             throw new ForbiddenException();
         }
@@ -70,24 +75,18 @@ public class GameEnvelope {
             throw new MethodFailureException();
         }
         games.put(gameDto.getName(), game);
-        RestUI restUI = new RestUI();
-        if(restUIs.get(gameDto.getName()) != null)
-            restUI = restUIs.get(gameDto.getName());
-        else
-            restUIs.put(gameDto.getName(), restUI);
         LOGGER.info("Game \"" + game.getName() + "\" created.");
-        game.play(restUI);
+        gameExecutor.play(game);
     }
 
     public BoardDto sendMove(String gameName, MoveDto moveDto) throws ForbiddenException {
         String s = moveDto.getMove();
-        RestUI restUI = restUIs.get(gameName);
         Game game = games.get(gameName);
         if(game == null) {
             LOGGER.warn("There is no game named \"" + gameName + "\"! Move not served!");
             throw new ForbiddenException();
         }
-        restUI.getInQueue().offer(s);
+        game.getInQueue().offer(s);
         try {
             TimeUnit.MILLISECONDS.sleep(200);
         }
@@ -95,19 +94,18 @@ public class GameEnvelope {
             LOGGER.warn("SLEEP Exception: " + e.getMessage());
         }
         LOGGER.info("New move (game: " + gameName + ", move: " + moveDto.getMove() + ") served.");
-        return boardMapper.mapToBoardDto(game.getBoard(), restUI.getGameStatus(), game.isActivePlayer(),
+        return boardMapper.mapToBoardDto(game.getBoard(), game.getGameStatus(), game.isActivePlayer(),
                 game.isWhiteAIPlayer(), game.isBlackAIPlayer(), game.getMoves());
     }
 
     public BoardDto getBoard(String gameName) throws ForbiddenException {
-        RestUI restUI = restUIs.get(gameName);
         Game game = games.get(gameName);
         if(game == null) {
             LOGGER.warn("There is no game named \"" + gameName + "\"! Board not sent!");
             throw new ForbiddenException();
         }
         LOGGER.info("Board (game \"" + gameName + "\") sent.");
-        return boardMapper.mapToBoardDto(game.getBoard(), restUI.getGameStatus(), game.isActivePlayer(),
+        return boardMapper.mapToBoardDto(game.getBoard(), game.getGameStatus(), game.isActivePlayer(),
                 game.isWhiteAIPlayer(), game.isBlackAIPlayer(), game.getMoves());
     }
 
@@ -138,7 +136,6 @@ public class GameEnvelope {
         GameProgressDetailsDto gameProgressDetailsDto = gameProgressDetailsMapper.mapToGameProgressDetailsDto(game);
         if(game.isFinished()) {
             games.remove(gameName);
-            restUIs.remove(gameName);
             LOGGER.info("Game \"" + gameName + "\" finish details sent. Game removed.");
         }
         else {
@@ -154,7 +151,6 @@ public class GameEnvelope {
             throw new ForbiddenException();
         }
         games.remove(gameName);
-        restUIs.remove(gameName);
         LOGGER.info("Game  \"" + gameName + "\" removed.");
     }
 

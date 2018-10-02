@@ -120,7 +120,6 @@
             }
         });
         
-        getBoard();
         $('[created-game-name]').text(gameName);
         $('[new-game-section]')[0].style.display = 'none';
         $('[created-game-section]')[0].style.display = 'block';
@@ -149,6 +148,8 @@
                 break;
             }
         }
+
+        getBoard();
     }
 
     function sendMove() {

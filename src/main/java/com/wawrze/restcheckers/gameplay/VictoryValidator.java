@@ -21,12 +21,11 @@ public class VictoryValidator {
         return draw;
     }
 
-    public static boolean validateEndOfGame(Board board, int whiteQueenMoves, int blackQueenMoves, boolean player,
-                                            RulesSet rulesSet) {
+    public static boolean validateEndOfGame(Game game) {
         draw = false;
-        return validateFigures(board, rulesSet)
-                || validateMovePossibility(board, player, rulesSet)
-                || validateQueenMoves(whiteQueenMoves, blackQueenMoves);
+        return validateFigures(game.getBoard(), game.getRulesSet())
+                || validateMovePossibility(game.getBoard(), game.isActivePlayer(), game.getRulesSet())
+                || validateQueenMoves(game.getWhiteQueenMoves(), game.getBlackQueenMoves());
     }
 
     private static boolean validateMovePossibility(Board board, boolean player, RulesSet rulesSet){

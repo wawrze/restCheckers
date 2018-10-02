@@ -1,5 +1,8 @@
 package com.wawrze.restcheckers.figures;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class FigureFactory {
 
     public Figure getNewFigure(boolean color, String figureName) {

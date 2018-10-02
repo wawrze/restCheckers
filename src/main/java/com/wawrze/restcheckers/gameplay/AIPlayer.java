@@ -97,9 +97,13 @@ public class AIPlayer {
                     else
                         whiteQueenMoves++;
                 }
-                if(VictoryValidator.validateEndOfGame(tmpBoard, whiteQueenMoves, blackQueenMoves, activePlayer,
-                        rulesSet)) {
-                    value = evaluateWhenEndOfGame();
+                Game tmpGame = new Game("tmpGame", rulesSet, true, true);
+                tmpGame.setBoard(tmpBoard);
+                tmpGame.setWhiteQueenMoves(whiteQueenMoves);
+                tmpGame.setBlackQueenMoves(blackQueenMoves);
+                tmpGame.setActivePlayer(activePlayer);
+                    if(VictoryValidator.validateEndOfGame(tmpGame)) {
+                        value = evaluateWhenEndOfGame();
                 }
                 else {
                     value = 1;
@@ -110,8 +114,12 @@ public class AIPlayer {
                 try {
                     (new CapturePossibilityValidator(tmpBoard, activePlayer, rulesSet))
                             .validateCapturePossibilityForOneFigure(entry.getKey().getRow2(), entry.getKey().getCol2());
-                    if(VictoryValidator.validateEndOfGame(tmpBoard, whiteQueenMoves, blackQueenMoves, activePlayer,
-                            rulesSet)) {
+                    Game tmpGame = new Game("tmpGame", rulesSet, true, true);
+                    tmpGame.setBoard(tmpBoard);
+                    tmpGame.setWhiteQueenMoves(whiteQueenMoves);
+                    tmpGame.setBlackQueenMoves(blackQueenMoves);
+                    tmpGame.setActivePlayer(activePlayer);
+                    if(VictoryValidator.validateEndOfGame(tmpGame)) {
                         value = evaluateWhenEndOfGame();
                     }
                     else {
