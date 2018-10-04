@@ -22,6 +22,7 @@ public class GameInfoDto {
     private boolean isFinished;
     private boolean isDraw;
     private boolean winner;
+    private String typeOfWin;
     private int moves;
     private int blackQueenMoves;
     private int whiteQueenMoves;

@@ -299,18 +299,13 @@
                         $('[type-of-game-finish]').text("(Each player has done 15 moves in the row by a king.)");
                     }
                     else {
+                        $('[type-of-game-finish]').text("(" + gameInfo.typeOfWin + ")");
                         if (gameInfo.winner) {
                             $('[winner-or-draw]').text("BLACK WINS");
                             $('[game-finished]')[0].style.background = 'black';
                             $('[game-finished]')[0].style.color = 'white';
                             $('[status]')[1].style.background = 'black';
                             $('[next-move-section]')[0].style.background = 'black';
-                            if (gameInfo.whitePawns == 0 && gameInfo.whiteQueens == 0) {
-                                $('[type-of-game-finish]').text("(White player lost all his figures.)");
-                            }
-                            else {
-                                $('[type-of-game-finish]').text("(White player cannot move.)");
-                            }
                         }
                         else {
                             $('[winner-or-draw]').text("WHITE WINS");
@@ -318,12 +313,6 @@
                             $('[game-finished]')[0].style.color = 'black';
                             $('[status]')[1].style.background = 'white';
                             $('[next-move-section]')[0].style.background = 'white';
-                            if (gameInfo.blackPawns == 0 && gameInfo.blackQueens == 0) {
-                                $('[type-of-game-finish]').text("(Black player lost all his figures.)");
-                            }
-                            else {
-                                $('[type-of-game-finish]').text("(Black player cannot move.)");
-                            }
                         }
                     }
                     $('[new-game-section]')[0].style.display = 'block';

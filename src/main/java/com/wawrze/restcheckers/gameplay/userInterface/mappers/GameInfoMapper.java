@@ -46,6 +46,7 @@ public class GameInfoMapper {
                 game.isFinished(),
                 game.isDraw(),
                 game.isWinner(),
+                typeOfWin(game),
                 game.getMovesList().size(),
                 game.getBlackQueenMoves(),
                 game.getWhiteQueenMoves(),
@@ -99,6 +100,42 @@ public class GameInfoMapper {
                 dateTime.getMinute(),
                 dateTime.getSecond()
         );
+    }
+
+    public String typeOfWin(Game game) {
+        if(!game.isFinished() || game.isDraw()) {
+            return "";
+        }
+        else {
+            if(game.getRulesSet().isVictoryConditionsReversed()) {
+                if(game.isWinner()) {
+                    if((countBlackPawns(game) + countBlackQueens(game)) == 0) //A
+                        return "Black player lost all his figures.";
+                    else
+                        return "Black player cannot move.";
+                }
+                else {
+                    if((countWhitePawns(game) + countWhiteQueens(game)) == 0) //B
+                        return "White player lost all his figures.";
+                    else
+                        return "White player cannot move.";
+                }
+            }
+            else {
+                if(game.isWinner()) {
+                    if((countWhitePawns(game) + countWhiteQueens(game)) == 0) //B
+                        return "White player lost all his figures.";
+                    else
+                        return "White player cannot move.";
+                }
+                else {
+                    if((countBlackPawns(game) + countBlackQueens(game)) == 0) //A
+                        return "Black player lost all his figures.";
+                    else
+                        return "Black player cannot move.";
+                }
+            }
+        }
     }
 
 }

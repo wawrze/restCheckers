@@ -1,6 +1,6 @@
 package com.wawrze.restcheckers.gameplay;
 
-import lombok.AllArgsConstructor;
+import com.wawrze.restcheckers.gameplay.userInterface.mappers.GameInfoMapper;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -9,17 +9,47 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "finished_games")
 @NoArgsConstructor
-@AllArgsConstructor
 public class FinishedGame {
 
     private Long id;
     private String name;
     private String typeOfVictoryAndWinner;
+    private int moves;
     private RulesSet rulesSet;
     private boolean isBlackAIPlayer;
     private boolean isWhiteAIPlayer;
     private LocalDateTime startTime;
     private LocalDateTime finishTime;
+
+    public FinishedGame(Game game) {
+        this.name = game.getName();
+        this.typeOfVictoryAndWinner = getTypeOfVictoryAndWinner(game);
+        this.moves = game.getMovesList().size();
+        this.rulesSet = game.getRulesSet();
+        this.isBlackAIPlayer = game.isBlackAIPlayer();
+        this.isWhiteAIPlayer = game.isWhiteAIPlayer();
+        this.startTime = game.getStartTime();
+        this.finishTime = game.getLastAction();
+    }
+
+    private String getTypeOfVictoryAndWinner(Game game) {
+        String result;
+        if(game.isDraw()) {
+            result = "draw";
+        }
+        else {
+            if(game.isWinner())
+                result = "black, ";
+            else
+                result = "white, ";
+            String typeOfWin = new GameInfoMapper().typeOfWin(game);
+            if(typeOfWin.contains("lost all his figures"))
+                result += "lost figures";
+            else
+                result += "blocked";
+        }
+        return result;
+    }
 
     @Column(name = "id")
     @Id
@@ -36,6 +66,11 @@ public class FinishedGame {
     @Column(name = "type_of_victory_and_winner")
     public String getTypeOfVictoryAndWinner() {
         return typeOfVictoryAndWinner;
+    }
+
+    @Column(name = "moves")
+    public int getMoves() {
+        return moves;
     }
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -74,6 +109,10 @@ public class FinishedGame {
 
     private void setTypeOfVictoryAndWinner(String typeOfVictoryAndWinner) {
         this.typeOfVictoryAndWinner = typeOfVictoryAndWinner;
+    }
+
+    public void setMoves(int moves) {
+        this.moves = moves;
     }
 
     private void setRulesSet(RulesSet rulesSet) {

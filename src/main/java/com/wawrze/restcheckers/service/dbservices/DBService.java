@@ -1,5 +1,6 @@
 package com.wawrze.restcheckers.service.dbservices;
 
+import com.wawrze.restcheckers.gameplay.FinishedGame;
 import com.wawrze.restcheckers.gameplay.Game;
 import com.wawrze.restcheckers.gameplay.RulesSet;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class DBService {
     @Autowired
     RulesSetDao rulesSetDao;
 
+    @Autowired
+    FinishedGameDao finishedGameDao;
+
     /////// RULES ////////////////////////////////////////////////
 
     public void saveRulesSet(RulesSet rulesSet) {
@@ -36,7 +40,7 @@ public class DBService {
         return rulesSetDao.findByName(name);
     }
 
-    /////// GAME ////////////////////////////////////////////////
+    /////// GAME /////////////////////////////////////////////////
 
     public boolean isGameExisting(String name) {
         return gameDAO.existsByName(name);
@@ -60,6 +64,16 @@ public class DBService {
 
     public void deleteGame(Long id) {
         gameDAO.deleteById(id);
+    }
+
+    /////// FINISHED GAME ////////////////////////////////////////
+
+    public void saveFinishedGame(Game game) {
+        finishedGameDao.save(new FinishedGame(game));
+    }
+
+    public List<FinishedGame> getFinishedGames() {
+        return finishedGameDao.findAll();
     }
 
 }
