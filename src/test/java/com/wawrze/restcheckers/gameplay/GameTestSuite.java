@@ -3,13 +3,21 @@ package com.wawrze.restcheckers.gameplay;
 import com.wawrze.restcheckers.figures.None;
 import com.wawrze.restcheckers.figures.Pawn;
 import com.wawrze.restcheckers.figures.Queen;
-import com.wawrze.restcheckers.gameplay.userInterface.RestUI;
 import org.junit.*;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class GameTestSuite {
 
     private static int counter = 1;
 
+    @Autowired
+    private GameExecutor gameExecutor;
+    
     @BeforeClass
     public static void beforeTests(){
         System.out.println("InGameUI tests: started");
@@ -38,40 +46,35 @@ public class GameTestSuite {
                 true, true, true,
                 "", "");
         Game game = new Game("", rulesSet, false, false);
-        RestUI restUI;
         boolean result = false;
         //When
-        restUI = new RestUI();
-        restUI.getInQueue().offer("x");
+        game.getInQueue().offer("x");
         try {
-            game.play(restUI);
+            gameExecutor.play(game);
         }
         catch(Exception e) {
             result = true;
         }
-        restUI = new RestUI();
-        restUI.getInQueue().offer("A1-Q9");
-        restUI.getInQueue().offer("x");
+        game.getInQueue().offer("A1-Q9");
+        game.getInQueue().offer("x");
         try {
-            game.play(restUI);
+            gameExecutor.play(game);
         }
         catch(Exception e) {
             result = true;
         }
-        restUI = new RestUI();
-        restUI.getInQueue().offer("Abc");
-        restUI.getInQueue().offer("x");
+        game.getInQueue().offer("Abc");
+        game.getInQueue().offer("x");
         try {
-            game.play(restUI);
+            gameExecutor.play(game);
         }
         catch(Exception e) {
             result = true;
         }
-        restUI = new RestUI();
-        restUI.getInQueue().offer("A1-A2");
-        restUI.getInQueue().offer("x");
+        game.getInQueue().offer("A1-A2");
+        game.getInQueue().offer("x");
         try {
-            game.play(restUI);
+            gameExecutor.play(game);
         }
         catch(Exception e) {
             result = true;
@@ -87,7 +90,6 @@ public class GameTestSuite {
                 true, true, true,
                 "", "");
         Game game = new Game("", rulesSet, false, false);
-        RestUI restUI = new RestUI();
         int blackQueenMovesCounter;
         int whiteQueenMovesCounter;
         boolean result = false;
@@ -98,12 +100,12 @@ public class GameTestSuite {
         }
         game.getBoard().setFigure('A', 8, new Queen(true));
         game.getBoard().setFigure('H', 1, new Queen(false));
-        restUI.getInQueue().offer("H1-G22");
-        restUI.getInQueue().offer("H1-G2");
-        restUI.getInQueue().offer("A8-B7");
-        restUI.getInQueue().offer("x");
+        game.getInQueue().offer("H1-G22");
+        game.getInQueue().offer("H1-G2");
+        game.getInQueue().offer("A8-B7");
+        game.getInQueue().offer("x");
         try {
-            game.play(restUI);
+            gameExecutor.play(game);
         }
         catch(Exception e) {
             result = true;
@@ -123,7 +125,6 @@ public class GameTestSuite {
                 true, true, true,
                 "", "");
         Game game = new Game("", rulesSet, false, false);
-        RestUI restUI = new RestUI();
         boolean result = false;
         //When
         for(int i = 1;i < 9;i++) {
@@ -132,11 +133,11 @@ public class GameTestSuite {
         }
         game.getBoard().setFigure('B', 7, new Pawn(false));
         game.getBoard().setFigure('G', 2, new Pawn(true));
-        restUI.getInQueue().offer("B7-A8");
-        restUI.getInQueue().offer("G2-H1");
-        restUI.getInQueue().offer("x");
+        game.getInQueue().offer("B7-A8");
+        game.getInQueue().offer("G2-H1");
+        game.getInQueue().offer("x");
         try {
-            game.play(restUI);
+            gameExecutor.play(game);
         }
         catch(Exception e) {
             result = true;
@@ -154,7 +155,6 @@ public class GameTestSuite {
                 false, true, false,
                 "", "");
         Game game = new Game("", rulesSet, false, true);
-        RestUI restUI = new RestUI();
         boolean result = false;
         //When
         for(int i = 1;i < 9;i++) {
@@ -168,12 +168,12 @@ public class GameTestSuite {
         game.getBoard().setFigure('B', 7, new Pawn(false));
         game.getBoard().setFigure('D', 7, new Pawn(false));
         game.getBoard().setFigure('G', 6, new Pawn(false));
-        restUI.getInQueue().offer("e8-c6");
-        restUI.getInQueue().offer("c6-d5");
-        restUI.getInQueue().offer("c6-a8");
-        restUI.getInQueue().offer("x");
+        game.getInQueue().offer("e8-c6");
+        game.getInQueue().offer("c6-d5");
+        game.getInQueue().offer("c6-a8");
+        game.getInQueue().offer("x");
         try {
-            game.play(restUI);
+            gameExecutor.play(game);
         }
         catch(Exception e) {
             result = true;
@@ -189,7 +189,6 @@ public class GameTestSuite {
                 false, true, false,
                 "", "");
         Game game = new Game("", rulesSet, true, false);
-        RestUI restUI = new RestUI();
         boolean result = false;
         //When
         for(int i = 1;i < 9;i++) {
@@ -204,13 +203,13 @@ public class GameTestSuite {
         game.getBoard().setFigure('E', 2, new Pawn(false));
         game.getBoard().setFigure('G', 2, new Pawn(false));
         game.getBoard().setFigure('G', 6, new Pawn(false));
-        restUI.getInQueue().offer("g6-e8");
-        restUI.getInQueue().offer("e8-c6");
-        restUI.getInQueue().offer("c6-b7");
-        restUI.getInQueue().offer("c6-a4");
-        restUI.getInQueue().offer("x");
+        game.getInQueue().offer("g6-e8");
+        game.getInQueue().offer("e8-c6");
+        game.getInQueue().offer("c6-b7");
+        game.getInQueue().offer("c6-a4");
+        game.getInQueue().offer("x");
         try {
-            game.play(restUI);
+            gameExecutor.play(game);
         }
         catch(Exception e) {
             result = true;

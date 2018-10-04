@@ -13,8 +13,7 @@ import java.util.stream.IntStream;
 @Component
 public class BoardMapper {
 
-    public BoardDto mapToBoardDto(Board board, String gameStatus, boolean activePlayer, boolean isWhiteAIPlayer,
-                                  boolean isBlackAIPlayer, List<String> moves) {
+    public BoardDto mapToBoardDto(Board board) {
         List<RowDto> rowDtos = new ArrayList<>();
         IntStream.iterate(0, i -> ++i)
                 .limit(8)
@@ -29,22 +28,7 @@ public class BoardMapper {
                             )));
                     rowDtos.add(new RowDto(i, listRow));
                 });
-        String movesHistory;
-        if(moves.isEmpty()) {
-            movesHistory = "";
-        }
-        else {
-            int i = moves.size() - 1;
-            movesHistory = (i + 1) + ". " + moves.get(i);
-            for (i--; i >= 0; i--) {
-                if (moves.get(i).charAt(0) == moves.get(i + 1).charAt(0)) {
-                    movesHistory += ("\n" + (i + 1) + ". " + moves.get(i));
-                } else {
-                    movesHistory += ("\n\n" + (i + 1) + ". " + moves.get(i));
-                }
-            }
-        }
-        return new BoardDto(rowDtos, gameStatus, activePlayer, isWhiteAIPlayer, isBlackAIPlayer, movesHistory);
+        return new BoardDto(rowDtos);
     }
 
 }

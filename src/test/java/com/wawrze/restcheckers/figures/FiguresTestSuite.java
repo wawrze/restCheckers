@@ -30,17 +30,18 @@ public class FiguresTestSuite {
     @Test
     public void testGetFigureName() {
         //Given
-        Pawn pawn = new Pawn(true);
-        Queen queen = new Queen(true);
-        None none = new None(true);
+        FigureFactory figureFactory = new FigureFactory();
+        Figure pawn = figureFactory.getNewFigure(true, Figure.PAWN);
+        Figure queen = figureFactory.getNewFigure(true, Figure.QUEEN);
+        Figure none = figureFactory.getNewFigure(true, Figure.NONE);
         //When
         String result1 = pawn.getFigureName();
         String result2 = queen.getFigureName();
         String result3 = none.getFigureName();
         //Then
-        Assert.assertEquals(result1, "pawn");
-        Assert.assertEquals(result2, "queen");
-        Assert.assertEquals(result3, "none");
+        Assert.assertEquals("pawn", result1);
+        Assert.assertEquals("queen", result2);
+        Assert.assertEquals("none", result3);
     }
 
 }

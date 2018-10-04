@@ -4,12 +4,20 @@ import com.wawrze.restcheckers.board.Board;
 import com.wawrze.restcheckers.figures.None;
 import com.wawrze.restcheckers.figures.Pawn;
 import com.wawrze.restcheckers.figures.Queen;
-import com.wawrze.restcheckers.gameplay.userInterface.RestUI;
 import org.junit.*;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class AIPlayerTestSuite {
 
     private static int counter = 1;
+
+    @Autowired
+    private GameExecutor gameExecutor;
 
     @BeforeClass
     public static void beforeTests(){
@@ -62,13 +70,12 @@ public class AIPlayerTestSuite {
                 false,true, false,
                 "", "");
         Game game = new Game("", rulesSet, true, true);
-        RestUI restUI = new RestUI();
         boolean result = false;
         //When
         for(int i=0;i < 1000;i++)
-            restUI.getInQueue().offer("next");
+            game.getInQueue().offer("next");
         try {
-            game.play(restUI);
+            gameExecutor.play(game);
         }
         catch (Exception e) {
             result = true;
@@ -84,13 +91,12 @@ public class AIPlayerTestSuite {
                 false,true, false,
                 "", "");
         Game game = new Game("", rulesSet, true, true);
-        RestUI restUI = new RestUI();
         boolean result = false;
         //When
         for(int i=0;i < 200;i++)
-            restUI.getInQueue().push("next");
+            game.getInQueue().push("next");
         try {
-            game.play(restUI);
+            gameExecutor.play(game);
         }
         catch(Exception e) {
             result = true;
@@ -106,11 +112,10 @@ public class AIPlayerTestSuite {
                 false,true, false,
                 "", "");
         Game game = new Game("", rulesSet, true, true);
-        RestUI restUI = new RestUI();
         boolean result = false;
         //When
         for(int i=0;i < 200;i++)
-            restUI.getInQueue().push("next");
+            game.getInQueue().push("next");
         for(int i = 1;i < 9;i++) {
             for(int j = 1;j < 9;j++)
                 game.getBoard().setFigure((char) (i + 64), j, new None(true));
@@ -118,7 +123,7 @@ public class AIPlayerTestSuite {
         game.getBoard().setFigure('A', 4, new Pawn(true));
         game.getBoard().setFigure('H', 3, new Pawn(false));
         try {
-            game.play(restUI);
+            gameExecutor.play(game);
         }
         catch(Exception e) {
             result = true;

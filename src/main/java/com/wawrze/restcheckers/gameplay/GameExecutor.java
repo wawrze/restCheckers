@@ -93,7 +93,7 @@ public class GameExecutor {
         Move move = new Move(x1, y1, x2, y2);
         try {
             MoveValidator.validateMove(move, game.getBoard(), game.isActivePlayer(), game.getRulesSet());
-            game.getMoves().add((game.isActivePlayer() ? "black: " : "white: ") + move);
+            game.getMovesList().add((game.isActivePlayer() ? "black: " : "white: ") + move);
             move.makeMove(game.getBoard());
             if(game.getBoard().getFigure(move.getRow2(),move.getCol2()).getFigureName().equals(Figure.QUEEN)){
                 if(game.isActivePlayer())
@@ -111,7 +111,7 @@ public class GameExecutor {
             restUI.printMoveDone(game);
         }
         catch (CaptureException e) {
-            game.getMoves().add((game.isActivePlayer() ? "black: " : "white: ") + move);
+            game.getMovesList().add((game.isActivePlayer() ? "black: " : "white: ") + move);
             move.makeCapture(game.getBoard(), e.getRow(), e.getCol());
             try {
                 multiCapture(game, move);
@@ -170,7 +170,7 @@ public class GameExecutor {
                         MoveValidator.validateMove(move, game.getBoard(), game.isActivePlayer(), game.getRulesSet());
                     }
                     catch(CaptureException e1){
-                        game.getMoves().add((game.isActivePlayer() ? "black: " : "white: ") + move);
+                        game.getMovesList().add((game.isActivePlayer() ? "black: " : "white: ") + move);
                         move.makeCapture(game.getBoard(), e1.getRow(), e1.getCol());
                     }
                     finally {}

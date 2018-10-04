@@ -1,31 +1,33 @@
 package com.wawrze.restcheckers.gameplay;
 
-import lombok.Getter;
+import com.wawrze.restcheckers.service.dbservices.DBService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
-@Getter
+@DependsOn("DBService")
 public class RulesSets {
 
-    private List<RulesSet> rules;
+    @Autowired
+    private DBService dbService;
 
-    public RulesSets() {
-        rules = new ArrayList<>();
+    public List<RulesSet> updateRules() {
         RulesSet rule = new RulesSet(false, false, false,
                 false, true, false,
                 "classic", "classic (brasilian) draughts");
-        rules.add(rule);
+        dbService.saveRulesSet(rule);
         rule = new RulesSet(false, true, true,
                 false, true, true,
                 "english", "english draughts (checkers)");
-        rules.add(rule);
+        dbService.saveRulesSet(rule);
         rule = new RulesSet(true, false, false,
                 false, true, false,
                 "poddavki", "standard rules, but reversed victory");
-        rules.add(rule);
+        dbService.saveRulesSet(rule);
+        return dbService.getAllRulesSets();
     }
 
 }

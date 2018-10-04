@@ -59,9 +59,15 @@ public class VictoryValidatorTestSuite {
                 false, true, false,
                 "", "");
         boolean result1,result2;
+        Game game = new Game("test", ruleSet, false, false);
         //When
-        result1 = VictoryValidator.validateEndOfGame(board,0,0,true, ruleSet);
-        result2 = VictoryValidator.validateEndOfGame(board,0,0,false, ruleSet);
+        game.setBoard(board);
+        game.setWhiteQueenMoves(0);
+        game.setBlackQueenMoves(0);
+        game.setActivePlayer(true);
+        result1 = VictoryValidator.validateEndOfGame(game);
+        game.setActivePlayer(false);
+        result2 = VictoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertFalse(result1);
         Assert.assertFalse(result2);
@@ -83,9 +89,15 @@ public class VictoryValidatorTestSuite {
                 false, true, false,
                 "", "");
         boolean result1,result2;
+        Game game = new Game("test", ruleSet, false, false);
         //When
-        result1 = VictoryValidator.validateEndOfGame(board,0,0,true, ruleSet);
-        result2 = VictoryValidator.validateEndOfGame(board,0,0,false, ruleSet);
+        game.setBoard(board);
+        game.setWhiteQueenMoves(0);
+        game.setBlackQueenMoves(0);
+        game.setActivePlayer(true);
+        result1 = VictoryValidator.validateEndOfGame(game);
+        game.setActivePlayer(false);
+        result2 = VictoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertFalse(result1);
         Assert.assertFalse(result2);
@@ -107,9 +119,15 @@ public class VictoryValidatorTestSuite {
                 false, true, false,
                 "", "");
         boolean result1,result2;
+        Game game = new Game("test", ruleSet, false, false);
         //When
-        result1 = VictoryValidator.validateEndOfGame(board,0,0,true, ruleSet);
-        result2 = VictoryValidator.validateEndOfGame(board,0,0,false, ruleSet);
+        game.setBoard(board);
+        game.setWhiteQueenMoves(0);
+        game.setBlackQueenMoves(0);
+        game.setActivePlayer(true);
+        result1 = VictoryValidator.validateEndOfGame(game);
+        game.setActivePlayer(false);
+        result2 = VictoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertFalse(result1);
         Assert.assertFalse(result2);
@@ -131,9 +149,15 @@ public class VictoryValidatorTestSuite {
                 false, true, false,
                 "", "");
         boolean result1,result2;
+        Game game = new Game("test", ruleSet, false, false);
         //When
-        result1 = VictoryValidator.validateEndOfGame(board,0,0,true, ruleSet);
-        result2 = VictoryValidator.validateEndOfGame(board,0,0,false, ruleSet);
+        game.setBoard(board);
+        game.setWhiteQueenMoves(0);
+        game.setBlackQueenMoves(0);
+        game.setActivePlayer(true);
+        result1 = VictoryValidator.validateEndOfGame(game);
+        game.setActivePlayer(false);
+        result2 = VictoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertFalse(result1);
         Assert.assertFalse(result2);
@@ -160,13 +184,19 @@ public class VictoryValidatorTestSuite {
                 .addFigure('H',3, new Pawn(false))
                 .addFigure('G',2, new Queen(false))
                 .build();
-        boolean result1,result2;
-        //When
         RulesSet ruleSet = new RulesSet(true, false, false,
                 false, true, false,
                 "", "");
-        result1 = VictoryValidator.validateEndOfGame(board,0,0,true, ruleSet);
-        result2 = VictoryValidator.validateEndOfGame(board,0,0,false, ruleSet);
+        boolean result1,result2;
+        Game game = new Game("test", ruleSet, false, false);
+        //When
+        game.setBoard(board);
+        game.setWhiteQueenMoves(0);
+        game.setBlackQueenMoves(0);
+        game.setActivePlayer(true);
+        result1 = VictoryValidator.validateEndOfGame(game);
+        game.setActivePlayer(false);
+        result2 = VictoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertFalse(result1);
         Assert.assertFalse(result2);
@@ -198,13 +228,19 @@ public class VictoryValidatorTestSuite {
                 .addFigure('H',1, new Pawn(true))
                 .addFigure('H',3, new Pawn(true))
                 .build();
-        boolean result1,result2;
-        //When
         RulesSet ruleSet = new RulesSet(true, false, false,
                 false, true, false,
                 "", "");
-        result1 = VictoryValidator.validateEndOfGame(board,0,0,true, ruleSet);
-        result2 = VictoryValidator.validateEndOfGame(board,0,0,false, ruleSet);
+        boolean result1,result2;
+        Game game = new Game("test", ruleSet, false, false);
+        //When
+        game.setBoard(board);
+        game.setWhiteQueenMoves(0);
+        game.setBlackQueenMoves(0);
+        game.setActivePlayer(true);
+        result1 = VictoryValidator.validateEndOfGame(game);
+        game.setActivePlayer(false);
+        result2 = VictoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertFalse(result1);
         Assert.assertFalse(result2);
@@ -227,12 +263,17 @@ public class VictoryValidatorTestSuite {
                 .addFigure('H',3, new Pawn(false))
                 .addFigure('G',2, new Queen(false))
                 .build();
-        boolean result;
-        //When
         RulesSet ruleSet = new RulesSet(true, false, false,
                 false, true, false,
                 "", "");
-        result = VictoryValidator.validateEndOfGame(board,0,0,true, ruleSet);
+        boolean result;
+        Game game = new Game("test", ruleSet, false, false);
+        //When
+        game.setBoard(board);
+        game.setWhiteQueenMoves(0);
+        game.setBlackQueenMoves(0);
+        game.setActivePlayer(true);
+        result = VictoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertTrue(result);
         Assert.assertFalse(VictoryValidator.isDraw());
@@ -256,12 +297,17 @@ public class VictoryValidatorTestSuite {
                 .addFigure('F',5, new Queen(true))
                 .addFigure('F',7, new Queen(true))
                 .build();
-        boolean result;
-        //When
         RulesSet ruleSet = new RulesSet(true, false, false,
                 false, true, false,
                 "", "");
-        result = VictoryValidator.validateEndOfGame(board,0,0,false, ruleSet);
+        boolean result;
+        Game game = new Game("test", ruleSet, false, false);
+        //When
+        game.setBoard(board);
+        game.setWhiteQueenMoves(0);
+        game.setBlackQueenMoves(0);
+        game.setActivePlayer(false);
+        result = VictoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertTrue(result);
         Assert.assertFalse(VictoryValidator.isDraw());
@@ -275,12 +321,17 @@ public class VictoryValidatorTestSuite {
                 .addFigure('A',2, new Queen(true))
                 .addFigure('H',7, new Queen(false))
                 .build();
-        boolean result;
-        //When
         RulesSet ruleSet = new RulesSet(true, false, false,
                 false, true, false,
                 "", "");
-        result = VictoryValidator.validateEndOfGame(board,16,15,true, ruleSet);
+        boolean result;
+        Game game = new Game("test", ruleSet, false, false);
+        //When
+        game.setBoard(board);
+        game.setWhiteQueenMoves(16);
+        game.setBlackQueenMoves(15);
+        game.setActivePlayer(true);
+        result = VictoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertTrue(result);
         Assert.assertTrue(VictoryValidator.isDraw());
@@ -297,12 +348,17 @@ public class VictoryValidatorTestSuite {
                 .addFigure('A',4, new Queen(true))
                 .addFigure('H',7, new Queen(true))
                 .build();
-        boolean result;
-        //When
         RulesSet ruleSet = new RulesSet(true, false, false,
                 false, true, false,
                 "", "");
-        result = VictoryValidator.validateEndOfGame(board,0,0,false, ruleSet);
+        boolean result;
+        Game game = new Game("test", ruleSet, false, false);
+        //When
+        game.setBoard(board);
+        game.setWhiteQueenMoves(0);
+        game.setBlackQueenMoves(0);
+        game.setActivePlayer(false);
+        result = VictoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertTrue(result);
         Assert.assertFalse(VictoryValidator.getWinner());
@@ -319,20 +375,25 @@ public class VictoryValidatorTestSuite {
                 .addFigure('A',4, new Queen(false))
                 .addFigure('H',7, new Queen(false))
                 .build();
-        boolean result;
-        //When
         RulesSet ruleSet = new RulesSet(true, false, false,
                 false, true, false,
                 "", "");
-        result = VictoryValidator.validateEndOfGame(board,0,0,true, ruleSet);
+        boolean result;
+        Game game = new Game("test", ruleSet, false, false);
+        //When
+        game.setBoard(board);
+        game.setWhiteQueenMoves(0);
+        game.setBlackQueenMoves(0);
+        game.setActivePlayer(true);
+        result = VictoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertTrue(result);
         Assert.assertTrue(VictoryValidator.getWinner());
     }
 
-      /******************
+      /*****************
      * STANDARD RULES *
-    *****************/
+    ****************/
 
     @Test
     public void testNoEndOfGame1std(){
@@ -359,9 +420,15 @@ public class VictoryValidatorTestSuite {
                 false, true, false,
                 "", "");
         boolean result1,result2;
+        Game game = new Game("test", ruleSet, false, false);
         //When
-        result1 = VictoryValidator.validateEndOfGame(board,0,0,true, ruleSet);
-        result2 = VictoryValidator.validateEndOfGame(board,0,0,false, ruleSet);
+        game.setBoard(board);
+        game.setWhiteQueenMoves(0);
+        game.setBlackQueenMoves(0);
+        game.setActivePlayer(true);
+        result1 = VictoryValidator.validateEndOfGame(game);
+        game.setActivePlayer(false);
+        result2 = VictoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertFalse(result1);
         Assert.assertFalse(result2);
@@ -383,9 +450,15 @@ public class VictoryValidatorTestSuite {
                 false, true, false,
                 "", "");
         boolean result1,result2;
+        Game game = new Game("test", ruleSet, false, false);
         //When
-        result1 = VictoryValidator.validateEndOfGame(board,0,0,true, ruleSet);
-        result2 = VictoryValidator.validateEndOfGame(board,0,0,false, ruleSet);
+        game.setBoard(board);
+        game.setWhiteQueenMoves(0);
+        game.setBlackQueenMoves(0);
+        game.setActivePlayer(true);
+        result1 = VictoryValidator.validateEndOfGame(game);
+        game.setActivePlayer(true);
+        result2 = VictoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertFalse(result1);
         Assert.assertFalse(result2);
@@ -407,9 +480,15 @@ public class VictoryValidatorTestSuite {
                 false, true, false,
                 "", "");
         boolean result1,result2;
+        Game game = new Game("test", ruleSet, false, false);
         //When
-        result1 = VictoryValidator.validateEndOfGame(board,0,0,true, ruleSet);
-        result2 = VictoryValidator.validateEndOfGame(board,0,0,false, ruleSet);
+        game.setBoard(board);
+        game.setWhiteQueenMoves(0);
+        game.setBlackQueenMoves(0);
+        game.setActivePlayer(true);
+        result1 = VictoryValidator.validateEndOfGame(game);
+        game.setActivePlayer(false);
+        result2 = VictoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertFalse(result1);
         Assert.assertFalse(result2);
@@ -431,9 +510,15 @@ public class VictoryValidatorTestSuite {
                 false, true, false,
                 "", "");
         boolean result1,result2;
+        Game game = new Game("test", ruleSet, false, false);
         //When
-        result1 = VictoryValidator.validateEndOfGame(board,0,0,true, ruleSet);
-        result2 = VictoryValidator.validateEndOfGame(board,0,0,false, ruleSet);
+        game.setBoard(board);
+        game.setWhiteQueenMoves(0);
+        game.setBlackQueenMoves(0);
+        game.setActivePlayer(true);
+        result1 = VictoryValidator.validateEndOfGame(game);
+        game.setActivePlayer(false);
+        result2 = VictoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertFalse(result1);
         Assert.assertFalse(result2);
@@ -460,13 +545,19 @@ public class VictoryValidatorTestSuite {
                 .addFigure('H',3, new Pawn(false))
                 .addFigure('G',2, new Queen(false))
                 .build();
-        boolean result1,result2;
-        //When
         RulesSet ruleSet = new RulesSet(false, false, false,
                 false, true, false,
                 "", "");
-        result1 = VictoryValidator.validateEndOfGame(board,0,0,true, ruleSet);
-        result2 = VictoryValidator.validateEndOfGame(board,0,0,false, ruleSet);
+        boolean result1,result2;
+        Game game = new Game("test", ruleSet, false, false);
+        //When
+        game.setBoard(board);
+        game.setWhiteQueenMoves(0);
+        game.setBlackQueenMoves(0);
+        game.setActivePlayer(true);
+        result1 = VictoryValidator.validateEndOfGame(game);
+        game.setActivePlayer(false);
+        result2 = VictoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertFalse(result1);
         Assert.assertFalse(result2);
@@ -498,13 +589,19 @@ public class VictoryValidatorTestSuite {
                 .addFigure('H',1, new Pawn(true))
                 .addFigure('H',3, new Pawn(true))
                 .build();
-        boolean result1,result2;
-        //When
         RulesSet ruleSet = new RulesSet(false, false, false,
                 false, true, false,
                 "", "");
-        result1 = VictoryValidator.validateEndOfGame(board,0,0,true, ruleSet);
-        result2 = VictoryValidator.validateEndOfGame(board,0,0,false, ruleSet);
+        boolean result1,result2;
+        Game game = new Game("test", ruleSet, false, false);
+        //When
+        game.setBoard(board);
+        game.setWhiteQueenMoves(0);
+        game.setBlackQueenMoves(0);
+        game.setActivePlayer(true);
+        result1 = VictoryValidator.validateEndOfGame(game);
+        game.setActivePlayer(false);
+        result2 = VictoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertFalse(result1);
         Assert.assertFalse(result2);
@@ -527,12 +624,17 @@ public class VictoryValidatorTestSuite {
                 .addFigure('H',3, new Pawn(false))
                 .addFigure('G',2, new Queen(false))
                 .build();
-        boolean result;
-        //When
         RulesSet ruleSet = new RulesSet(false, false, false,
                 false, true, false,
                 "", "");
-        result = VictoryValidator.validateEndOfGame(board,0,0,true, ruleSet);
+        boolean result;
+        Game game = new Game("test", ruleSet, false, false);
+        //When
+        game.setBoard(board);
+        game.setWhiteQueenMoves(0);
+        game.setBlackQueenMoves(0);
+        game.setActivePlayer(true);
+        result = VictoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertTrue(result);
         Assert.assertFalse(VictoryValidator.isDraw());
@@ -556,12 +658,17 @@ public class VictoryValidatorTestSuite {
                 .addFigure('F',5, new Queen(true))
                 .addFigure('F',7, new Queen(true))
                 .build();
-        boolean result;
-        //When
         RulesSet ruleSet = new RulesSet(false, false, false,
                 false, true, false,
                 "", "");
-        result = VictoryValidator.validateEndOfGame(board,0,0,false, ruleSet);
+        boolean result;
+        Game game = new Game("test", ruleSet, false, false);
+        //When
+        game.setBoard(board);
+        game.setWhiteQueenMoves(0);
+        game.setBlackQueenMoves(0);
+        game.setActivePlayer(false);
+        result = VictoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertTrue(result);
         Assert.assertFalse(VictoryValidator.isDraw());
@@ -575,12 +682,17 @@ public class VictoryValidatorTestSuite {
                 .addFigure('A',2, new Queen(true))
                 .addFigure('H',7, new Queen(false))
                 .build();
-        boolean result;
-        //When
         RulesSet ruleSet = new RulesSet(false, false, false,
                 false, true, false,
                 "", "");
-        result = VictoryValidator.validateEndOfGame(board,16,15,true, ruleSet);
+        boolean result;
+        Game game = new Game("test", ruleSet, false, false);
+        //When
+        game.setBoard(board);
+        game.setWhiteQueenMoves(16);
+        game.setBlackQueenMoves(15);
+        game.setActivePlayer(true);
+        result = VictoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertTrue(result);
         Assert.assertTrue(VictoryValidator.isDraw());
@@ -597,12 +709,17 @@ public class VictoryValidatorTestSuite {
                 .addFigure('A',4, new Queen(true))
                 .addFigure('H',7, new Queen(true))
                 .build();
-        boolean result;
-        //When
         RulesSet ruleSet = new RulesSet(false, false, false,
                 false, true, false,
                 "", "");
-        result = VictoryValidator.validateEndOfGame(board,0,0,false, ruleSet);
+        boolean result;
+        Game game = new Game("test", ruleSet, false, false);
+        //When
+        game.setBoard(board);
+        game.setWhiteQueenMoves(0);
+        game.setBlackQueenMoves(0);
+        game.setActivePlayer(false);
+        result = VictoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertTrue(result);
         Assert.assertTrue(VictoryValidator.getWinner());
@@ -619,12 +736,17 @@ public class VictoryValidatorTestSuite {
                 .addFigure('A',4, new Queen(false))
                 .addFigure('H',7, new Queen(false))
                 .build();
-        boolean result;
-        //When
         RulesSet ruleSet = new RulesSet(false, false, false,
                 false, true, false,
                 "", "");
-        result = VictoryValidator.validateEndOfGame(board,0,0,true, ruleSet);
+        boolean result;
+        Game game = new Game("test", ruleSet, false, false);
+        //When
+        game.setBoard(board);
+        game.setWhiteQueenMoves(0);
+        game.setBlackQueenMoves(0);
+        game.setActivePlayer(true);
+        result = VictoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertTrue(result);
         Assert.assertFalse(VictoryValidator.getWinner());

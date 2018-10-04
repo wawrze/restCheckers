@@ -1,16 +1,10 @@
 package com.wawrze.restcheckers.gameplay.userInterface;
 
-import com.wawrze.restcheckers.gameplay.Game;
-import com.wawrze.restcheckers.gameplay.GameExecutor;
-import com.wawrze.restcheckers.gameplay.RulesSet;
+import com.wawrze.restcheckers.gameplay.*;
 import com.wawrze.restcheckers.gameplay.userInterface.dtos.*;
-import com.wawrze.restcheckers.gameplay.userInterface.mappers.BoardMapper;
-import com.wawrze.restcheckers.gameplay.userInterface.mappers.GameListMapper;
-import com.wawrze.restcheckers.gameplay.userInterface.mappers.GameProgressDetailsMapper;
-import com.wawrze.restcheckers.gameplay.userInterface.mappers.RulesSetsMapper;
-import com.wawrze.restcheckers.gameplay.RulesSets;
-import exceptions.httpExceptions.ForbiddenException;
-import exceptions.httpExceptions.MethodFailureException;
+import com.wawrze.restcheckers.gameplay.userInterface.mappers.*;
+import com.wawrze.restcheckers.service.dbservices.DBService;
+import exceptions.httpExceptions.*;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +22,7 @@ import java.util.stream.Collectors;
 public class GameEnvelope {
 
     @Autowired
-    private BoardMapper boardMapper;
+    private DBService dbService;
 
     @Autowired
     private RulesSets rules;
@@ -37,7 +31,7 @@ public class GameEnvelope {
     private RulesSetsMapper rulesSetsMapper;
 
     @Autowired
-    private GameProgressDetailsMapper gameProgressDetailsMapper;
+    private GameInfoMapper gameInfoMapper;
 
     @Autowired
     private GameListMapper gameListMapper;
@@ -50,41 +44,43 @@ public class GameEnvelope {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GameEnvelope.class);
 
-    private Map<String, Game> games = new HashMap<>();
+    private Map<Long, Game> games = new HashMap<>();
 
-    public void startNewGame(GameDto gameDto) throws ForbiddenException, MethodFailureException {
-        if(games.entrySet().stream()
-                .filter(entry -> entry.getKey().equalsIgnoreCase(gameDto.getName()))
-                .count() != 0) {
-            LOGGER.warn("Game \"" + gameDto.getName() + "\" already exist! Game not created.");
-            throw new ForbiddenException();
-        }
-        RulesSet rulesSet = rules.getRules().stream()
-                .filter(rule -> rule.getName().equals(gameDto.getRulesName()))
-                .collect(Collectors.toList()).get(0);
-        boolean isBlackAIPlayer = gameDto.getIsBlackAIPlayer().equals("true");
-        boolean isWhiteAIPlayer = gameDto.getIsWhiteAIPlayer().equals("true");
-        Game game = new Game(
+    public Long startNewGame(GameDto gameDto) throws MethodFailureException {
+        Game game;
+        game = new Game(
                 gameDto.getName(),
-                rulesSet,
-                isBlackAIPlayer,
-                isWhiteAIPlayer
+                dbService.getRulesSetByName(gameDto.getRulesName()),
+                gameDto.getIsBlackAIPlayer().equals("true"),
+                gameDto.getIsWhiteAIPlayer().equals("true")
         );
         if(game == null) {
             LOGGER.warn("Unknown error! Game not created!");
-            throw new MethodFailureException();
+            throw new MethodFailureException("Unknown error! Game not created!");
         }
-        games.put(gameDto.getName(), game);
-        LOGGER.info("Game \"" + game.getName() + "\" created.");
+        dbService.saveGame(game);
+        games.put(game.getId(), game);
+        LOGGER.info("Game \"" + game.getName() + "\" (id " + game.getId() + ") created.");
+        return game.getId();
+    }
+
+    public void playGame(Long gameId) throws ForbiddenException {
+        Game game = games.get(gameId);
+        if(game == null) {
+            LOGGER.warn("There is no game with id = " + gameId + "! Game not started!");
+            throw new MethodFailureException("There is no game with id = " + gameId + "! Game not started!");
+        }
+        LOGGER.info("Starting game \"" + game.getName() + "\" (id " + game.getId() + ").");
+        game.updateLastAction();
         gameExecutor.play(game);
     }
 
-    public BoardDto sendMove(String gameName, MoveDto moveDto) throws ForbiddenException {
+    public GameInfoDto sendMove(Long gameId, MoveDto moveDto) throws MethodFailureException {
         String s = moveDto.getMove();
-        Game game = games.get(gameName);
+        Game game = games.get(gameId);
         if(game == null) {
-            LOGGER.warn("There is no game named \"" + gameName + "\"! Move not served!");
-            throw new ForbiddenException();
+            LOGGER.warn("There is no game with id = \"" + gameId + "\"! Move not served!");
+            throw new MethodFailureException("There is no game with id = \"" + gameId + "\"! Move not served!");
         }
         game.getInQueue().offer(s);
         try {
@@ -93,29 +89,21 @@ public class GameEnvelope {
         catch(InterruptedException e) {
             LOGGER.warn("SLEEP Exception: " + e.getMessage());
         }
-        LOGGER.info("New move (game: " + gameName + ", move: " + moveDto.getMove() + ") served.");
-        return boardMapper.mapToBoardDto(game.getBoard(), game.getGameStatus(), game.isActivePlayer(),
-                game.isWhiteAIPlayer(), game.isBlackAIPlayer(), game.getMoves());
-    }
-
-    public BoardDto getBoard(String gameName) throws ForbiddenException {
-        Game game = games.get(gameName);
-        if(game == null) {
-            LOGGER.warn("There is no game named \"" + gameName + "\"! Board not sent!");
-            throw new ForbiddenException();
-        }
-        LOGGER.info("Board (game \"" + gameName + "\") sent.");
-        return boardMapper.mapToBoardDto(game.getBoard(), game.getGameStatus(), game.isActivePlayer(),
-                game.isWhiteAIPlayer(), game.isBlackAIPlayer(), game.getMoves());
+        LOGGER.info("New move (game: \"" + game.getName() + "\" (id " + game.getId() + "), move: "
+                + moveDto.getMove() + ") served.");
+        game.updateLastAction();
+        dbService.saveGame(game);
+        LOGGER.info("Game: " + game.getName() + " (" + game.getId() + ") saved to database.");
+        return gameInfoMapper.mapToGameProgressDetailsDto(game);
     }
 
     public RulesSetsDto getRulesSets() {
         LOGGER.info("Rules sets sent.");
-        return rulesSetsMapper.mapToRulesSetsDto(rules);
+        return rulesSetsMapper.mapToRulesSetsDto();
     }
 
-    public RulesSetDto getRulesSet(String rulesSetName) throws ForbiddenException {
-        List<RulesSet> list = rules.getRules().stream()
+    public RulesSetDto getRulesSet(String rulesSetName) throws MethodFailureException {
+        List<RulesSet> list = rules.updateRules().stream()
                 .filter(rule -> rule.getName().equals(rulesSetName))
                 .collect(Collectors.toList());
         RulesSet rulesSet = list.size() == 0 ? null : list.get(0);
@@ -127,31 +115,35 @@ public class GameEnvelope {
         return rulesSetsMapper.mapToRulesSetDto(rulesSet);
     }
 
-    public GameProgressDetailsDto getGameProgressDetails(String gameName) throws ForbiddenException {
-        Game game = games.get(gameName);
+    public GameInfoDto getGameInfo(Long gameId) throws MethodFailureException {
+        Game game = games.get(gameId);
         if(game == null) {
-            LOGGER.warn("There is no game named \"" + gameName + "\"! Game details not sent!");
-            throw new ForbiddenException();
+            LOGGER.warn("There is no game with id = \"" + gameId + "\"! Game details not sent!");
+            throw new MethodFailureException("There is no game with id = \"" + gameId + "\"! Game details not sent!");
         }
-        GameProgressDetailsDto gameProgressDetailsDto = gameProgressDetailsMapper.mapToGameProgressDetailsDto(game);
+        GameInfoDto gameInfoDto = gameInfoMapper.mapToGameProgressDetailsDto(game);
         if(game.isFinished()) {
-            games.remove(gameName);
-            LOGGER.info("Game \"" + gameName + "\" finish details sent. Game removed.");
+            games.remove(gameId);
+            game.updateLastAction();
+            dbService.saveGame(game);
+            LOGGER.info("Game \"" + game.getName() + "\" (id " + game.getId() + ") finish details sent. " +
+                    "Game archived to DB.");
         }
         else {
-            LOGGER.info("Game \"" + gameName + "\" details sent.");
+            LOGGER.info("Game \"" + game.getName() + "\" (id " + game.getId() + ") details sent.");
         }
-        return gameProgressDetailsDto;
+        game.updateLastAction();
+        return gameInfoDto;
     }
 
-    public void deleteGame(String gameName) throws ForbiddenException {
-        Game game = games.get(gameName);
+    public void deleteGame(Long gameId) throws MethodFailureException {
+        Game game = games.get(gameId);
         if(game == null) {
-            LOGGER.warn("There is no game named \"" + gameName + "\"! Game not removed!");
-            throw new ForbiddenException();
+            LOGGER.warn("There is no game with id = \"" + gameId + "\"! Game not removed!");
+            throw new MethodFailureException("There is no game with id = \"" + gameId + "\"! Game not removed!");
         }
-        games.remove(gameName);
-        LOGGER.info("Game  \"" + gameName + "\" removed.");
+        games.remove(gameId);
+        LOGGER.info("Game  \"" + game.getName() + "\" (id " + game.getId() + ") removed.");
     }
 
     public GameListDto getGameList() {

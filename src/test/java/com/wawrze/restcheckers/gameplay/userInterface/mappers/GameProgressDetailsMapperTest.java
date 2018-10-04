@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 public class GameProgressDetailsMapperTest {
 
     @Autowired
-    GameProgressDetailsMapper gameProgressDetailsMapper;
+    GameInfoMapper gameInfoMapper;
 
     @Autowired
     RulesSets rulesSets;
@@ -49,13 +49,13 @@ public class GameProgressDetailsMapperTest {
         //Given
         Game game = new Game(
                 "some name",
-                rulesSets.getRules().get(0),
+                rulesSets.updateRules().get(0),
                 true,
                 true
         );
         GameProgressDetailsDto gameProgressDetailsDto = new GameProgressDetailsDto();
         //When
-        gameProgressDetailsDto = gameProgressDetailsMapper.mapToGameProgressDetailsDto(game);
+        gameProgressDetailsDto = gameInfoMapper.mapToGameProgressDetailsDto(game);
         //Then
         assertEquals(0, gameProgressDetailsDto.getMoves());
         assertEquals(0, gameProgressDetailsDto.getBlackQueenMoves());

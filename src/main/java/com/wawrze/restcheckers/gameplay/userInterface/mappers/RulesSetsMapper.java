@@ -4,6 +4,7 @@ import com.wawrze.restcheckers.gameplay.RulesSet;
 import com.wawrze.restcheckers.gameplay.userInterface.dtos.RulesSetDto;
 import com.wawrze.restcheckers.gameplay.userInterface.dtos.RulesSetsDto;
 import com.wawrze.restcheckers.gameplay.RulesSets;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
@@ -11,8 +12,11 @@ import java.util.stream.Collectors;
 @Component
 public class RulesSetsMapper {
 
-    public RulesSetsDto mapToRulesSetsDto(RulesSets rulesSets) {
-        return new RulesSetsDto(rulesSets.getRules().stream()
+    @Autowired
+    RulesSets rulesSets;
+
+    public RulesSetsDto mapToRulesSetsDto() {
+        return new RulesSetsDto(rulesSets.updateRules().stream()
                 .map(this::mapToRulesSetDto)
                 .collect(Collectors.toList()));
     }

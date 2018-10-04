@@ -4,13 +4,13 @@ import com.wawrze.restcheckers.figures.Figure;
 import com.wawrze.restcheckers.figures.FigureFactory;
 import lombok.NoArgsConstructor;
 
-//import javax.persistence.*;
+import javax.persistence.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.IntStream;
 
-//@Entity
-//@Table(name = "boards")
+@Entity
+@Table(name = "boards")
 @NoArgsConstructor
 public class Board {
 
@@ -24,7 +24,7 @@ public class Board {
         this.rows = rows;
     }
 
-//    @Transient
+    @Transient
     public Board getNewBoard() {
         return new BoardBuilder()
                 .addFigure('A', 2, figureFactory.getNewFigure(true, Figure.PAWN))
@@ -91,7 +91,7 @@ public class Board {
 
     }
 
-//    @Transient
+    @Transient
     public Figure getFigure(char row, int col) {
         return this.rows.get(row).getFigure(col);
     }
@@ -100,25 +100,74 @@ public class Board {
         this.rows.get(row).setFigure(col, figure);
     }
 
-//    @Transient
+    @Transient
     public Map<Character, BoardRow> getRows() {
         return rows;
     }
 
-//    @Column(name = "board")
-    public String getStringRepresentation() {
-        return "test";
-    }
-
-    public void setStringRepresentation(String stringRepresentation) {
-        System.out.println(stringRepresentation);
-    }
-
-//    @Column(name = "id")
-//    @GeneratedValue
-//    @Id
+    @Column(name = "id")
+    @GeneratedValue
+    @Id
     public Long getId() {
         return id;
+    }
+
+    @Column(name = "string_representation")
+    public String getStringRepresentation() {
+        String result = "";
+        for(int i = 65;i < 73;i++) {
+            for(int j = 1;j < 9;j++) {
+                Figure f = rows.get((char) i).getFigures().get(j);
+                if (f.getFigureName().equals(Figure.PAWN))
+                    result += "p";
+                else if (f.getFigureName().equals(Figure.QUEEN))
+                    result += "q";
+                else
+                    result += "n";
+                if(f.getColor())
+                    result += "b";
+                else
+                    result += "w";
+            }
+        }
+        return result;
+}
+
+    public void setStringRepresentation(String stringRepresentation) {
+        char[] string = stringRepresentation.toCharArray();
+        Board board = new Board.BoardBuilder().build();
+        int c = 0;
+        for(int i = 65;i < 73;i++) {
+            for(int j = 1;j < 9;j++) {
+                Figure f;
+                if(string[c] == 'p') {
+                    c++;
+                    if(string[c] == 'b')
+                        f = figureFactory.getNewFigure(true, Figure.PAWN);
+                    else
+                        f = figureFactory.getNewFigure(false, Figure.PAWN);
+                    c++;
+                }
+                else if(string[c] == 'q') {
+                    c++;
+                    if(string[c] == 'b')
+                        f = figureFactory.getNewFigure(true, Figure.QUEEN);
+                    else
+                        f = figureFactory.getNewFigure(false, Figure.QUEEN);
+                    c++;
+                }
+                else {
+                    c++;
+                    if(string[c] == 'b')
+                        f = figureFactory.getNewFigure(true, Figure.NONE);
+                    else
+                        f = figureFactory.getNewFigure(false, Figure.NONE);
+                    c++;
+                }
+                board.setFigure((char) i, j, f);
+            }
+        }
+        this.rows = board.getRows();
     }
 
     public void setId(Long id) {

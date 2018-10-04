@@ -54,19 +54,19 @@ public class GameListMapperTest {
         //Given
         gameEnvelope.getGames().put("game1", new Game(
                 "game1",
-                rulesSets.getRules().get(0),
+                rulesSets.updateRules().get(0),
                 false,
                 false
         ));
         gameEnvelope.getGames().put("game2", new Game(
                 "game2",
-                rulesSets.getRules().get(1),
+                rulesSets.updateRules().get(1),
                 true,
                 true
         ));
         gameEnvelope.getGames().put("game3", new Game(
                 "game3",
-                rulesSets.getRules().get(2),
+                rulesSets.updateRules().get(2),
                 false,
                 true
         ));

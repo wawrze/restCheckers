@@ -290,3 +290,7 @@ img {
     font-size: x-large;
     font-weight: 900;
 }
+
+.always-hidden {
+    display: none;
+}

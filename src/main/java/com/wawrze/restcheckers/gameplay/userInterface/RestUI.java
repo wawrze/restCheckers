@@ -77,8 +77,8 @@ public class RestUI  {
         game.setGameStatus("Incorrect move format! Proper format example: E4-D5");
     }
 
-    public void gameAlreadyExist(Game game, String gameName) {
-        game.setGameStatus("Game \"" + gameName + "\" already exist. Game resumed.");
+    public void gameAlreadyExist(Game game) {
+        game.setGameStatus("Game \"" + game.getName() + "\" already exist. Game resumed.");
     }
 
     private void validate(String s) throws IncorrectMoveFormat {

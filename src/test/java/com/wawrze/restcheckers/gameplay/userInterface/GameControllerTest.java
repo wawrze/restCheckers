@@ -121,7 +121,7 @@ public class GameControllerTest {
         //Given
         rulesSets = new RulesSets();
         rulesSetsMapper = new RulesSetsMapper();
-        RulesSetDto rulesSetDto = rulesSetsMapper.mapToRulesSetDto(rulesSets.getRules().get(0));
+        RulesSetDto rulesSetDto = rulesSetsMapper.mapToRulesSetDto(rulesSets.updateRules().get(0));
         when(gameEnvelope.getRulesSet("classic")).thenReturn(rulesSetDto);
         //When & Then
         mockMvc.perform(get("/game/getRulesSet?rulesSetName=classic")

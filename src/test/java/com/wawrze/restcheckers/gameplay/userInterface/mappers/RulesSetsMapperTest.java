@@ -48,7 +48,7 @@ public class RulesSetsMapperTest {
     @Test
     public void testMapToRulesSetDto() {
         //Given
-        RulesSet rulesSet = rulesSets.getRules().get(0);
+        RulesSet rulesSet = rulesSets.updateRules().get(0);
         RulesSetDto rulesSetDto = new RulesSetDto();
         //When
         rulesSetDto = rulesSetsMapper.mapToRulesSetDto(rulesSet);
@@ -70,7 +70,7 @@ public class RulesSetsMapperTest {
         //When
         rulesSetsDto = rulesSetsMapper.mapToRulesSetsDto(rulesSets);
         //Then
-        assertEquals(rulesSets.getRules().size(), rulesSetsDto.getRules().size());
+        assertEquals(rulesSets.updateRules().size(), rulesSetsDto.getRules().size());
     }
 
 }
