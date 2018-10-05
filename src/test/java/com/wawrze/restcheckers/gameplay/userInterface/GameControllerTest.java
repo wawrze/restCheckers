@@ -3,10 +3,8 @@ package com.wawrze.restcheckers.gameplay.userInterface;
 import com.google.gson.Gson;
 import com.wawrze.restcheckers.board.Board;
 import com.wawrze.restcheckers.gameplay.FinishedGame;
-import com.wawrze.restcheckers.gameplay.RulesSets;
 import com.wawrze.restcheckers.gameplay.userInterface.dtos.*;
 import com.wawrze.restcheckers.gameplay.userInterface.mappers.BoardMapper;
-import com.wawrze.restcheckers.gameplay.userInterface.mappers.RulesSetsMapper;
 import exceptions.httpExceptions.MethodFailureException;
 import org.junit.*;
 import org.junit.runner.RunWith;
@@ -41,8 +39,6 @@ public class GameControllerTest {
 
     private static int counter = 1;
 
-    private RulesSetsMapper rulesSetsMapper;
-    private RulesSets rulesSets;
     private Gson gson;
 
     @BeforeClass
@@ -58,8 +54,6 @@ public class GameControllerTest {
     @Before
     public void before(){
         System.out.println("Test #" + counter + ": started");
-        rulesSetsMapper = new RulesSetsMapper();
-        rulesSets = new RulesSets();
         gson = new Gson();
     }
 
@@ -98,7 +92,7 @@ public class GameControllerTest {
         );
         when(gameEnvelope.getGameInfo(anyLong())).thenReturn(gameInfoDto);
         //When & Then
-        mockMvc.perform(get("/game/getGameInfo?gameId=1")
+        mockMvc.perform(get("/v1/games/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", is("name")))
@@ -114,7 +108,7 @@ public class GameControllerTest {
         //Given
         when(gameEnvelope.getGameInfo(anyLong())).thenThrow(new MethodFailureException(""));
         //When & Then
-        mockMvc.perform(get("/game/getGameInfo?gameId=1")
+        mockMvc.perform(get("/v1/games/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(420));
         verify(gameEnvelope, times(1)).getGameInfo(any());
@@ -129,7 +123,7 @@ public class GameControllerTest {
         rulesSetsDto.getRules().add(new RulesSetDto());
         when(gameEnvelope.getRulesSets()).thenReturn(rulesSetsDto);
         //When & Then
-        mockMvc.perform(get("/game/getRulesSets")
+        mockMvc.perform(get("/v1/rules")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(200))
                 .andExpect(jsonPath("$.rules", hasSize(3)));
@@ -151,7 +145,7 @@ public class GameControllerTest {
         );
         when(gameEnvelope.getRulesSet("classic")).thenReturn(rulesSetDto);
         //When & Then
-        mockMvc.perform(get("/game/getRulesSet?rulesSetName=classic")
+        mockMvc.perform(get("/v1/rules/classic")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", is("classic")))
@@ -166,7 +160,7 @@ public class GameControllerTest {
         //Given
         when(gameEnvelope.getRulesSet("classic")).thenThrow(new MethodFailureException(""));
         //When & Then
-        mockMvc.perform(get("/game/getRulesSet?rulesSetName=classic")
+        mockMvc.perform(get("/v1/rules/classic")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(420));
         verify(gameEnvelope, times(1)).getRulesSet(any());
@@ -226,7 +220,7 @@ public class GameControllerTest {
         GameListDto gameListDto = new GameListDto(gameList);
         when(gameEnvelope.getGameList()).thenReturn(gameListDto);
         //When & Then
-        mockMvc.perform(get("/game/getGames")
+        mockMvc.perform(get("/v1/games")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.gamesList", hasSize(3)))
@@ -253,7 +247,7 @@ public class GameControllerTest {
         );
         String jsonContent = gson.toJson(gameDto);
         //When & Then
-        mockMvc.perform(post("/game/newGame")
+        mockMvc.perform(post("/v1/games/new")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .content(jsonContent))
@@ -273,7 +267,7 @@ public class GameControllerTest {
         String jsonContent = gson.toJson(gameDto);
         doThrow(new MethodFailureException("")).when(gameEnvelope).startNewGame(any());
         //When & Then
-        mockMvc.perform(post("/game/newGame")
+        mockMvc.perform(post("/v1/games/new")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .content(jsonContent))
@@ -286,7 +280,7 @@ public class GameControllerTest {
         //Given
         doNothing().when(gameEnvelope).playGame(anyLong());
         //When & Then
-        mockMvc.perform(post("/game/playGame?gameId=1")
+        mockMvc.perform(post("/v1/games/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
         verify(gameEnvelope, times(1)).playGame(any());
@@ -297,7 +291,7 @@ public class GameControllerTest {
         //Given
         doThrow(new MethodFailureException("")).when(gameEnvelope).playGame(anyLong());
         //When & Then
-        mockMvc.perform(post("/game/playGame?gameId=1")
+        mockMvc.perform(post("/v1/games/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(420));
         verify(gameEnvelope, times(1)).playGame(any());
@@ -311,7 +305,7 @@ public class GameControllerTest {
         String jsonContent = gson.toJson(moveDto);
         when(gameEnvelope.sendMove(1L, moveDto)).thenReturn(gameInfoDto);
         //When & Then
-        mockMvc.perform(post("/game/sendMove?gameId=1")
+        mockMvc.perform(put("/v1/games/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .content(jsonContent))
@@ -326,7 +320,7 @@ public class GameControllerTest {
         String jsonContent = gson.toJson(moveDto);
         when(gameEnvelope.sendMove(anyLong(), any())).thenThrow(new MethodFailureException(""));
         //When & Then
-        mockMvc.perform(post("/game/sendMove?gameId=1")
+        mockMvc.perform(put("/v1/games/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .content(jsonContent))
@@ -339,7 +333,7 @@ public class GameControllerTest {
         //Given
         doNothing().when(gameEnvelope).deleteGame(anyLong());
         //When & Then
-        mockMvc.perform(delete("/game/deleteGame?gameId=1")
+        mockMvc.perform(delete("/v1/games/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
         verify(gameEnvelope, times(1)).deleteGame(any());
@@ -350,7 +344,7 @@ public class GameControllerTest {
         //Given
         doThrow(new MethodFailureException("")).when(gameEnvelope).deleteGame(anyLong());
         //When & Then
-        mockMvc.perform(delete("/game/deleteGame?gameId=1")
+        mockMvc.perform(delete("/v1/games/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(420));
         verify(gameEnvelope, times(1)).deleteGame(any());
@@ -365,7 +359,7 @@ public class GameControllerTest {
         list.add(new FinishedGame());
         when(gameEnvelope.getFinishedGames()).thenReturn(list);
         //When & Then
-        mockMvc.perform(get("/game/getFinishedGames")
+        mockMvc.perform(get("/v1/games/finished")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(status().isOk());

@@ -43,6 +43,7 @@ public class EmailServiceTest {
         counter++;
     }
 
+    @Ignore
     @Test
     public void shouldSentEmail() {
         //Given

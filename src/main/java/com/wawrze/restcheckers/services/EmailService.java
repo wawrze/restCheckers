@@ -1,5 +1,6 @@
 package com.wawrze.restcheckers.services;
 
+import com.wawrze.restcheckers.config.AppInfoConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,9 @@ public class EmailService {
 
     @Autowired
     private JavaMailSender javaMailSender;
+
+    @Autowired
+    AppInfoConfig appInfoConfig;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EmailService.class);
 
@@ -35,7 +39,7 @@ public class EmailService {
             messageHelper.setTo(receiverEmail);
             messageHelper.setSubject(subject);
             messageHelper.setText(message, true);
-            messageHelper.setFrom("mateusz.wawreszuk@gmail.com", "RestCheckers Application");
+            messageHelper.setFrom(appInfoConfig.getAppEmail(), "RestCheckers Application");
         };
     }
 

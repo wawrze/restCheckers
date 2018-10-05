@@ -1,5 +1,6 @@
 package com.wawrze.restcheckers.services;
 
+import com.wawrze.restcheckers.config.AppInfoConfig;
 import com.wawrze.restcheckers.gameplay.Game;
 import com.wawrze.restcheckers.gameplay.userInterface.GameEnvelope;
 import com.wawrze.restcheckers.services.dbservices.DBService;
@@ -32,6 +33,9 @@ public class Scheduler {
 
     @Autowired
     MailCreatorService mailCreatorService;
+
+    @Autowired
+    AppInfoConfig appInfoConfig;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Scheduler.class);
 
@@ -80,7 +84,7 @@ public class Scheduler {
 
     @Scheduled(cron = "0 0 10 * * *")
     private void sentDailyEmail() {
-        String to = "mateusz.wawreszuk@gmail.com";
+        String to = appInfoConfig.getOwnerEmail();
         String subject = "RestCheckers - daily info";
         emailService.send(to, subject, mailCreatorService.buildDailyEmail());
         LOGGER.info("Daily email sent.");

@@ -20,4 +20,7 @@ public class AppInfoConfig {
     @Value("${info.app.owner.company}")
     private String ownerCompany;
 
+    @Value("${spring.mail.username}" + "@gmail.com")
+    private String appEmail;
+
 }

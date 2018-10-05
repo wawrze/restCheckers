@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
 
-    const apiRoot = 'http://localhost:8080/game/'
+    const apiRoot = 'http://localhost:8080/v1/'
     const board = $('[board]');
     const gStatus = $('[gameStatus]');
     const mHistory = $('[movesHistory]');
@@ -24,7 +24,7 @@
     getAllAvailableRulesSets();
 
     function getAllAvailableRulesSets() {
-        var requestUrl = apiRoot + 'getRulesSets';
+        var requestUrl = apiRoot + 'rules';
 
         $.ajax({
             url: requestUrl,
@@ -54,7 +54,7 @@
 
     function getSelectedRulesSet() {
         var gameRulesName = $('[rules-set-select]').val()
-        var requestUrl = apiRoot + 'getRulesSet?rulesSetName=' + gameRulesName;
+        var requestUrl = apiRoot + 'rules/' + gameRulesName;
 
         $.ajax({
             url: requestUrl,
@@ -78,7 +78,7 @@
     }
     
     function createGame() {
-        const requestUrl = apiRoot + 'newGame';
+        const requestUrl = apiRoot + 'games/new';
         
         gameName = $('[game-name]').val();
         var gameRulesName = $('[rules-set-select]').val();
@@ -149,7 +149,7 @@
     }
 
     function playGame() {
-        const requestUrl = apiRoot + 'playGame?gameId=' + $('[game-id]').text();
+        const requestUrl = apiRoot + 'games/' + $('[game-id]').text();
 
         $.ajax({
             url: requestUrl,
@@ -159,7 +159,7 @@
     }
 
     function sendMove() {
-        var requestUrl = apiRoot + 'sendMove?gameId=' + $('[game-id]').text();
+        var requestUrl = apiRoot + 'games/' + $('[game-id]').text();
         var moveToSend;
 
         if ($('[black-player-select]').val() == "Computer" && $('[white-player-select]').val() == "Computer") {
@@ -171,7 +171,7 @@
 
         $.ajax({
             url: requestUrl,
-            method: 'POST',
+            method: 'PUT',
             processData: false,
             contentType: "application/json;charset=UTF-8",
             dataType: 'json',
@@ -195,7 +195,7 @@
     }
 
     function getGameInfo() {
-        const requestUrl = apiRoot + 'getGameInfo?gameId=' + $('[game-id]').text();
+        const requestUrl = apiRoot + 'games/' + $('[game-id]').text();
         
         $.ajax({
             url: requestUrl,
@@ -360,7 +360,7 @@
         $('[next-move]')[0].style.display = 'none';
         $('[send-move-button]')[0].style.display = 'none';
 
-        var requestUrl = apiRoot + 'deleteGame?gameId=' + gameId;
+        var requestUrl = apiRoot + 'games/' + $('[game-id]').text();
 
         $.ajax({
             url: requestUrl,
