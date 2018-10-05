@@ -13,6 +13,7 @@ public class RestUI  {
         if(game.getInQueue().isEmpty())
             return null;
         s = game.getInQueue().poll();
+        s.length();
         s = s.toLowerCase();
         String[] result;
         for(String o : options) {
