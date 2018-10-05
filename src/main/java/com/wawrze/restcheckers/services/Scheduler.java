@@ -27,6 +27,12 @@ public class Scheduler {
     @Autowired
     DBService dbService;
 
+    @Autowired
+    EmailService emailService;
+
+    @Autowired
+    MailCreatorService mailCreatorService;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(Scheduler.class);
 
     @Scheduled(fixedDelay = 1500000)
@@ -62,7 +68,22 @@ public class Scheduler {
                     dbService.deleteGame(game.getId());
                     LOGGER.info("Game \"" + game.getName() + "\" deleted from DB.");
                 });
+        games.stream()
+                .filter(game -> game.isFinished())
+                .forEach(game -> {
+                    dbService.saveFinishedGame(game);
+                    dbService.deleteGame(game.getId());
+                    LOGGER.info("Game \"" + game.getName() + "\" moved to finished games.");
+                });
         LOGGER.info("Cleaning finished.");
+    }
+
+    @Scheduled(cron = "0 0 10 * * *")
+    private void sentDailyEmail() {
+        String to = "mateusz.wawreszuk@gmail.com";
+        String subject = "RestCheckers - daily info";
+        emailService.send(to, subject, mailCreatorService.buildDailyEmail());
+        LOGGER.info("Daily email sent.");
     }
 
 }

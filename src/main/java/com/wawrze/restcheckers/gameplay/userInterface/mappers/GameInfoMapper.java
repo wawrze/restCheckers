@@ -141,4 +141,14 @@ public class GameInfoMapper {
         }
     }
 
+    public String mapDateTimeToString(LocalDateTime dateTime) {
+        String s = "" + dateTime.getYear();
+        s += ("-" + (dateTime.getMonthValue() < 10 ? "0" : "") + dateTime.getMonthValue());
+        s += ("-" + (dateTime.getDayOfMonth() < 10 ? "0" : "") + dateTime.getDayOfMonth());
+        s += (" " + (dateTime.getHour() < 10 ? "0" : "") + dateTime.getHour());
+        s += (":" + (dateTime.getMinute() < 10 ? "0" : "") + dateTime.getMinute());
+        s += (":" + (dateTime.getSecond() < 10 ? "0" : "") + dateTime.getSecond());
+        return s;
+    }
+
 }

@@ -156,14 +156,8 @@ public class GameEnvelope {
                     LOGGER.info("\t\tRules set name: " + game.getRulesSet().getName());
                     LOGGER.info("\t\tBlack player: " + (game.isBlackAIPlayer() ? "computer" : "human"));
                     LOGGER.info("\t\tWhite player: " + (game.isWhiteAIPlayer() ? "computer" : "human"));
-                    LOGGER.info("\t\tStart time: " + game.getStartTime().getYear() + "-" +
-                            game.getStartTime().getMonthValue() + "-" + game.getStartTime().getDayOfMonth() + " "
-                    + game.getStartTime().getHour() + ":" + game.getStartTime().getMinute() + ":"
-                    + game.getStartTime().getSecond());
-                    LOGGER.info("\t\tFinish time: " + game.getFinishTime().getYear() + "-" +
-                            game.getFinishTime().getMonthValue() + "-" + game.getFinishTime().getDayOfMonth() + " "
-                            + game.getFinishTime().getHour() + ":" + game.getFinishTime().getMinute() + ":"
-                            + game.getFinishTime().getSecond());
+                    LOGGER.info("\t\tStart time: " + gameInfoMapper.mapDateTimeToString(game.getStartTime()));
+                    LOGGER.info("\t\tFinish time: " + gameInfoMapper.mapDateTimeToString(game.getFinishTime()));
                 });
         LOGGER.info("<================================");
         return finishedGames;
