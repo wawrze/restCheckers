@@ -1,4 +1,4 @@
-package com.wawrze.restcheckers.service.dbservices;
+package com.wawrze.restcheckers.services.dbservices;
 
 import com.wawrze.restcheckers.gameplay.FinishedGame;
 import org.springframework.data.repository.CrudRepository;
@@ -16,5 +16,8 @@ public interface FinishedGameDao extends CrudRepository<FinishedGame, Long> {
 
     @Override
     List<FinishedGame> findAll();
+
+    @Override
+    void delete(Long id);
 
 }

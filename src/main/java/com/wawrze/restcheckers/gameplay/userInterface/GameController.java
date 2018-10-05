@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/game")
 @CrossOrigin(origins = "*")
-public class GameController {
+public class /**/GameController {
 
     @Autowired
     GameEnvelope gameEnvelope;

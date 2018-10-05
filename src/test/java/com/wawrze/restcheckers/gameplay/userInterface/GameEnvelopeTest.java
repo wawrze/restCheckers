@@ -1,15 +1,20 @@
 package com.wawrze.restcheckers.gameplay.userInterface;
 
+import com.wawrze.restcheckers.gameplay.FinishedGame;
 import com.wawrze.restcheckers.gameplay.Game;
+import com.wawrze.restcheckers.gameplay.RulesSet;
 import com.wawrze.restcheckers.gameplay.RulesSets;
 import com.wawrze.restcheckers.gameplay.userInterface.dtos.*;
-import exceptions.httpExceptions.ForbiddenException;
+import com.wawrze.restcheckers.services.dbservices.DBService;
+import exceptions.httpExceptions.MethodFailureException;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.IntStream;
 
 import static org.junit.Assert.*;
@@ -23,6 +28,9 @@ public class GameEnvelopeTest {
 
     @Autowired
     RulesSets rulesSets;
+
+    @Autowired
+    DBService dbService;
 
     private static int counter = 1;
 
@@ -48,7 +56,6 @@ public class GameEnvelopeTest {
         counter++;
     }
 
-    @Ignore
     @Test
     public void shouldStartNewGame() {
         //Given
@@ -59,64 +66,42 @@ public class GameEnvelopeTest {
                 "false"
         );
         //When
-        gameEnvelope.startNewGame(gameDto);
+        Long id = gameEnvelope.startNewGame(gameDto);
         //Then
         assertEquals(1, gameEnvelope.getGames().size());
-    }
-
-    @Test
-    public void shouldNotStartNewGame() {
-        //Given
-        GameDto gameDto = new GameDto(
-                "test1",
-                "classic",
-                "false",
-                "false"
-        );
-        Game game = new Game(gameDto.getName(), rulesSets.updateRules().get(0), false, false);
-        game.getInQueue().offer("x");
-        gameEnvelope.getGames().put(gameDto.getName(), game);
-        boolean result = false;
-        //When
-        try {
-            gameEnvelope.startNewGame(gameDto);
-        }
-        catch(ForbiddenException e) {
-            result = true;
-        }
-        //Then
-        assertTrue(result);
+        //Clean up
+        dbService.deleteGame(id);
     }
 
     @Test
     public void shouldServeNewMove() {
         //Given
         MoveDto moveDto = new MoveDto("F1-E2");
-        String gameName = "game name";
-        Game game = new Game(
-                gameName,
-                rulesSets.updateRules().get(0),
-                false,
-                false
+        GameDto gameDto = new GameDto(
+                "test",
+                "classic",
+                "false",
+                "false"
         );
-        gameEnvelope.getGames().put(gameName, game);
+        Long id = gameEnvelope.startNewGame(gameDto);
         //When
-        BoardDto boardDto = gameEnvelope.sendMove(gameName, moveDto);
+        GameInfoDto gameInfoDto = gameEnvelope.sendMove(id, moveDto);
         //Then
-        assertEquals("Game started.", boardDto.getGameStatus());
+        assertEquals("Game started.", gameInfoDto.getGameStatus());
+        //Clean up
+        dbService.deleteGame(id);
     }
 
     @Test
     public void shouldNotServeNewMove() {
         //Given
         MoveDto moveDto = new MoveDto("F1-E2");
-        String gameName = "game name";
         boolean result = false;
         //When
         try {
-            gameEnvelope.sendMove(gameName, moveDto);
+            gameEnvelope.sendMove(0L, moveDto);
         }
-        catch(ForbiddenException e) {
+        catch(MethodFailureException e) {
             result = true;
         }
         //Then
@@ -124,32 +109,33 @@ public class GameEnvelopeTest {
     }
 
     @Test
-    public void shouldGetBoard() {
+    public void shouldGetGameInfo() {
         //Given
-        String gameName = "game name";
-        Game game = new Game(
-                gameName,
-                rulesSets.updateRules().get(0),
-                false,
-                false
+        GameDto gameDto = new GameDto(
+                "test",
+                "classic",
+                "false",
+                "false"
         );
-        gameEnvelope.getGames().put(gameName, game);
         //When
-        BoardDto boardDto = gameEnvelope.getBoard(gameName);
+        Long id = gameEnvelope.startNewGame(gameDto);
+        gameEnvelope.getGames().get(id).updateLastAction();
+        GameInfoDto gameInfoDto = gameEnvelope.getGameInfo(id);
         //Then
-        assertEquals("Game started.", boardDto.getGameStatus());
+        assertEquals("Game started.", gameInfoDto.getGameStatus());
+        //Clean up
+        dbService.deleteGame(id);
     }
 
     @Test
-    public void shouldNotGetBoard() {
+    public void shouldNotGetGameInfo() {
         //Given
-        String gameName = "game name";
         boolean result = false;
         //When
         try {
-            gameEnvelope.getBoard(gameName);
+            gameEnvelope.getGameInfo(0L);
         }
-        catch(ForbiddenException e) {
+        catch(MethodFailureException e) {
             result = true;
         }
         //Then
@@ -168,9 +154,8 @@ public class GameEnvelopeTest {
     @Test
     public void shouldGetRulesSet() {
         //Given
-        String rulesSetName = "classic";
         //When
-        RulesSetDto rulesSetDto = gameEnvelope.getRulesSet(rulesSetName);
+        RulesSetDto rulesSetDto = gameEnvelope.getRulesSet("classic");
         //Then
         assertEquals(rulesSets.updateRules().get(0).getName(), rulesSetDto.getName());
         assertEquals(rulesSets.updateRules().get(0).getDescription(), rulesSetDto.getDescription());
@@ -179,13 +164,12 @@ public class GameEnvelopeTest {
     @Test
     public void shouldNotGetRulesSet() {
         //Given
-        String rulesSetName = "not existing name";
         boolean result = false;
         //When
         try {
-            RulesSetDto rulesSetDto = gameEnvelope.getRulesSet(rulesSetName);
+            RulesSetDto rulesSetDto = gameEnvelope.getRulesSet("not existing name");
         }
-        catch(ForbiddenException e) {
+        catch(MethodFailureException e) {
             result = true;
         }
         //Then
@@ -193,98 +177,58 @@ public class GameEnvelopeTest {
     }
 
     @Test
-    public void shouldGetGameProgressDetails() {
+    public void shouldGetFinishedGameInfo() {
         //Given
-        String gameName = "game name";
-        Game game = new Game(
-                gameName,
-                rulesSets.updateRules().get(0),
-                false,
-                false
-        );
-        gameEnvelope.getGames().put(gameName, game);
-        //When
-        GameProgressDetailsDto gameProgressDetailsDto = gameEnvelope.getGameProgressDetails(gameName);
-        //Then
-        assertEquals(0, gameProgressDetailsDto.getMoves());
-        assertEquals(0, gameProgressDetailsDto.getBlackQueenMoves());
-        assertEquals(0, gameProgressDetailsDto.getWhiteQueenMoves());
-        assertEquals(12, gameProgressDetailsDto.getBlackPawns());
-        assertEquals(12, gameProgressDetailsDto.getWhitePawns());
-        assertEquals(0, gameProgressDetailsDto.getBlackQueens());
-        assertEquals(0, gameProgressDetailsDto.getWhiteQueens());
-        assertFalse(gameProgressDetailsDto.isFinished());
-        assertFalse(gameProgressDetailsDto.isDraw());
-        assertFalse(gameProgressDetailsDto.isWinner());
-    }
-
-    @Test
-    public void shouldNotGetGameProgressDetails() {
-        //Given
-        String gameName = "no such game name";
-        boolean result = false;
-        //When
-        try {
-            gameEnvelope.getGameProgressDetails(gameName);
-        }
-        catch(ForbiddenException e) {
-            result = true;
-        }
-        //Then
-        assertTrue(result);
-    }
-
-    @Ignore
-    @Test
-    public void shouldGetFinishedGameProgressDetails() {
-        //Given
-        String gameName = "test name";
         GameDto gameDto = new GameDto(
-                gameName,
+                "test",
                 "classic",
                 "true",
                 "true"
         );
-        Game game = new Game(gameName, rulesSets.updateRules().get(0), true, true);
+        //When
+        Long id = gameEnvelope.startNewGame(gameDto);
+        Game game = gameEnvelope.getGames().get(id);
         IntStream.iterate(0, i -> ++i)
                 .limit(1000)
                 .forEach(i -> game.getInQueue().offer("next"));
-        gameEnvelope.getGames().put(gameName, game);
-        //When
-        gameEnvelope.startNewGame(gameDto);
-        GameProgressDetailsDto gameProgressDetailsDto = gameEnvelope.getGameProgressDetails(gameName);
+        gameEnvelope.playGame(id);
+        GameInfoDto gameInfoDto = gameEnvelope.getGameInfo(id);
         //Then
-        assertTrue(gameProgressDetailsDto.isFinished());
-        assertNotEquals(0, gameProgressDetailsDto.getMoves());
+        assertTrue(gameInfoDto.isFinished());
+        assertNotEquals(0, gameInfoDto.getMoves());
+        //Clean up
+        dbService.deleteGame(id);
+        List<FinishedGame> finishedGames = dbService.getFinishedGames();
+        FinishedGame finishedGame = finishedGames.get(finishedGames.size() - 1);
+        id = finishedGame.getId();
+        dbService.deleteFinishedGame(id);
     }
 
     @Test
     public void shouldDeleteGame() {
         //Given
-        String gameName = "game to delete";
-        Game game = new Game(
-                gameName,
-                rulesSets.updateRules().get(0),
-                false,
-                false
+        GameDto gameDto = new GameDto(
+                "test",
+                "classic",
+                "true",
+                "true"
         );
-        gameEnvelope.getGames().put(gameName, game);
+        Long id = gameEnvelope.startNewGame(gameDto);
         //When
-        gameEnvelope.deleteGame(gameName);
+        gameEnvelope.deleteGame(id);
         //Then
-        assertFalse(gameEnvelope.getGames().containsKey(gameName));
+        assertFalse(gameEnvelope.getGames().containsKey(id));
     }
 
     @Test
     public void shouldNotDeleteGame() {
         //Given
-        String gameName = "game to delete";
         boolean result = false;
         //When
         try {
-            gameEnvelope.deleteGame(gameName);
+            gameEnvelope.deleteGame(0L);
         }
-        catch(ForbiddenException e) {
+        catch(MethodFailureException e) {
             result = true;
         }
         //Then
@@ -294,21 +238,21 @@ public class GameEnvelopeTest {
     @Test
     public void shouldGetGameList() {
         //Given
-        gameEnvelope.getGames().put("game1", new Game(
+        gameEnvelope.getGames().put(1L, new Game(
                 "game1",
-                rulesSets.updateRules().get(0),
+                new RulesSet(),
                 false,
                 false
         ));
-        gameEnvelope.getGames().put("game2", new Game(
+        gameEnvelope.getGames().put(2L, new Game(
                 "game2",
-                rulesSets.updateRules().get(1),
+                new RulesSet(),
                 true,
                 true
         ));
-        gameEnvelope.getGames().put("game3", new Game(
+        gameEnvelope.getGames().put(3L, new Game(
                 "game3",
-                rulesSets.updateRules().get(2),
+                new RulesSet(),
                 false,
                 true
         ));

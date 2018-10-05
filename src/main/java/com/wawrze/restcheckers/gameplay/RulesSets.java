@@ -1,6 +1,6 @@
 package com.wawrze.restcheckers.gameplay;
 
-import com.wawrze.restcheckers.service.dbservices.DBService;
+import com.wawrze.restcheckers.services.dbservices.DBService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;

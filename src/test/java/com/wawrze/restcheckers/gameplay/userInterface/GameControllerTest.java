@@ -1,13 +1,16 @@
 package com.wawrze.restcheckers.gameplay.userInterface;
 
 import com.google.gson.Gson;
+import com.wawrze.restcheckers.board.Board;
+import com.wawrze.restcheckers.gameplay.FinishedGame;
 import com.wawrze.restcheckers.gameplay.RulesSets;
 import com.wawrze.restcheckers.gameplay.userInterface.dtos.*;
+import com.wawrze.restcheckers.gameplay.userInterface.mappers.BoardMapper;
 import com.wawrze.restcheckers.gameplay.userInterface.mappers.RulesSetsMapper;
-import exceptions.httpExceptions.ForbiddenException;
 import exceptions.httpExceptions.MethodFailureException;
 import org.junit.*;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -26,6 +29,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebMvcTest
 public class GameControllerTest {
+
+    @InjectMocks
+    private BoardMapper boardMapper;
 
     @Autowired
     private MockMvc mockMvc;
@@ -65,63 +71,84 @@ public class GameControllerTest {
 
 
     @Test
-    public void shouldGetBoard() throws Exception {
+    public void shouldGetGameInfo() throws Exception {
         //Given
-        BoardDto boardDto = new BoardDto(
-                null,
+        GameInfoDto gameInfoDto = new GameInfoDto(
+                "name",
+                "rules",
                 "status",
+                "1. white: F1-E2",
+                boardMapper.mapToBoardDto(new Board.BoardBuilder().build().getNewBoard()),
                 true,
                 false,
                 false,
-                null
+                false,
+                false,
+                false,
+                "no win",
+                10,
+                5,
+                7,
+                1,
+                2,
+                3,
+                4,
+                new DateTimeDto(2018, 1, 1, 12, 0, 0),
+                new DateTimeDto(2020, 12, 31, 18, 5, 30)
         );
-        when(gameEnvelope.getBoard(anyString())).thenReturn(boardDto);
+        when(gameEnvelope.getGameInfo(anyLong())).thenReturn(gameInfoDto);
         //When & Then
-        mockMvc.perform(get("/game/getBoard?gameName=someName")
+        mockMvc.perform(get("/game/getGameInfo?gameId=1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.gameStatus", is("status")))
+                .andExpect(jsonPath("$.name", is("name")))
+                .andExpect(jsonPath("$.rulesName", is("rules")))
                 .andExpect(jsonPath("$.activePlayer", is(true)))
                 .andExpect(jsonPath("$.whiteAIPlayer", is(false)))
                 .andExpect(jsonPath("$.blackAIPlayer", is(false)));
-        verify(gameEnvelope, times(1)).getBoard(any());
+        verify(gameEnvelope, times(1)).getGameInfo(any());
     }
 
     @Test
-    public void shouldNotGetBoard() throws Exception {
+    public void shouldNotGetGameInfo() throws Exception {
         //Given
-        when(gameEnvelope.getBoard(anyString())).thenThrow(new ForbiddenException());
+        when(gameEnvelope.getGameInfo(anyLong())).thenThrow(new MethodFailureException(""));
         //When & Then
-        mockMvc.perform(get("/game/getBoard?gameName=someName")
+        mockMvc.perform(get("/game/getGameInfo?gameId=1")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(403));
-        verify(gameEnvelope, times(1)).getBoard(any());
+                .andExpect(status().is(420));
+        verify(gameEnvelope, times(1)).getGameInfo(any());
     }
 
     @Test
     public void shouldGetRulesSets() throws Exception {
         //Given
-        rulesSets = new RulesSets();
-        rulesSetsMapper = new RulesSetsMapper();
-        RulesSetsDto rulesSetsDto = rulesSetsMapper.mapToRulesSetsDto(rulesSets);
+        RulesSetsDto rulesSetsDto = new RulesSetsDto();
+        rulesSetsDto.getRules().add(new RulesSetDto());
+        rulesSetsDto.getRules().add(new RulesSetDto());
+        rulesSetsDto.getRules().add(new RulesSetDto());
         when(gameEnvelope.getRulesSets()).thenReturn(rulesSetsDto);
         //When & Then
         mockMvc.perform(get("/game/getRulesSets")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(200))
-                .andExpect(jsonPath("$.rules", hasSize(3)))
-                .andExpect(jsonPath("$.rules[0].name", is("classic")))
-                .andExpect(jsonPath("$.rules[1].name", is("english")))
-                .andExpect(jsonPath("$.rules[2].name", is("poddavki")));
+                .andExpect(jsonPath("$.rules", hasSize(3)));
         verify(gameEnvelope, times(1)).getRulesSets();
     }
 
     @Test
     public void shouldGetRulesSet() throws Exception {
         //Given
-        rulesSets = new RulesSets();
-        rulesSetsMapper = new RulesSetsMapper();
-        RulesSetDto rulesSetDto = rulesSetsMapper.mapToRulesSetDto(rulesSets.updateRules().get(0));
+        RulesSetDto rulesSetDto = new RulesSetDto(
+                false,
+                false,
+                false,
+                false,
+                true,
+                false,
+                "classic",
+                ""
+        );
         when(gameEnvelope.getRulesSet("classic")).thenReturn(rulesSetDto);
         //When & Then
         mockMvc.perform(get("/game/getRulesSet?rulesSetName=classic")
@@ -137,50 +164,12 @@ public class GameControllerTest {
     @Test
     public void shouldNotGetRulesSet() throws Exception {
         //Given
-        when(gameEnvelope.getRulesSet("classic")).thenThrow(new ForbiddenException());
+        when(gameEnvelope.getRulesSet("classic")).thenThrow(new MethodFailureException(""));
         //When & Then
         mockMvc.perform(get("/game/getRulesSet?rulesSetName=classic")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(403));
+                .andExpect(status().is(420));
         verify(gameEnvelope, times(1)).getRulesSet(any());
-    }
-
-    @Test
-    public void shouldGetGamesDetails() throws Exception {
-        //Given
-        GameProgressDetailsDto gameProgressDetailsDto = new GameProgressDetailsDto(
-                true,
-                true,
-                true,
-                50,
-                15,
-                15,
-                5,
-                5,
-                1,
-                2
-        );
-        when(gameEnvelope.getGameProgressDetails(anyString())).thenReturn(gameProgressDetailsDto);
-        //When & Then
-        mockMvc.perform(get("/game/getGameProgressDetails?gameName=someName")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(200))
-                .andExpect(jsonPath("$.finished", is(true)))
-                .andExpect(jsonPath("$.moves", is(50)))
-                .andExpect(jsonPath("$.blackPawns", is(5)))
-                .andExpect(jsonPath("$.whiteQueens", is(1)));
-        verify(gameEnvelope, times(1)).getGameProgressDetails(any());
-    }
-
-    @Test
-    public void shouldNotGetGamesDetails() throws Exception {
-        //Given
-                when(gameEnvelope.getGameProgressDetails(anyString())).thenThrow(new ForbiddenException());
-        //When & Then
-        mockMvc.perform(get("/game/getGameProgressDetails?gameName=someName")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(403));
-        verify(gameEnvelope, times(1)).getGameProgressDetails(any());
     }
 
     @Test
@@ -190,22 +179,48 @@ public class GameControllerTest {
         gameList.add(new GameInfoDto(
                 "some name",
                 "classic",
+                "status",
+                "1. white: F1-E2",
+                null,
+                true,
+                true,
+                true,
                 false,
                 false,
                 false,
-                false,
-                false,
-                new DateTimeDto()
+                "no win",
+                10,
+                5,
+                7,
+                1,
+                2,
+                3,
+                4,
+                new DateTimeDto(2018, 1, 1, 12, 0, 0),
+                new DateTimeDto(2020, 12, 31, 18, 5, 30)
         ));
         gameList.add(new GameInfoDto(
                 "some other name",
                 "english",
+                "status",
+                "1. white: F1-E2",
+                null,
                 true,
                 true,
                 true,
-                true,
-                true,
-                new DateTimeDto()
+                false,
+                false,
+                false,
+                "no win",
+                10,
+                5,
+                7,
+                1,
+                2,
+                3,
+                4,
+                new DateTimeDto(2018, 1, 1, 12, 0, 0),
+                new DateTimeDto(2020, 12, 31, 18, 5, 30)
         ));
         gameList.add(new GameInfoDto());
         GameListDto gameListDto = new GameListDto(gameList);
@@ -239,9 +254,9 @@ public class GameControllerTest {
         String jsonContent = gson.toJson(gameDto);
         //When & Then
         mockMvc.perform(post("/game/newGame")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .characterEncoding("UTF-8")
-                        .content(jsonContent))
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8")
+                .content(jsonContent))
                 .andExpect(status().isOk());
         verify(gameEnvelope, times(1)).startNewGame(any());
     }
@@ -256,27 +271,7 @@ public class GameControllerTest {
                 "false"
         );
         String jsonContent = gson.toJson(gameDto);
-        doThrow(new ForbiddenException()).when(gameEnvelope).startNewGame(any());
-        //When & Then
-        mockMvc.perform(post("/game/newGame")
-                .contentType(MediaType.APPLICATION_JSON)
-                .characterEncoding("UTF-8")
-                .content(jsonContent))
-                .andExpect(status().is(403));
-        verify(gameEnvelope, times(1)).startNewGame(any());
-    }
-
-    @Test
-    public void shouldNotStartNewGame2() throws Exception {
-        //Given
-        GameDto gameDto = new GameDto(
-                "some name",
-                "classic",
-                "false",
-                "false"
-        );
-        String jsonContent = gson.toJson(gameDto);
-        doThrow(new MethodFailureException()).when(gameEnvelope).startNewGame(any());
+        doThrow(new MethodFailureException("")).when(gameEnvelope).startNewGame(any());
         //When & Then
         mockMvc.perform(post("/game/newGame")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -287,26 +282,41 @@ public class GameControllerTest {
     }
 
     @Test
+    public void shouldPlayGame() throws Exception {
+        //Given
+        doNothing().when(gameEnvelope).playGame(anyLong());
+        //When & Then
+        mockMvc.perform(post("/game/playGame?gameId=1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+        verify(gameEnvelope, times(1)).playGame(any());
+    }
+
+    @Test
+    public void shouldNotPlayGame() throws Exception {
+        //Given
+        doThrow(new MethodFailureException("")).when(gameEnvelope).playGame(anyLong());
+        //When & Then
+        mockMvc.perform(post("/game/playGame?gameId=1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is(420));
+        verify(gameEnvelope, times(1)).playGame(any());
+    }
+
+    @Test
     public void shouldServeNewMove() throws Exception {
         //Given
         MoveDto moveDto = new MoveDto("A1-B2");
-        BoardDto boardDto = new BoardDto(
-                null,
-                "status",
-                true,
-                false,
-                false,
-                null
-        );
+        GameInfoDto gameInfoDto = new GameInfoDto();
         String jsonContent = gson.toJson(moveDto);
-        when(gameEnvelope.sendMove("someName", moveDto)).thenReturn(boardDto);
+        when(gameEnvelope.sendMove(1L, moveDto)).thenReturn(gameInfoDto);
         //When & Then
-        mockMvc.perform(post("/game/sendMove?gameName=someName")
+        mockMvc.perform(post("/game/sendMove?gameId=1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .content(jsonContent))
                 .andExpect(status().is(200));
-        verify(gameEnvelope, times(1)).sendMove(anyString(), any());
+        verify(gameEnvelope, times(1)).sendMove(anyLong(), any());
     }
 
     @Test
@@ -314,20 +324,22 @@ public class GameControllerTest {
         //Given
         MoveDto moveDto = new MoveDto("A1-B2");
         String jsonContent = gson.toJson(moveDto);
-        when(gameEnvelope.sendMove(anyString(), any())).thenThrow(new ForbiddenException());
+        when(gameEnvelope.sendMove(anyLong(), any())).thenThrow(new MethodFailureException(""));
         //When & Then
-        mockMvc.perform(post("/game/sendMove?gameName=someName")
+        mockMvc.perform(post("/game/sendMove?gameId=1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .content(jsonContent))
-                .andExpect(status().is(403));
-        verify(gameEnvelope, times(1)).sendMove(anyString(), any());
+                .andExpect(status().is(420));
+        verify(gameEnvelope, times(1)).sendMove(anyLong(), any());
     }
 
     @Test
     public void shouldDeleteGame() throws Exception {
+        //Given
+        doNothing().when(gameEnvelope).deleteGame(anyLong());
         //When & Then
-        mockMvc.perform(delete("/game/deleteGame?gameName=someName")
+        mockMvc.perform(delete("/game/deleteGame?gameId=1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
         verify(gameEnvelope, times(1)).deleteGame(any());
@@ -336,12 +348,28 @@ public class GameControllerTest {
     @Test
     public void shouldNotDeleteGame() throws Exception {
         //Given
-        doThrow(new ForbiddenException()).when(gameEnvelope).deleteGame(anyString());
+        doThrow(new MethodFailureException("")).when(gameEnvelope).deleteGame(anyLong());
         //When & Then
-        mockMvc.perform(delete("/game/deleteGame?gameName=someName")
+        mockMvc.perform(delete("/game/deleteGame?gameId=1")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(403));
+                .andExpect(status().is(420));
         verify(gameEnvelope, times(1)).deleteGame(any());
+    }
+
+    @Test
+    public void shouldGetFinishedGames() throws Exception {
+        //Given
+        List<FinishedGame> list = new ArrayList<>();
+        list.add(new FinishedGame());
+        list.add(new FinishedGame());
+        list.add(new FinishedGame());
+        when(gameEnvelope.getFinishedGames()).thenReturn(list);
+        //When & Then
+        mockMvc.perform(get("/game/getFinishedGames")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$", hasSize(3)))
+                .andExpect(status().isOk());
+        verify(gameEnvelope, times(1)).getFinishedGames();
     }
 
 }

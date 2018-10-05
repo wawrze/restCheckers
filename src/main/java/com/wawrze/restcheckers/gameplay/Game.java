@@ -72,7 +72,9 @@ public class Game {
     @Column(name = "moves", length = 5000)
     public String getMoves() {
         String result = "";
-        for (String s : moves)
+        if(moves == null)
+            return result;
+        for(String s : moves)
             result += (s + ",");
         return result;
     }

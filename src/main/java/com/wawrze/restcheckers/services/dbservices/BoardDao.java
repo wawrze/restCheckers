@@ -1,4 +1,4 @@
-package com.wawrze.restcheckers.service.dbservices;
+package com.wawrze.restcheckers.services.dbservices;
 
 import com.wawrze.restcheckers.board.Board;
 import org.springframework.data.repository.CrudRepository;

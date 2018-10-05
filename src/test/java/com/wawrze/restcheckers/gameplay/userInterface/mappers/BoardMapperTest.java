@@ -56,12 +56,7 @@ public class BoardMapperTest {
         moves.add("white: C3-D4");
         moves.add("black: E5-F6");
         boardDto = boardMapper.mapToBoardDto(
-                board,
-                "status",
-                true,
-                true,
-                true,
-                moves
+                board
         );
         boardDto.getRows().add(new RowDto());
         boardDto.getRows().get(0).getFigures().add(new FigureDto());
@@ -106,27 +101,16 @@ public class BoardMapperTest {
                 board.getFigure('H', 6).getFigureName(),
                 boardDto.getRows().get(7).getFigures().get(5).getName()
         );
-        assertEquals(boardDto.getGameStatus(), "status");
-        assertEquals(boardDto.getMovesHistory(), "3. black: E5-F6\n\n2. white: C3-D4\n1. white: A1-B2");
-        assertTrue(boardDto.isActivePlayer());
-        assertTrue(boardDto.isBlackAIPlayer());
-        assertTrue(boardDto.isWhiteAIPlayer());
     }
 
     @Test
     public void testMapToBoardDtoEmpty() {
         //Given
         Board board = new Board.BoardBuilder().build();
-        List<String> moves = new ArrayList<>();
         BoardDto boardDto;
         //When
         boardDto = boardMapper.mapToBoardDto(
-                board,
-                "",
-                true,
-                true,
-                true,
-                moves
+                board
         );
         //Then
         assertEquals(
@@ -161,11 +145,6 @@ public class BoardMapperTest {
                 board.getFigure('H', 6).getFigureName(),
                 boardDto.getRows().get(7).getFigures().get(5).getName()
         );
-        assertEquals("", boardDto.getGameStatus());
-        assertEquals("", boardDto.getMovesHistory());
-        assertTrue(boardDto.isActivePlayer());
-        assertTrue(boardDto.isBlackAIPlayer());
-        assertTrue(boardDto.isWhiteAIPlayer());
     }
 
 }

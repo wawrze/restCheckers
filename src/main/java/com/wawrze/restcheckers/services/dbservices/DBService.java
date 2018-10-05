@@ -1,4 +1,4 @@
-package com.wawrze.restcheckers.service.dbservices;
+package com.wawrze.restcheckers.services.dbservices;
 
 import com.wawrze.restcheckers.gameplay.FinishedGame;
 import com.wawrze.restcheckers.gameplay.Game;
@@ -40,15 +40,11 @@ public class DBService {
         return rulesSetDao.findByName(name);
     }
 
+    public void deleteRulesSet(Long id) {
+        rulesSetDao.delete(id);
+    }
+
     /////// GAME /////////////////////////////////////////////////
-
-    public boolean isGameExisting(String name) {
-        return gameDAO.existsByName(name);
-    }
-
-    public Game getGameByName(String name) {
-        return gameDAO.getByName(name);
-    }
 
     public void saveGame(Game game) {
         gameDAO.save(game);
@@ -74,6 +70,10 @@ public class DBService {
 
     public List<FinishedGame> getFinishedGames() {
         return finishedGameDao.findAll();
+    }
+
+    public void deleteFinishedGame(Long id) {
+        finishedGameDao.delete(id);
     }
 
 }

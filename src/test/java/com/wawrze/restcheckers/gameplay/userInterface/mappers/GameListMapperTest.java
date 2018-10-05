@@ -52,19 +52,19 @@ public class GameListMapperTest {
     @Test
     public void testMapToGameListDto() {
         //Given
-        gameEnvelope.getGames().put("game1", new Game(
+        gameEnvelope.getGames().put(1L, new Game(
                 "game1",
                 rulesSets.updateRules().get(0),
                 false,
                 false
         ));
-        gameEnvelope.getGames().put("game2", new Game(
+        gameEnvelope.getGames().put(2L, new Game(
                 "game2",
                 rulesSets.updateRules().get(1),
                 true,
                 true
         ));
-        gameEnvelope.getGames().put("game3", new Game(
+        gameEnvelope.getGames().put(3L, new Game(
                 "game3",
                 rulesSets.updateRules().get(2),
                 false,
@@ -72,6 +72,9 @@ public class GameListMapperTest {
         ));
         GameListDto gameListDto = new GameListDto();
         //When
+        gameEnvelope.getGames().entrySet().stream()
+                .map(entry -> entry.getValue())
+                .forEach(game -> game.updateLastAction());
         gameListDto = gameListMapper.mapToGameListDto();
         //Then
         assertEquals(3, gameListDto.getGamesList().size());

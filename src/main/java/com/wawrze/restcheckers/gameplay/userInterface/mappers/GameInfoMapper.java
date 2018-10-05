@@ -92,14 +92,17 @@ public class GameInfoMapper {
     }
 
     private DateTimeDto mapToDateTimeDto(LocalDateTime dateTime) {
-        return new DateTimeDto(
-                dateTime.getYear(),
-                dateTime.getMonthValue(),
-                dateTime.getDayOfMonth(),
-                dateTime.getHour(),
-                dateTime.getMinute(),
-                dateTime.getSecond()
-        );
+        if(dateTime != null)
+            return new DateTimeDto(
+                    dateTime.getYear(),
+                    dateTime.getMonthValue(),
+                    dateTime.getDayOfMonth(),
+                    dateTime.getHour(),
+                    dateTime.getMinute(),
+                    dateTime.getSecond()
+            );
+        else
+            return new DateTimeDto(0, 0, 0, 0, 0, 0);
     }
 
     public String typeOfWin(Game game) {

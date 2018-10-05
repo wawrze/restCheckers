@@ -1,8 +1,8 @@
-package com.wawrze.restcheckers.scheduler;
+package com.wawrze.restcheckers.services;
 
 import com.wawrze.restcheckers.gameplay.Game;
 import com.wawrze.restcheckers.gameplay.userInterface.GameEnvelope;
-import com.wawrze.restcheckers.service.dbservices.DBService;
+import com.wawrze.restcheckers.services.dbservices.DBService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +41,7 @@ public class Scheduler {
         Map<Long, Game> games = new HashMap<>(gameEnvelope.getGames());
         games.entrySet().stream()
                 .map(entry -> entry.getValue())
+                .filter(game -> game.getLastAction() != null)
                 .filter(game -> (game.getLastAction().plusMinutes(5L).isBefore(LocalDateTime.now())))
                 .forEach(game -> {
                     dbService.saveGame(game);
@@ -55,8 +56,8 @@ public class Scheduler {
         LOGGER.info("Starting to clean non-active games from DB...");
         List<Game> games = dbService.getAllGames();
         games.stream()
-                .filter(game -> (game.getLastAction() != null &&
-                        game.getLastAction().plusHours(1L).isBefore(LocalDateTime.now())))
+                .filter(game -> game.getLastAction() != null)
+                .filter(game -> game.getLastAction().plusHours(1L).isBefore(LocalDateTime.now()))
                 .forEach(game -> {
                     dbService.deleteGame(game.getId());
                     LOGGER.info("Game \"" + game.getName() + "\" deleted from DB.");

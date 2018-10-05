@@ -1,4 +1,4 @@
-package com.wawrze.restcheckers.service.dbservices;
+package com.wawrze.restcheckers.services.dbservices;
 
 import com.wawrze.restcheckers.gameplay.RulesSet;
 import org.springframework.data.repository.CrudRepository;
@@ -18,6 +18,9 @@ public interface RulesSetDao extends CrudRepository<RulesSet, Long> {
 
     @Override
     List<RulesSet> findAll();
+
+    @Override
+    void delete(Long id);
 
     RulesSet findByName(String name);
 

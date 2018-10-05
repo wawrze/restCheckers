@@ -3,7 +3,7 @@ package com.wawrze.restcheckers.gameplay.userInterface;
 import com.wawrze.restcheckers.gameplay.*;
 import com.wawrze.restcheckers.gameplay.userInterface.dtos.*;
 import com.wawrze.restcheckers.gameplay.userInterface.mappers.*;
-import com.wawrze.restcheckers.service.dbservices.DBService;
+import com.wawrze.restcheckers.services.dbservices.DBService;
 import exceptions.httpExceptions.*;
 import lombok.Getter;
 import org.slf4j.Logger;
