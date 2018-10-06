@@ -146,6 +146,7 @@
             $('[send-move-button]').text("Send move");
             $('[next-move]').focus();
         }
+        getGameInfo();
     }
 
     function playGame() {
@@ -196,13 +197,6 @@
 
     function getGameInfo() {
         const requestUrl = apiRoot + 'games/' + $('[game-id]').text();
-        
-        var start = new Date().getTime();
-        for (var i = 0; i < 1e7; i++) {
-            if ((new Date().getTime() - start) > 500) {
-                break;
-            }
-        }
 
         $.ajax({
             url: requestUrl,

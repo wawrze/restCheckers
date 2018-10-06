@@ -13,8 +13,12 @@ import exceptions.IncorrectMoveFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -27,7 +31,9 @@ public class GameExecutor {
     
     @Autowired
     private RestUI restUI;
-    
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(GameExecutor.class);
+
     public void play(Game game) {
         boolean b;
         do {
@@ -45,7 +51,11 @@ public class GameExecutor {
     private boolean waitForMove(Game game) {
         String captures = "";
         try {
-            (new CapturePossibilityValidator(game.getBoard(), game.isActivePlayer(), game.getRulesSet())).validateCapturePossibility();
+            (new CapturePossibilityValidator(
+                    game.getBoard(),
+                    game.isActivePlayer(),
+                    game.getRulesSet()
+            )).validateCapturePossibility();
         }
         catch(CapturePossibleException e){
             captures = e.getMessage();
@@ -53,11 +63,25 @@ public class GameExecutor {
         }
         String[] s;
         if((game.isBlackAIPlayer() && game.isActivePlayer()) || (game.isWhiteAIPlayer() && !game.isActivePlayer())) {
-            s = (new AIPlayer(game.getBoard(), game.isActivePlayer(), game.getRulesSet(), game.getWhiteQueenMoves(), game.getBlackQueenMoves())).getAIMove();
+            s = (new AIPlayer(
+                    game.getBoard(),
+                    game.isActivePlayer(),
+                    game.getRulesSet(),
+                    game.getWhiteQueenMoves(),
+                    game.getBlackQueenMoves()
+            )).getAIMove();
             if(game.isBlackAIPlayer() && game.isWhiteAIPlayer()) {
                 String[] t;
                 do {
                     t = restUI.getMoveOrOption(game, captures);
+                    if(t != null) {
+                        String movesQueue = game.getInQueue().stream().collect(Collectors.joining(", "));
+                        String u = "";
+                        for(int i = 0;i < t.length;i++)
+                            u += t[i];
+                        LOGGER.info("Game \"" + game.getName() + "\": getting move \"" + u + "\" from moves queue ("
+                                + movesQueue + ").");
+                    }
                 }
                 while(t == null);
             }

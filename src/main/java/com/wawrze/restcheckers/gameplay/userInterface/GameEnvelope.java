@@ -114,6 +114,12 @@ public class GameEnvelope {
             LOGGER.warn("There is no game with id = \"" + gameId + "\"! Game info not sent!");
             throw new MethodFailureException("There is no game with id = \"" + gameId + "\"! Game info not sent!");
         }
+        try {
+            Thread.sleep(500L);
+        }
+        catch(InterruptedException e) {
+            throw new MethodFailureException("Application error!");
+        }
         GameInfoDto gameInfoDto = gameInfoMapper.mapToGameProgressDetailsDto(game);
         if(game.isFinished()) {
             games.remove(gameId);
