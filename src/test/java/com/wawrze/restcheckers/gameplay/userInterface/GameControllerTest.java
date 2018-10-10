@@ -302,9 +302,7 @@ public class GameControllerTest {
     public void shouldServeNewMove() throws Exception {
         //Given
         MoveDto moveDto = new MoveDto("A1-B2");
-        GameInfoDto gameInfoDto = new GameInfoDto();
         String jsonContent = gson.toJson(moveDto);
-        when(gameEnvelope.sendMove(1L, moveDto)).thenReturn(gameInfoDto);
         //When & Then
         mockMvc.perform(put("/v1/games/1")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -319,7 +317,7 @@ public class GameControllerTest {
         //Given
         MoveDto moveDto = new MoveDto("A1-B2");
         String jsonContent = gson.toJson(moveDto);
-        when(gameEnvelope.sendMove(anyLong(), any())).thenThrow(new MethodFailureException(""));
+        doThrow(new MethodFailureException("")).when(gameEnvelope).sendMove(anyLong(), any());
         //When & Then
         mockMvc.perform(put("/v1/games/1")
                 .contentType(MediaType.APPLICATION_JSON)

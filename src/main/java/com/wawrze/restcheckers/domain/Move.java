@@ -5,7 +5,7 @@ import com.wawrze.restcheckers.domain.figures.Figure;
 import com.wawrze.restcheckers.domain.figures.FigureFactory;
 import exceptions.*;
 
-public final class Move {
+public class Move {
 
     private FigureFactory figureFactory = new FigureFactory();
 

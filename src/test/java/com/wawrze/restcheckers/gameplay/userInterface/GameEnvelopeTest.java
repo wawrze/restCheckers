@@ -85,9 +85,9 @@ public class GameEnvelopeTest {
         );
         Long id = gameEnvelope.startNewGame(gameDto);
         //When
-        GameInfoDto gameInfoDto = gameEnvelope.sendMove(id, moveDto);
+        gameEnvelope.sendMove(id, moveDto);
         //Then
-        assertEquals("Game started.", gameInfoDto.getGameStatus());
+        assertEquals("Game started.", gameEnvelope.getGames().get(id).getGameStatus());
         //Clean up
         dbService.deleteGame(id);
     }
