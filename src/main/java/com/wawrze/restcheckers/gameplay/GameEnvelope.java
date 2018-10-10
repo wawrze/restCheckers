@@ -79,7 +79,7 @@ public class GameEnvelope {
         gameExecutor.play(game);
     }
 
-    public void sendMove(Long gameId, MoveDto moveDto) throws MethodFailureException {
+    public boolean sendMove(Long gameId, MoveDto moveDto) throws MethodFailureException {
         String s = moveDto.getMove();
         Game game = games.get(gameId);
         if(game == null) {
@@ -95,6 +95,7 @@ public class GameEnvelope {
         game.updateLastAction();
         dbService.saveGame(game);
         LOGGER.info("Game: " + game.getName() + " (" + game.getId() + ") saved to database.");
+        return true;
     }
 
     public RulesSetsDto getRulesSets() {

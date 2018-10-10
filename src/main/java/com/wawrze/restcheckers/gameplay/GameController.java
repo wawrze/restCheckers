@@ -42,8 +42,8 @@ public class GameController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/games/{gameId}")
-    public void sendMove(@PathVariable Long gameId, @RequestBody MoveDto moveDto) throws MethodFailureException {
-        gameEnvelope.sendMove(gameId, moveDto);
+    public boolean sendMove(@PathVariable Long gameId, @RequestBody MoveDto moveDto) throws MethodFailureException {
+        return gameEnvelope.sendMove(gameId, moveDto);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/games/{gameId}")
