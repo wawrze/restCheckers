@@ -79,7 +79,7 @@ public class GameEnvelope {
         gameExecutor.play(game);
     }
 
-    public GameInfoDto sendMove(Long gameId, MoveDto moveDto) throws MethodFailureException {
+    public void sendMove(Long gameId, MoveDto moveDto) throws MethodFailureException {
         String s = moveDto.getMove();
         Game game = games.get(gameId);
         if(game == null) {
@@ -95,7 +95,6 @@ public class GameEnvelope {
         game.updateLastAction();
         dbService.saveGame(game);
         LOGGER.info("Game: " + game.getName() + " (" + game.getId() + ") saved to database.");
-        return gameInfoMapper.mapToGameProgressDetailsDto(game);
     }
 
     public RulesSetsDto getRulesSets() {
@@ -123,7 +122,7 @@ public class GameEnvelope {
             throw new MethodFailureException("There is no game with id = \"" + gameId + "\"! Game info not sent!");
         }
         try {
-            Thread.sleep(500L);
+            Thread.sleep(1000);
         }
         catch(InterruptedException e) {
             throw new MethodFailureException("Application error!");

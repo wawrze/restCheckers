@@ -19,8 +19,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.stream.Collectors;
-
 @Service
 @AllArgsConstructor
 @NoArgsConstructor
@@ -75,14 +73,6 @@ public class GameExecutor {
                 String[] t;
                 do {
                     t = restUI.getMoveOrOption(game, captures);
-                    if(t != null) {
-                        String movesQueue = game.getInQueue().stream().collect(Collectors.joining(", "));
-                        String u = "";
-                        for(int i = 0;i < t.length;i++)
-                            u += t[i];
-                        LOGGER.info("Game \"" + game.getName() + "\": getting move \"" + u + "\" from moves queue ("
-                                + movesQueue + ").");
-                    }
                 }
                 while(t == null);
             }
