@@ -1,8 +1,11 @@
 package com.wawrze.restcheckers.moves;
 
-import com.wawrze.restcheckers.board.*;
-import com.wawrze.restcheckers.figures.*;
-import com.wawrze.restcheckers.gameplay.RulesSet;
+import com.wawrze.restcheckers.domain.Move;
+import com.wawrze.restcheckers.domain.board.Board;
+import com.wawrze.restcheckers.domain.figures.Pawn;
+import com.wawrze.restcheckers.domain.figures.Queen;
+import com.wawrze.restcheckers.domain.RulesSet;
+import com.wawrze.restcheckers.gameplay.moves.MoveValidator;
 import exceptions.*;
 import org.junit.*;
 

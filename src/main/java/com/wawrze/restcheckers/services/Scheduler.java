@@ -1,8 +1,8 @@
 package com.wawrze.restcheckers.services;
 
 import com.wawrze.restcheckers.config.AppInfoConfig;
-import com.wawrze.restcheckers.gameplay.Game;
-import com.wawrze.restcheckers.gameplay.userInterface.GameEnvelope;
+import com.wawrze.restcheckers.domain.Game;
+import com.wawrze.restcheckers.gameplay.GameEnvelope;
 import com.wawrze.restcheckers.services.dbservices.DBService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,6 +1,6 @@
 package com.wawrze.restcheckers.services.dbservices;
 
-import com.wawrze.restcheckers.board.Board;
+import com.wawrze.restcheckers.domain.board.Board;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

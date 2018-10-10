@@ -1,10 +1,11 @@
 package com.wawrze.restcheckers.gameplay.userInterface;
 
-import com.wawrze.restcheckers.gameplay.FinishedGame;
-import com.wawrze.restcheckers.gameplay.Game;
-import com.wawrze.restcheckers.gameplay.RulesSet;
-import com.wawrze.restcheckers.gameplay.RulesSets;
-import com.wawrze.restcheckers.gameplay.userInterface.dtos.*;
+import com.wawrze.restcheckers.domain.FinishedGame;
+import com.wawrze.restcheckers.domain.Game;
+import com.wawrze.restcheckers.domain.RulesSet;
+import com.wawrze.restcheckers.domain.RulesSets;
+import com.wawrze.restcheckers.dtos.*;
+import com.wawrze.restcheckers.gameplay.GameEnvelope;
 import com.wawrze.restcheckers.services.dbservices.DBService;
 import exceptions.httpExceptions.MethodFailureException;
 import org.junit.*;
@@ -13,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 

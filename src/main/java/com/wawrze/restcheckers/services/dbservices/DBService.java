@@ -1,8 +1,8 @@
 package com.wawrze.restcheckers.services.dbservices;
 
-import com.wawrze.restcheckers.gameplay.FinishedGame;
-import com.wawrze.restcheckers.gameplay.Game;
-import com.wawrze.restcheckers.gameplay.RulesSet;
+import com.wawrze.restcheckers.domain.FinishedGame;
+import com.wawrze.restcheckers.domain.Game;
+import com.wawrze.restcheckers.domain.RulesSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,11 +1,12 @@
 package com.wawrze.restcheckers.gameplay;
 
-import com.wawrze.restcheckers.figures.Figure;
-import com.wawrze.restcheckers.figures.FigureFactory;
-import com.wawrze.restcheckers.gameplay.userInterface.RestUI;
-import com.wawrze.restcheckers.moves.CapturePossibilityValidator;
-import com.wawrze.restcheckers.moves.Move;
-import com.wawrze.restcheckers.moves.MoveValidator;
+import com.wawrze.restcheckers.domain.Game;
+import com.wawrze.restcheckers.domain.figures.Figure;
+import com.wawrze.restcheckers.domain.figures.FigureFactory;
+import com.wawrze.restcheckers.domain.Move;
+import com.wawrze.restcheckers.gameplay.moves.AIPlayer;
+import com.wawrze.restcheckers.gameplay.moves.CapturePossibilityValidator;
+import com.wawrze.restcheckers.gameplay.moves.MoveValidator;
 import exceptions.CaptureException;
 import exceptions.CapturePossibleException;
 import exceptions.IncorrectMoveException;
@@ -92,10 +93,7 @@ public class GameExecutor {
         if(s == null)
             return true;
         else if(s.length == 1) {
-            if (s[0].equals("x"))
-                return false;
-            else
-                return true;
+            return !s[0].equals("x");
         }
         else {
             try {

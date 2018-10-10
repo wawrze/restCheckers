@@ -1,8 +1,10 @@
 package com.wawrze.restcheckers.gameplay;
 
-import com.wawrze.restcheckers.figures.None;
-import com.wawrze.restcheckers.figures.Pawn;
-import com.wawrze.restcheckers.figures.Queen;
+import com.wawrze.restcheckers.domain.Game;
+import com.wawrze.restcheckers.domain.RulesSet;
+import com.wawrze.restcheckers.domain.figures.None;
+import com.wawrze.restcheckers.domain.figures.Pawn;
+import com.wawrze.restcheckers.domain.figures.Queen;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

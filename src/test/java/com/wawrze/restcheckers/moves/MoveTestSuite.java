@@ -1,7 +1,10 @@
 package com.wawrze.restcheckers.moves;
 
-import com.wawrze.restcheckers.board.Board;
-import com.wawrze.restcheckers.figures.*;
+import com.wawrze.restcheckers.domain.Move;
+import com.wawrze.restcheckers.domain.board.Board;
+import com.wawrze.restcheckers.domain.figures.None;
+import com.wawrze.restcheckers.domain.figures.Pawn;
+import com.wawrze.restcheckers.domain.figures.Queen;
 import exceptions.IncorrectMoveFormat;
 import org.junit.*;
 

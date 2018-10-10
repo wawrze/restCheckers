@@ -1,7 +1,7 @@
 package com.wawrze.restcheckers.services;
 
 import com.wawrze.restcheckers.config.AppInfoConfig;
-import com.wawrze.restcheckers.gameplay.userInterface.mappers.GameInfoMapper;
+import com.wawrze.restcheckers.dtos.mappers.GameInfoMapper;
 import com.wawrze.restcheckers.services.dbservices.DBService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

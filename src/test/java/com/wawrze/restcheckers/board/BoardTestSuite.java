@@ -1,6 +1,9 @@
 package com.wawrze.restcheckers.board;
 
-import com.wawrze.restcheckers.figures.*;
+import com.wawrze.restcheckers.domain.board.Board;
+import com.wawrze.restcheckers.domain.figures.None;
+import com.wawrze.restcheckers.domain.figures.Pawn;
+import com.wawrze.restcheckers.domain.figures.Queen;
 import org.junit.*;
 
 public class BoardTestSuite {

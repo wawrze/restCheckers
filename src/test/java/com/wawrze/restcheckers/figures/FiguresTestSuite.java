@@ -1,5 +1,7 @@
 package com.wawrze.restcheckers.figures;
 
+import com.wawrze.restcheckers.domain.figures.Figure;
+import com.wawrze.restcheckers.domain.figures.FigureFactory;
 import org.junit.*;
 
 public class FiguresTestSuite {

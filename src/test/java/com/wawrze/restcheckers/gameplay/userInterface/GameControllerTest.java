@@ -1,10 +1,11 @@
 package com.wawrze.restcheckers.gameplay.userInterface;
 
 import com.google.gson.Gson;
-import com.wawrze.restcheckers.board.Board;
-import com.wawrze.restcheckers.gameplay.FinishedGame;
-import com.wawrze.restcheckers.gameplay.userInterface.dtos.*;
-import com.wawrze.restcheckers.gameplay.userInterface.mappers.BoardMapper;
+import com.wawrze.restcheckers.domain.board.Board;
+import com.wawrze.restcheckers.domain.FinishedGame;
+import com.wawrze.restcheckers.dtos.*;
+import com.wawrze.restcheckers.dtos.mappers.BoardMapper;
+import com.wawrze.restcheckers.gameplay.GameEnvelope;
 import exceptions.httpExceptions.MethodFailureException;
 import org.junit.*;
 import org.junit.runner.RunWith;

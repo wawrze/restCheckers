@@ -1,9 +1,11 @@
 package com.wawrze.restcheckers.gameplay;
 
-import com.wawrze.restcheckers.board.Board;
-import com.wawrze.restcheckers.figures.Figure;
-import com.wawrze.restcheckers.moves.Move;
-import com.wawrze.restcheckers.moves.MoveValidator;
+import com.wawrze.restcheckers.domain.Game;
+import com.wawrze.restcheckers.domain.RulesSet;
+import com.wawrze.restcheckers.domain.board.Board;
+import com.wawrze.restcheckers.domain.figures.Figure;
+import com.wawrze.restcheckers.domain.Move;
+import com.wawrze.restcheckers.gameplay.moves.MoveValidator;
 import exceptions.CaptureException;
 import exceptions.IncorrectMoveException;
 import exceptions.IncorrectMoveFormat;

@@ -1,9 +1,10 @@
 package com.wawrze.restcheckers.gameplay.userInterface.mappers;
 
-import com.wawrze.restcheckers.board.Board;
-import com.wawrze.restcheckers.gameplay.userInterface.dtos.BoardDto;
-import com.wawrze.restcheckers.gameplay.userInterface.dtos.FigureDto;
-import com.wawrze.restcheckers.gameplay.userInterface.dtos.RowDto;
+import com.wawrze.restcheckers.domain.board.Board;
+import com.wawrze.restcheckers.dtos.BoardDto;
+import com.wawrze.restcheckers.dtos.FigureDto;
+import com.wawrze.restcheckers.dtos.RowDto;
+import com.wawrze.restcheckers.dtos.mappers.BoardMapper;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

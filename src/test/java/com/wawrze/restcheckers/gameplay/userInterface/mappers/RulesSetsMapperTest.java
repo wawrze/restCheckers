@@ -1,9 +1,10 @@
 package com.wawrze.restcheckers.gameplay.userInterface.mappers;
 
-import com.wawrze.restcheckers.gameplay.RulesSet;
-import com.wawrze.restcheckers.gameplay.RulesSets;
-import com.wawrze.restcheckers.gameplay.userInterface.dtos.RulesSetDto;
-import com.wawrze.restcheckers.gameplay.userInterface.dtos.RulesSetsDto;
+import com.wawrze.restcheckers.domain.RulesSet;
+import com.wawrze.restcheckers.domain.RulesSets;
+import com.wawrze.restcheckers.dtos.RulesSetDto;
+import com.wawrze.restcheckers.dtos.RulesSetsDto;
+import com.wawrze.restcheckers.dtos.mappers.RulesSetsMapper;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

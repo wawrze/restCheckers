@@ -1,0 +1,16 @@
+group 'com.wawrze.restcheckers'
+version '0.0.1-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile('org.seleniumhq.selenium:selenium-java:3.6.0')
+
+    testCompile('junit:junit:4.12')
+}

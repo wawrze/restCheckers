@@ -1,6 +1,6 @@
 package com.wawrze.restcheckers.services.dbservices;
 
-import com.wawrze.restcheckers.gameplay.FinishedGame;
+import com.wawrze.restcheckers.domain.FinishedGame;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
