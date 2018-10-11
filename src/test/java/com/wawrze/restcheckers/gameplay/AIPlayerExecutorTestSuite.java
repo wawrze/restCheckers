@@ -1,12 +1,13 @@
 package com.wawrze.restcheckers.gameplay;
 
+import com.wawrze.restcheckers.domain.AIPlayer;
 import com.wawrze.restcheckers.domain.Game;
 import com.wawrze.restcheckers.domain.RulesSet;
 import com.wawrze.restcheckers.domain.board.Board;
 import com.wawrze.restcheckers.domain.figures.None;
 import com.wawrze.restcheckers.domain.figures.Pawn;
 import com.wawrze.restcheckers.domain.figures.Queen;
-import com.wawrze.restcheckers.gameplay.moves.AIPlayer;
+import com.wawrze.restcheckers.gameplay.moves.AIPlayerExecutor;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +16,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class AIPlayerTestSuite {
+public class AIPlayerExecutorTestSuite {
 
     private static int counter = 1;
 
     @Autowired
     private GameExecutor gameExecutor;
+
+    @Autowired
+    private AIPlayerExecutor aiPlayerExecutor;
 
     @BeforeClass
     public static void beforeTests(){
@@ -57,8 +61,14 @@ public class AIPlayerTestSuite {
         boolean result = false;
         //When
         try {
-            aiPlayer = new AIPlayer(board, true, rulesSet, 14, 14);
-            aiPlayer.getAIMove();
+            aiPlayer = aiPlayerExecutor.newAIPlayer(
+                    board,
+                    true,
+                    rulesSet,
+                    14,
+                    14
+            );
+            aiPlayerExecutor.getAIMove(aiPlayer);
         } catch(Exception e) {
             result = true;
         }

@@ -3,6 +3,7 @@ package com.wawrze.restcheckers.frontendtests;
 import com.wawrze.restcheckers.frontendtests.config.WebDriverConfig;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotInteractableException;
@@ -164,8 +165,9 @@ public class FirefoxCheckersTestSuite {
         }
     }
 
+    @Ignore
     @Test
-    public void shouldPlayHumanVsComputerGameClassicRules() throws InterruptedException {
+    public void shouldPlayHumanVsComputerGame() throws InterruptedException {
         Thread.sleep(2000);
 
         WebElement name = driver.findElement(By.xpath(XPATH_GAME_NAME));
@@ -265,7 +267,7 @@ public class FirefoxCheckersTestSuite {
     }
 
     @Test
-    public void shouldPlayHumanVsComputerGameEnglishRules() throws InterruptedException {
+    public void shouldPlayHumanVsHumanGame() throws InterruptedException {
         Thread.sleep(2000);
 
         WebElement name = driver.findElement(By.xpath(XPATH_GAME_NAME));
@@ -278,89 +280,126 @@ public class FirefoxCheckersTestSuite {
         select.selectByIndex(0);
         WebElement blackPlayer = driver.findElement(By.xpath(XPATH_BLACK_PLAYER));
         select = new Select(blackPlayer);
-        select.selectByIndex(1);
+        select.selectByIndex(0);
         WebElement createButton = driver.findElement(By.xpath(XPATH_CREATE_BUTTON));
         createButton.click();
-
         Thread.sleep(2000);
-
         WebElement nextMoveInput = driver.findElement(By.xpath(XPATH_NEXT_MOVE_INPUT));
         WebElement nextMoveButton = driver.findElement(By.xpath(XPATH_NEXT_MOVE));
-
         nextMoveInput.sendKeys("F1-E2");
         nextMoveButton.click();
         Thread.sleep(1200);
-        nextMoveInput.sendKeys("E2-D1");
+        nextMoveInput.sendKeys("C2-D1");
+        nextMoveButton.click();
+        Thread.sleep(1200);
+        nextMoveInput.sendKeys("F3-E4");
+        nextMoveButton.click();
+        Thread.sleep(1200);
+        nextMoveInput.sendKeys("D1-F3");
+        nextMoveButton.click();
+        Thread.sleep(1200);
+        nextMoveInput.sendKeys("F3-D5");
         nextMoveButton.click();
         Thread.sleep(1200);
         nextMoveInput.sendKeys("F5-E6");
         nextMoveButton.click();
         Thread.sleep(1200);
-        nextMoveInput.sendKeys("G6-F5");
+        nextMoveInput.sendKeys("B1-C2");
         nextMoveButton.click();
         Thread.sleep(1200);
-        nextMoveInput.sendKeys("H5-G6");
+        nextMoveInput.sendKeys("G4-F3");
+        nextMoveButton.click();
+        Thread.sleep(1200);
+        nextMoveInput.sendKeys("A2-B1");
+        nextMoveButton.click();
+        Thread.sleep(1200);
+        nextMoveInput.sendKeys("F3-E2");
+        nextMoveButton.click();
+        Thread.sleep(1200);
+        nextMoveInput.sendKeys("C2-D1");
+        nextMoveButton.click();
+        Thread.sleep(1200);
+        nextMoveInput.sendKeys("H5-G4");
+        nextMoveButton.click();
+        Thread.sleep(1200);
+        nextMoveInput.sendKeys("D1-F3");
+        nextMoveButton.click();
+        Thread.sleep(1200);
+        nextMoveInput.sendKeys("F3-H5");
         nextMoveButton.click();
         Thread.sleep(1200);
         nextMoveInput.sendKeys("G2-F1");
         nextMoveButton.click();
         Thread.sleep(1200);
-        nextMoveInput.sendKeys("F5-D3");
+        nextMoveInput.sendKeys("B1-C2");
         nextMoveButton.click();
         Thread.sleep(1200);
-        nextMoveInput.sendKeys("G6-F5");
+        nextMoveInput.sendKeys("F1-E2");
         nextMoveButton.click();
         Thread.sleep(1200);
-        nextMoveInput.sendKeys("F5-E4");
+        nextMoveInput.sendKeys("C2-D3");
         nextMoveButton.click();
         Thread.sleep(1200);
-        nextMoveInput.sendKeys("H7-F5");
+        nextMoveInput.sendKeys("H3-G4");
         nextMoveButton.click();
         Thread.sleep(1200);
-        nextMoveInput.sendKeys("G8-F7");
+        nextMoveInput.sendKeys("D3-F1");
         nextMoveButton.click();
         Thread.sleep(1200);
-        nextMoveInput.sendKeys("F7-E8");
+        nextMoveInput.sendKeys("H1-G2");
         nextMoveButton.click();
         Thread.sleep(1200);
-        nextMoveInput.sendKeys("D3-B1");
+        nextMoveInput.sendKeys("F1-H3");
         nextMoveButton.click();
         Thread.sleep(1200);
-        nextMoveInput.sendKeys("E4-C6");
-        nextMoveButton.click();
-        Thread.sleep(1200);
-        nextMoveInput.sendKeys("C6-A4");
-        nextMoveButton.click();
-        Thread.sleep(1200);
-        nextMoveInput.sendKeys("A4-C2");
-        nextMoveButton.click();
-        Thread.sleep(1200);
-        nextMoveInput.sendKeys("E6-C4");
-        nextMoveButton.click();
-        Thread.sleep(1200);
-        nextMoveInput.sendKeys("F1-D3");
-        nextMoveButton.click();
-        Thread.sleep(1200);
-        nextMoveInput.sendKeys("C2-B3");
-        nextMoveButton.click();
-        Thread.sleep(1200);
-        nextMoveInput.sendKeys("B3-A4");
-        nextMoveButton.click();
-        Thread.sleep(1200);
-        nextMoveInput.sendKeys("C4-B5");
-        nextMoveButton.click();
-        Thread.sleep(1200);
-        nextMoveInput.sendKeys("B5-D7");
-        nextMoveButton.click();
-        Thread.sleep(1200);
-        nextMoveInput.sendKeys("E8-G6");
+        nextMoveInput.sendKeys("H3-F5");
         nextMoveButton.click();
         Thread.sleep(1200);
         nextMoveInput.sendKeys("F5-D7");
         nextMoveButton.click();
         Thread.sleep(1200);
-        nextMoveInput.sendKeys("A4-C2");
+        nextMoveInput.sendKeys("G6-F5");
         nextMoveButton.click();
+        Thread.sleep(1200);
+        nextMoveInput.sendKeys("B3-C2");
+        nextMoveButton.click();
+        Thread.sleep(1200);
+        nextMoveInput.sendKeys("F5-E4");
+        nextMoveButton.click();
+        Thread.sleep(1200);
+        nextMoveInput.sendKeys("D5-F3");
+        nextMoveButton.click();
+        Thread.sleep(1200);
+        nextMoveInput.sendKeys("F7-E6");
+        nextMoveButton.click();
+        Thread.sleep(1200);
+        nextMoveInput.sendKeys("D7-F5");
+        nextMoveButton.click();
+        Thread.sleep(1200);
+        nextMoveInput.sendKeys("G8-F7");
+        nextMoveButton.click();
+        Thread.sleep(1200);
+        nextMoveInput.sendKeys("H5-G6");
+        nextMoveButton.click();
+        Thread.sleep(1200);
+        nextMoveInput.sendKeys("F7-H5");
+        nextMoveButton.click();
+        Thread.sleep(1200);
+        nextMoveInput.sendKeys("C2-D3");
+        nextMoveButton.click();
+        Thread.sleep(1200);
+        nextMoveInput.sendKeys("H5-G4");
+        nextMoveButton.click();
+        Thread.sleep(1200);
+        nextMoveInput.sendKeys("F3-H5");
+        nextMoveButton.click();
+        Thread.sleep(1200);
+        nextMoveInput.sendKeys("H7-G6");
+        nextMoveButton.click();
+        Thread.sleep(1200);
+        nextMoveInput.sendKeys("H5-F7");
+        nextMoveButton.click();
+        Thread.sleep(1200);
 
         Thread.sleep(3000);
         WebElement finishedGame = driver.findElement(By.xpath(XPATH_GAME_FINISHED));

@@ -4,7 +4,7 @@ import com.wawrze.restcheckers.domain.Game;
 import com.wawrze.restcheckers.domain.figures.Figure;
 import com.wawrze.restcheckers.domain.figures.FigureFactory;
 import com.wawrze.restcheckers.domain.Move;
-import com.wawrze.restcheckers.gameplay.moves.AIPlayer;
+import com.wawrze.restcheckers.gameplay.moves.AIPlayerExecutor;
 import com.wawrze.restcheckers.gameplay.moves.CapturePossibilityValidator;
 import com.wawrze.restcheckers.gameplay.moves.MoveValidator;
 import exceptions.CaptureException;
@@ -30,6 +30,9 @@ public class GameExecutor {
     
     @Autowired
     private RestUI restUI;
+
+    @Autowired
+    private AIPlayerExecutor aiPlayerExecutor;
 
     private final static Logger LOGGER = LoggerFactory.getLogger(GameExecutor.class);
 
@@ -62,13 +65,13 @@ public class GameExecutor {
         }
         String[] s;
         if((game.isBlackAIPlayer() && game.isActivePlayer()) || (game.isWhiteAIPlayer() && !game.isActivePlayer())) {
-            s = (new AIPlayer(
+            s = aiPlayerExecutor.getAIMove(aiPlayerExecutor.newAIPlayer(
                     game.getBoard(),
                     game.isActivePlayer(),
                     game.getRulesSet(),
                     game.getWhiteQueenMoves(),
                     game.getBlackQueenMoves()
-            )).getAIMove();
+            ));
             if(game.isBlackAIPlayer() && game.isWhiteAIPlayer()) {
                 String[] t;
                 do {
@@ -163,9 +166,15 @@ public class GameExecutor {
                 String[] s;
                 if((game.isBlackAIPlayer() && game.isActivePlayer())
                         || (game.isWhiteAIPlayer() && !game.isActivePlayer())) {
-                    s = (new AIPlayer(game.getBoard(), game.isActivePlayer(), game.getRulesSet(),
-                            game.getWhiteQueenMoves(), game.getBlackQueenMoves(), move.getRow2(),
-                            move.getCol2())).getAIMove();
+                    s = aiPlayerExecutor.getAIMove(aiPlayerExecutor.newAIPlayer(
+                            game.getBoard(),
+                            game.isActivePlayer(),
+                            game.getRulesSet(),
+                            game.getWhiteQueenMoves(),
+                            game.getBlackQueenMoves(),
+                            move.getRow2(),
+                            move.getCol2())
+                    );
                 }
                 else {
                     s = restUI.getMoveOrOption(game, e.getMessage());
