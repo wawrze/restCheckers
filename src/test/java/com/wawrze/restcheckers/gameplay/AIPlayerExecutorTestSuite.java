@@ -1,8 +1,9 @@
 package com.wawrze.restcheckers.gameplay;
 
-import com.wawrze.restcheckers.domain.AIPlayer;
+import com.wawrze.restcheckers.domain.aiplayer.AIPlayer;
 import com.wawrze.restcheckers.domain.Game;
 import com.wawrze.restcheckers.domain.RulesSet;
+import com.wawrze.restcheckers.domain.aiplayer.AIPlayerFactory;
 import com.wawrze.restcheckers.domain.board.Board;
 import com.wawrze.restcheckers.domain.figures.None;
 import com.wawrze.restcheckers.domain.figures.Pawn;
@@ -25,6 +26,9 @@ public class AIPlayerExecutorTestSuite {
 
     @Autowired
     private AIPlayerExecutor aiPlayerExecutor;
+
+    @Autowired
+    private AIPlayerFactory aiPlayerFactory;
 
     @BeforeClass
     public static void beforeTests(){
@@ -61,7 +65,7 @@ public class AIPlayerExecutorTestSuite {
         boolean result = false;
         //When
         try {
-            aiPlayer = aiPlayerExecutor.newAIPlayer(
+            aiPlayer = aiPlayerFactory.newAIPlayer(
                     board,
                     true,
                     rulesSet,

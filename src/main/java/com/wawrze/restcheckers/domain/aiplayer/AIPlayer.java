@@ -1,5 +1,7 @@
-package com.wawrze.restcheckers.domain;
+package com.wawrze.restcheckers.domain.aiplayer;
 
+import com.wawrze.restcheckers.domain.Move;
+import com.wawrze.restcheckers.domain.RulesSet;
 import com.wawrze.restcheckers.domain.board.Board;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

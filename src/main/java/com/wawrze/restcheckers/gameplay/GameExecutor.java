@@ -1,6 +1,7 @@
 package com.wawrze.restcheckers.gameplay;
 
 import com.wawrze.restcheckers.domain.Game;
+import com.wawrze.restcheckers.domain.aiplayer.AIPlayerFactory;
 import com.wawrze.restcheckers.domain.figures.Figure;
 import com.wawrze.restcheckers.domain.figures.FigureFactory;
 import com.wawrze.restcheckers.domain.Move;
@@ -34,6 +35,9 @@ public class GameExecutor {
     @Autowired
     private AIPlayerExecutor aiPlayerExecutor;
 
+    @Autowired
+    private AIPlayerFactory aiPlayerFactory;
+
     private final static Logger LOGGER = LoggerFactory.getLogger(GameExecutor.class);
 
     public void play(Game game) {
@@ -65,7 +69,7 @@ public class GameExecutor {
         }
         String[] s;
         if((game.isBlackAIPlayer() && game.isActivePlayer()) || (game.isWhiteAIPlayer() && !game.isActivePlayer())) {
-            s = aiPlayerExecutor.getAIMove(aiPlayerExecutor.newAIPlayer(
+            s = aiPlayerExecutor.getAIMove(aiPlayerFactory.newAIPlayer(
                     game.getBoard(),
                     game.isActivePlayer(),
                     game.getRulesSet(),
@@ -166,7 +170,7 @@ public class GameExecutor {
                 String[] s;
                 if((game.isBlackAIPlayer() && game.isActivePlayer())
                         || (game.isWhiteAIPlayer() && !game.isActivePlayer())) {
-                    s = aiPlayerExecutor.getAIMove(aiPlayerExecutor.newAIPlayer(
+                    s = aiPlayerExecutor.getAIMove(aiPlayerFactory.newAIPlayer(
                             game.getBoard(),
                             game.isActivePlayer(),
                             game.getRulesSet(),

@@ -1,13 +1,15 @@
 package com.wawrze.restcheckers.gameplay.moves;
 
-import com.wawrze.restcheckers.domain.AIPlayer;
+import com.wawrze.restcheckers.domain.aiplayer.AIPlayer;
 import com.wawrze.restcheckers.domain.Game;
 import com.wawrze.restcheckers.domain.RulesSet;
+import com.wawrze.restcheckers.domain.aiplayer.AIPlayerFactory;
 import com.wawrze.restcheckers.domain.board.Board;
 import com.wawrze.restcheckers.domain.figures.Figure;
 import com.wawrze.restcheckers.domain.Move;
 import com.wawrze.restcheckers.gameplay.VictoryValidator;
 import exceptions.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -18,75 +20,10 @@ public class AIPlayerExecutor {
 
     private final int MAX_DEPTH = 3;
 
-    public AIPlayer newAIPlayer(Board board, boolean player, RulesSet rulesSet, int whiteQueenMoves,
-                                int blackQueenMoves) {
-        AIPlayer aiPlayer = new AIPlayer(
-                board,
-                player,
-                player,
-                rulesSet,
-                whiteQueenMoves,
-                blackQueenMoves,
-                1,
-                new HashMap<>()
-                );
-        getPossibleMoves(aiPlayer);
-        evaluateMoves(aiPlayer);
-        return aiPlayer;
-    }
+    @Autowired
+    private AIPlayerFactory aiPlayerFactory;
 
-    public AIPlayer newAIPlayer(Board board, boolean player, RulesSet rulesSet, int whiteQueenMoves,
-                                int blackQueenMoves, char row, int col) {
-        AIPlayer aiPlayer = new AIPlayer(
-                board,
-                player,
-                player,
-                rulesSet,
-                whiteQueenMoves,
-                blackQueenMoves,
-                1,
-                new HashMap<>()
-        );
-        getPossibleMovesMultiCapture(aiPlayer, row, col);
-        evaluateMoves(aiPlayer);
-        return aiPlayer;
-    }
-
-    private AIPlayer newAIPlayer(Board board, boolean aiPlayer, boolean activePlayer, RulesSet rulesSet,
-                                 int whiteQueenMoves, int blackQueenMoves, int depth) {
-        AIPlayer player = new AIPlayer(
-                board,
-                aiPlayer,
-                activePlayer,
-                rulesSet,
-                whiteQueenMoves,
-                blackQueenMoves,
-                depth + 1,
-                new HashMap<>()
-        );
-        getPossibleMoves(player);
-        evaluateMoves(player);
-        return player;
-    }
-
-    private AIPlayer newAIPlayer(Board board, boolean aiPlayer, boolean activePlayer, RulesSet rulesSet,
-                                 int whiteQueenMoves, int blackQueenMoves, int depth, char row, int col) {
-        AIPlayer player = new AIPlayer(
-                board,
-                aiPlayer,
-                activePlayer,
-                rulesSet,
-                whiteQueenMoves,
-                blackQueenMoves,
-                depth + 1,
-                new HashMap<>()
-        );
-        getPossibleMovesMultiCapture(player, row, col);
-        evaluateMoves(player);
-        return player;
-    }
-
-    private void evaluateMoves(AIPlayer aiPlayer) {
+    public void evaluateMoves(AIPlayer aiPlayer) {
         Map<Move,Integer> moves = new HashMap<>(aiPlayer.getPossibleMoves());
         boolean capture;
         int value;
@@ -157,7 +94,7 @@ public class AIPlayerExecutor {
             value += getFigureSetEvaluation(aiPlayer, tmpBoard);
             if(aiPlayer.getDepth() < MAX_DEPTH){
                 if(capture) {
-                    AIPlayer nextMove = newAIPlayer(
+                    AIPlayer nextMove = aiPlayerFactory.newAIPlayer(
                             tmpBoard,
                             aiPlayer.isAIPlayer(),
                             aiPlayer.isActivePlayer(),
@@ -171,7 +108,7 @@ public class AIPlayerExecutor {
                     value += getMovesMapValue(nextMove);
                 }
                 else {
-                    AIPlayer nextMove = newAIPlayer(
+                    AIPlayer nextMove = aiPlayerFactory.newAIPlayer(
                             tmpBoard,
                             aiPlayer.isAIPlayer(),
                             !aiPlayer.isActivePlayer(),
@@ -202,7 +139,7 @@ public class AIPlayerExecutor {
             return -10000;
     }
 
-    private void getPossibleMovesMultiCapture(AIPlayer aiPlayer, char row, int col) {
+    public void getPossibleMovesMultiCapture(AIPlayer aiPlayer, char row, int col) {
         try {
             (new CapturePossibilityValidator(aiPlayer.getBoard(), aiPlayer.isActivePlayer(), aiPlayer.getRulesSet()))
                     .validateCapturePossibilityForOneFigure(row, col);
@@ -229,7 +166,7 @@ public class AIPlayerExecutor {
         }
     }
 
-    private void getPossibleMoves(AIPlayer aiPlayer) {
+    public void getPossibleMoves(AIPlayer aiPlayer) {
         try {
             (new CapturePossibilityValidator(
                     aiPlayer.getBoard(),
