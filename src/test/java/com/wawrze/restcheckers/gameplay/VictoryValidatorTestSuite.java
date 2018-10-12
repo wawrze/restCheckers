@@ -10,7 +10,9 @@ import org.junit.*;
 public class VictoryValidatorTestSuite {
 
     private static int counter = 1;
-
+    
+    private VictoryValidator victoryValidator = new VictoryValidator();
+    
     @BeforeClass
     public static void beforeTests(){
         System.out.println("CapturePossibilityValidator tests: started");
@@ -67,13 +69,13 @@ public class VictoryValidatorTestSuite {
         game.setWhiteQueenMoves(0);
         game.setBlackQueenMoves(0);
         game.setActivePlayer(true);
-        result1 = VictoryValidator.validateEndOfGame(game);
+        result1 = victoryValidator.validateEndOfGame(game);
         game.setActivePlayer(false);
-        result2 = VictoryValidator.validateEndOfGame(game);
+        result2 = victoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertFalse(result1);
         Assert.assertFalse(result2);
-        Assert.assertFalse(VictoryValidator.isDraw());
+        Assert.assertFalse(game.isDraw());
     }
 
     @Test
@@ -97,13 +99,13 @@ public class VictoryValidatorTestSuite {
         game.setWhiteQueenMoves(0);
         game.setBlackQueenMoves(0);
         game.setActivePlayer(true);
-        result1 = VictoryValidator.validateEndOfGame(game);
+        result1 = victoryValidator.validateEndOfGame(game);
         game.setActivePlayer(false);
-        result2 = VictoryValidator.validateEndOfGame(game);
+        result2 = victoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertFalse(result1);
         Assert.assertFalse(result2);
-        Assert.assertFalse(VictoryValidator.isDraw());
+        Assert.assertFalse(game.isDraw());
     }
 
     @Test
@@ -127,13 +129,13 @@ public class VictoryValidatorTestSuite {
         game.setWhiteQueenMoves(0);
         game.setBlackQueenMoves(0);
         game.setActivePlayer(true);
-        result1 = VictoryValidator.validateEndOfGame(game);
+        result1 = victoryValidator.validateEndOfGame(game);
         game.setActivePlayer(false);
-        result2 = VictoryValidator.validateEndOfGame(game);
+        result2 = victoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertFalse(result1);
         Assert.assertFalse(result2);
-        Assert.assertFalse(VictoryValidator.isDraw());
+        Assert.assertFalse(game.isDraw());
     }
 
     @Test
@@ -157,13 +159,13 @@ public class VictoryValidatorTestSuite {
         game.setWhiteQueenMoves(0);
         game.setBlackQueenMoves(0);
         game.setActivePlayer(true);
-        result1 = VictoryValidator.validateEndOfGame(game);
+        result1 = victoryValidator.validateEndOfGame(game);
         game.setActivePlayer(false);
-        result2 = VictoryValidator.validateEndOfGame(game);
+        result2 = victoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertFalse(result1);
         Assert.assertFalse(result2);
-        Assert.assertFalse(VictoryValidator.isDraw());
+        Assert.assertFalse(game.isDraw());
     }
 
     @Test
@@ -196,13 +198,13 @@ public class VictoryValidatorTestSuite {
         game.setWhiteQueenMoves(0);
         game.setBlackQueenMoves(0);
         game.setActivePlayer(true);
-        result1 = VictoryValidator.validateEndOfGame(game);
+        result1 = victoryValidator.validateEndOfGame(game);
         game.setActivePlayer(false);
-        result2 = VictoryValidator.validateEndOfGame(game);
+        result2 = victoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertFalse(result1);
         Assert.assertFalse(result2);
-        Assert.assertFalse(VictoryValidator.isDraw());
+        Assert.assertFalse(game.isDraw());
     }
 
     @Test
@@ -240,13 +242,13 @@ public class VictoryValidatorTestSuite {
         game.setWhiteQueenMoves(0);
         game.setBlackQueenMoves(0);
         game.setActivePlayer(true);
-        result1 = VictoryValidator.validateEndOfGame(game);
+        result1 = victoryValidator.validateEndOfGame(game);
         game.setActivePlayer(false);
-        result2 = VictoryValidator.validateEndOfGame(game);
+        result2 = victoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertFalse(result1);
         Assert.assertFalse(result2);
-        Assert.assertFalse(VictoryValidator.isDraw());
+        Assert.assertFalse(game.isDraw());
     }
 
     @Test
@@ -275,11 +277,11 @@ public class VictoryValidatorTestSuite {
         game.setWhiteQueenMoves(0);
         game.setBlackQueenMoves(0);
         game.setActivePlayer(true);
-        result = VictoryValidator.validateEndOfGame(game);
+        result = victoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertTrue(result);
-        Assert.assertFalse(VictoryValidator.isDraw());
-        Assert.assertTrue(VictoryValidator.getWinner());
+        Assert.assertFalse(game.isDraw());
+        Assert.assertTrue(game.isWinner());
     }
 
     @Test
@@ -309,11 +311,11 @@ public class VictoryValidatorTestSuite {
         game.setWhiteQueenMoves(0);
         game.setBlackQueenMoves(0);
         game.setActivePlayer(false);
-        result = VictoryValidator.validateEndOfGame(game);
+        result = victoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertTrue(result);
-        Assert.assertFalse(VictoryValidator.isDraw());
-        Assert.assertFalse(VictoryValidator.getWinner());
+        Assert.assertFalse(game.isDraw());
+        Assert.assertFalse(game.isWinner());
     }
 
     @Test
@@ -333,10 +335,10 @@ public class VictoryValidatorTestSuite {
         game.setWhiteQueenMoves(16);
         game.setBlackQueenMoves(15);
         game.setActivePlayer(true);
-        result = VictoryValidator.validateEndOfGame(game);
+        result = victoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertTrue(result);
-        Assert.assertTrue(VictoryValidator.isDraw());
+        Assert.assertTrue(game.isDraw());
     }
 
     @Test
@@ -360,10 +362,10 @@ public class VictoryValidatorTestSuite {
         game.setWhiteQueenMoves(0);
         game.setBlackQueenMoves(0);
         game.setActivePlayer(false);
-        result = VictoryValidator.validateEndOfGame(game);
+        result = victoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertTrue(result);
-        Assert.assertFalse(VictoryValidator.getWinner());
+        Assert.assertFalse(game.isWinner());
     }
 
     @Test
@@ -387,10 +389,10 @@ public class VictoryValidatorTestSuite {
         game.setWhiteQueenMoves(0);
         game.setBlackQueenMoves(0);
         game.setActivePlayer(true);
-        result = VictoryValidator.validateEndOfGame(game);
+        result = victoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertTrue(result);
-        Assert.assertTrue(VictoryValidator.getWinner());
+        Assert.assertTrue(game.isWinner());
     }
 
       /*****************
@@ -428,13 +430,13 @@ public class VictoryValidatorTestSuite {
         game.setWhiteQueenMoves(0);
         game.setBlackQueenMoves(0);
         game.setActivePlayer(true);
-        result1 = VictoryValidator.validateEndOfGame(game);
+        result1 = victoryValidator.validateEndOfGame(game);
         game.setActivePlayer(false);
-        result2 = VictoryValidator.validateEndOfGame(game);
+        result2 = victoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertFalse(result1);
         Assert.assertFalse(result2);
-        Assert.assertFalse(VictoryValidator.isDraw());
+        Assert.assertFalse(game.isDraw());
     }
 
     @Test
@@ -458,13 +460,13 @@ public class VictoryValidatorTestSuite {
         game.setWhiteQueenMoves(0);
         game.setBlackQueenMoves(0);
         game.setActivePlayer(true);
-        result1 = VictoryValidator.validateEndOfGame(game);
+        result1 = victoryValidator.validateEndOfGame(game);
         game.setActivePlayer(true);
-        result2 = VictoryValidator.validateEndOfGame(game);
+        result2 = victoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertFalse(result1);
         Assert.assertFalse(result2);
-        Assert.assertFalse(VictoryValidator.isDraw());
+        Assert.assertFalse(game.isDraw());
     }
 
     @Test
@@ -488,13 +490,13 @@ public class VictoryValidatorTestSuite {
         game.setWhiteQueenMoves(0);
         game.setBlackQueenMoves(0);
         game.setActivePlayer(true);
-        result1 = VictoryValidator.validateEndOfGame(game);
+        result1 = victoryValidator.validateEndOfGame(game);
         game.setActivePlayer(false);
-        result2 = VictoryValidator.validateEndOfGame(game);
+        result2 = victoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertFalse(result1);
         Assert.assertFalse(result2);
-        Assert.assertFalse(VictoryValidator.isDraw());
+        Assert.assertFalse(game.isDraw());
     }
 
     @Test
@@ -518,13 +520,13 @@ public class VictoryValidatorTestSuite {
         game.setWhiteQueenMoves(0);
         game.setBlackQueenMoves(0);
         game.setActivePlayer(true);
-        result1 = VictoryValidator.validateEndOfGame(game);
+        result1 = victoryValidator.validateEndOfGame(game);
         game.setActivePlayer(false);
-        result2 = VictoryValidator.validateEndOfGame(game);
+        result2 = victoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertFalse(result1);
         Assert.assertFalse(result2);
-        Assert.assertFalse(VictoryValidator.isDraw());
+        Assert.assertFalse(game.isDraw());
     }
 
     @Test
@@ -557,13 +559,13 @@ public class VictoryValidatorTestSuite {
         game.setWhiteQueenMoves(0);
         game.setBlackQueenMoves(0);
         game.setActivePlayer(true);
-        result1 = VictoryValidator.validateEndOfGame(game);
+        result1 = victoryValidator.validateEndOfGame(game);
         game.setActivePlayer(false);
-        result2 = VictoryValidator.validateEndOfGame(game);
+        result2 = victoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertFalse(result1);
         Assert.assertFalse(result2);
-        Assert.assertFalse(VictoryValidator.isDraw());
+        Assert.assertFalse(game.isDraw());
     }
 
     @Test
@@ -601,13 +603,13 @@ public class VictoryValidatorTestSuite {
         game.setWhiteQueenMoves(0);
         game.setBlackQueenMoves(0);
         game.setActivePlayer(true);
-        result1 = VictoryValidator.validateEndOfGame(game);
+        result1 = victoryValidator.validateEndOfGame(game);
         game.setActivePlayer(false);
-        result2 = VictoryValidator.validateEndOfGame(game);
+        result2 = victoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertFalse(result1);
         Assert.assertFalse(result2);
-        Assert.assertFalse(VictoryValidator.isDraw());
+        Assert.assertFalse(game.isDraw());
     }
 
     @Test
@@ -636,11 +638,11 @@ public class VictoryValidatorTestSuite {
         game.setWhiteQueenMoves(0);
         game.setBlackQueenMoves(0);
         game.setActivePlayer(true);
-        result = VictoryValidator.validateEndOfGame(game);
+        result = victoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertTrue(result);
-        Assert.assertFalse(VictoryValidator.isDraw());
-        Assert.assertFalse(VictoryValidator.getWinner());
+        Assert.assertFalse(game.isDraw());
+        Assert.assertFalse(game.isWinner());
     }
 
     @Test
@@ -670,11 +672,11 @@ public class VictoryValidatorTestSuite {
         game.setWhiteQueenMoves(0);
         game.setBlackQueenMoves(0);
         game.setActivePlayer(false);
-        result = VictoryValidator.validateEndOfGame(game);
+        result = victoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertTrue(result);
-        Assert.assertFalse(VictoryValidator.isDraw());
-        Assert.assertTrue(VictoryValidator.getWinner());
+        Assert.assertFalse(game.isDraw());
+        Assert.assertTrue(game.isWinner());
     }
 
     @Test
@@ -694,10 +696,10 @@ public class VictoryValidatorTestSuite {
         game.setWhiteQueenMoves(16);
         game.setBlackQueenMoves(15);
         game.setActivePlayer(true);
-        result = VictoryValidator.validateEndOfGame(game);
+        result = victoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertTrue(result);
-        Assert.assertTrue(VictoryValidator.isDraw());
+        Assert.assertTrue(game.isDraw());
     }
 
     @Test
@@ -721,10 +723,10 @@ public class VictoryValidatorTestSuite {
         game.setWhiteQueenMoves(0);
         game.setBlackQueenMoves(0);
         game.setActivePlayer(false);
-        result = VictoryValidator.validateEndOfGame(game);
+        result = victoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertTrue(result);
-        Assert.assertTrue(VictoryValidator.getWinner());
+        Assert.assertTrue(game.isWinner());
     }
 
     @Test
@@ -748,10 +750,10 @@ public class VictoryValidatorTestSuite {
         game.setWhiteQueenMoves(0);
         game.setBlackQueenMoves(0);
         game.setActivePlayer(true);
-        result = VictoryValidator.validateEndOfGame(game);
+        result = victoryValidator.validateEndOfGame(game);
         //Then
         Assert.assertTrue(result);
-        Assert.assertFalse(VictoryValidator.getWinner());
+        Assert.assertFalse(game.isWinner());
     }
 
 }

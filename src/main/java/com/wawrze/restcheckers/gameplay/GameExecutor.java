@@ -5,7 +5,7 @@ import com.wawrze.restcheckers.domain.aiplayer.AIPlayerFactory;
 import com.wawrze.restcheckers.domain.figures.Figure;
 import com.wawrze.restcheckers.domain.figures.FigureFactory;
 import com.wawrze.restcheckers.domain.Move;
-import com.wawrze.restcheckers.gameplay.moves.AIPlayerExecutor;
+import com.wawrze.restcheckers.gameplay.moves.AIPlayerMoveEvaluator;
 import com.wawrze.restcheckers.gameplay.moves.CapturePossibilityValidator;
 import com.wawrze.restcheckers.gameplay.moves.MoveValidator;
 import exceptions.CaptureException;
@@ -33,21 +33,22 @@ public class GameExecutor {
     private RestUI restUI;
 
     @Autowired
-    private AIPlayerExecutor aiPlayerExecutor;
+    private AIPlayerMoveEvaluator aiPlayerMoveEvaluator;
 
     @Autowired
     private AIPlayerFactory aiPlayerFactory;
+
+    @Autowired
+    private VictoryValidator victoryValidator;
 
     private final static Logger LOGGER = LoggerFactory.getLogger(GameExecutor.class);
 
     public void play(Game game) {
         boolean b;
         do {
-            boolean isFinished = VictoryValidator.validateEndOfGame(game);
+            boolean isFinished = victoryValidator.validateEndOfGame(game);
             if(isFinished) {
                 game.setFinished(true);
-                game.setDraw(VictoryValidator.isDraw());
-                game.setWinner(VictoryValidator.getWinner());
                 break;
             }
             b = this.waitForMove(game);
@@ -69,7 +70,7 @@ public class GameExecutor {
         }
         String[] s;
         if((game.isBlackAIPlayer() && game.isActivePlayer()) || (game.isWhiteAIPlayer() && !game.isActivePlayer())) {
-            s = aiPlayerExecutor.getAIMove(aiPlayerFactory.newAIPlayer(
+            s = aiPlayerMoveEvaluator.getAIMove(aiPlayerFactory.newAIPlayer(
                     game.getBoard(),
                     game.isActivePlayer(),
                     game.getRulesSet(),
@@ -170,7 +171,7 @@ public class GameExecutor {
                 String[] s;
                 if((game.isBlackAIPlayer() && game.isActivePlayer())
                         || (game.isWhiteAIPlayer() && !game.isActivePlayer())) {
-                    s = aiPlayerExecutor.getAIMove(aiPlayerFactory.newAIPlayer(
+                    s = aiPlayerMoveEvaluator.getAIMove(aiPlayerFactory.newAIPlayer(
                             game.getBoard(),
                             game.isActivePlayer(),
                             game.getRulesSet(),

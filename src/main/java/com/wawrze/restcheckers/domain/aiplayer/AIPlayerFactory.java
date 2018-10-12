@@ -2,7 +2,7 @@ package com.wawrze.restcheckers.domain.aiplayer;
 
 import com.wawrze.restcheckers.domain.RulesSet;
 import com.wawrze.restcheckers.domain.board.Board;
-import com.wawrze.restcheckers.gameplay.moves.AIPlayerExecutor;
+import com.wawrze.restcheckers.gameplay.moves.AIPlayerMoveEvaluator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +12,7 @@ import java.util.HashMap;
 public class AIPlayerFactory {
 
     @Autowired
-    private AIPlayerExecutor aiPlayerExecutor;
+    private AIPlayerMoveEvaluator aiPlayerMoveEvaluator;
 
     public AIPlayer newAIPlayer(Board board, boolean player, RulesSet rulesSet, int whiteQueenMoves,
                                 int blackQueenMoves) {
@@ -26,8 +26,8 @@ public class AIPlayerFactory {
                 1,
                 new HashMap<>()
         );
-        aiPlayerExecutor.getPossibleMoves(aiPlayer);
-        aiPlayerExecutor.evaluateMoves(aiPlayer);
+        aiPlayerMoveEvaluator.getPossibleMoves(aiPlayer);
+        aiPlayerMoveEvaluator.evaluateMoves(aiPlayer);
         return aiPlayer;
     }
 
@@ -43,8 +43,8 @@ public class AIPlayerFactory {
                 1,
                 new HashMap<>()
         );
-        aiPlayerExecutor.getPossibleMovesMultiCapture(aiPlayer, row, col);
-        aiPlayerExecutor.evaluateMoves(aiPlayer);
+        aiPlayerMoveEvaluator.getPossibleMovesMultiCapture(aiPlayer, row, col);
+        aiPlayerMoveEvaluator.evaluateMoves(aiPlayer);
         return aiPlayer;
     }
 
@@ -60,8 +60,8 @@ public class AIPlayerFactory {
                 depth + 1,
                 new HashMap<>()
         );
-        aiPlayerExecutor.getPossibleMoves(player);
-        aiPlayerExecutor.evaluateMoves(player);
+        aiPlayerMoveEvaluator.getPossibleMoves(player);
+        aiPlayerMoveEvaluator.evaluateMoves(player);
         return player;
     }
 
@@ -77,8 +77,8 @@ public class AIPlayerFactory {
                 depth + 1,
                 new HashMap<>()
         );
-        aiPlayerExecutor.getPossibleMovesMultiCapture(player, row, col);
-        aiPlayerExecutor.evaluateMoves(player);
+        aiPlayerMoveEvaluator.getPossibleMovesMultiCapture(player, row, col);
+        aiPlayerMoveEvaluator.evaluateMoves(player);
         return player;
     }
 

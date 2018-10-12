@@ -8,7 +8,7 @@ import com.wawrze.restcheckers.domain.board.Board;
 import com.wawrze.restcheckers.domain.figures.None;
 import com.wawrze.restcheckers.domain.figures.Pawn;
 import com.wawrze.restcheckers.domain.figures.Queen;
-import com.wawrze.restcheckers.gameplay.moves.AIPlayerExecutor;
+import com.wawrze.restcheckers.gameplay.moves.AIPlayerMoveEvaluator;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class AIPlayerExecutorTestSuite {
+public class AIPlayerMoveEvaluatorTestSuite {
 
     private static int counter = 1;
 
@@ -25,7 +25,7 @@ public class AIPlayerExecutorTestSuite {
     private GameExecutor gameExecutor;
 
     @Autowired
-    private AIPlayerExecutor aiPlayerExecutor;
+    private AIPlayerMoveEvaluator aiPlayerMoveEvaluator;
 
     @Autowired
     private AIPlayerFactory aiPlayerFactory;
@@ -72,7 +72,7 @@ public class AIPlayerExecutorTestSuite {
                     14,
                     14
             );
-            aiPlayerExecutor.getAIMove(aiPlayer);
+            aiPlayerMoveEvaluator.getAIMove(aiPlayer);
         } catch(Exception e) {
             result = true;
         }

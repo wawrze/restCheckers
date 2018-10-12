@@ -16,12 +16,15 @@ import java.util.*;
 import java.util.stream.IntStream;
 
 @Component
-public class AIPlayerExecutor {
+public class AIPlayerMoveEvaluator {
 
     private final int MAX_DEPTH = 3;
 
     @Autowired
     private AIPlayerFactory aiPlayerFactory;
+
+    @Autowired
+    private VictoryValidator victoryValidator;
 
     public void evaluateMoves(AIPlayer aiPlayer) {
         Map<Move,Integer> moves = new HashMap<>(aiPlayer.getPossibleMoves());
@@ -52,8 +55,8 @@ public class AIPlayerExecutor {
                 tmpGame.setWhiteQueenMoves(aiPlayer.getWhiteQueenMoves());
                 tmpGame.setBlackQueenMoves(aiPlayer.getBlackQueenMoves());
                 tmpGame.setActivePlayer(aiPlayer.isActivePlayer());
-                    if(VictoryValidator.validateEndOfGame(tmpGame)) {
-                        value = evaluateWhenEndOfGame(aiPlayer);
+                    if(victoryValidator.validateEndOfGame(tmpGame)) {
+                        value = evaluateWhenEndOfGame(aiPlayer, tmpGame);
                 }
                 else {
                     value = 1;
@@ -74,8 +77,8 @@ public class AIPlayerExecutor {
                     tmpGame.setWhiteQueenMoves(aiPlayer.getWhiteQueenMoves());
                     tmpGame.setBlackQueenMoves(aiPlayer.getBlackQueenMoves());
                     tmpGame.setActivePlayer(aiPlayer.isActivePlayer());
-                    if(VictoryValidator.validateEndOfGame(tmpGame)) {
-                        value = evaluateWhenEndOfGame(aiPlayer);
+                    if(victoryValidator.validateEndOfGame(tmpGame)) {
+                        value = evaluateWhenEndOfGame(aiPlayer, tmpGame);
                     }
                     else {
                         value = 100;
@@ -130,10 +133,10 @@ public class AIPlayerExecutor {
                 .sum();
     }
 
-    private int evaluateWhenEndOfGame(AIPlayer aiPlayer){
-        if (VictoryValidator.isDraw())
+    private int evaluateWhenEndOfGame(AIPlayer aiPlayer, Game game){
+        if (game.isDraw())
             return 0;
-        else if(VictoryValidator.getWinner() == aiPlayer.isActivePlayer())
+        else if(game.isWinner() == aiPlayer.isActivePlayer())
             return 10000;
         else
             return -10000;
