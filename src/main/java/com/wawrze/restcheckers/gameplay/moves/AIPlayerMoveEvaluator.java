@@ -1,5 +1,6 @@
 package com.wawrze.restcheckers.gameplay.moves;
 
+import com.wawrze.restcheckers.domain.CapturesFinder;
 import com.wawrze.restcheckers.domain.aiplayer.AIPlayer;
 import com.wawrze.restcheckers.domain.Game;
 import com.wawrze.restcheckers.domain.RulesSet;
@@ -25,6 +26,9 @@ public class AIPlayerMoveEvaluator {
 
     @Autowired
     private VictoryValidator victoryValidator;
+
+    @Autowired
+    private CapturePossibilityValidator capturePossibilityValidator;
 
     public void evaluateMoves(AIPlayer aiPlayer) {
         Map<Move,Integer> moves = new HashMap<>(aiPlayer.getPossibleMoves());
@@ -65,8 +69,11 @@ public class AIPlayerMoveEvaluator {
             catch(CaptureException e) {
                 entry.getKey().makeCapture(tmpBoard, e.getRow(), e.getCol());
                 try {
-                    (new CapturePossibilityValidator(tmpBoard, aiPlayer.isActivePlayer(), aiPlayer.getRulesSet()))
-                            .validateCapturePossibilityForOneFigure(entry.getKey().getRow2(), entry.getKey().getCol2());
+                    capturePossibilityValidator.validateCapturePossibilityForOneFigure(new CapturesFinder(
+                            tmpBoard,
+                            aiPlayer.isActivePlayer(),
+                            aiPlayer.getRulesSet()
+                    ), entry.getKey().getRow2(), entry.getKey().getCol2());
                     Game tmpGame = new Game(
                             "tmpGame",
                             aiPlayer.getRulesSet(),
@@ -144,8 +151,11 @@ public class AIPlayerMoveEvaluator {
 
     public void getPossibleMovesMultiCapture(AIPlayer aiPlayer, char row, int col) {
         try {
-            (new CapturePossibilityValidator(aiPlayer.getBoard(), aiPlayer.isActivePlayer(), aiPlayer.getRulesSet()))
-                    .validateCapturePossibilityForOneFigure(row, col);
+            capturePossibilityValidator.validateCapturePossibilityForOneFigure(new CapturesFinder(
+                    aiPlayer.getBoard(),
+                    aiPlayer.isActivePlayer(),
+                    aiPlayer.getRulesSet()
+                    ), row, col);
         }
         catch(CapturePossibleException e) {
             moveListFromCaptures(aiPlayer, e.getMessage());
@@ -171,11 +181,11 @@ public class AIPlayerMoveEvaluator {
 
     public void getPossibleMoves(AIPlayer aiPlayer) {
         try {
-            (new CapturePossibilityValidator(
+            capturePossibilityValidator.validateCapturePossibility(new CapturesFinder(
                     aiPlayer.getBoard(),
                     aiPlayer.isActivePlayer(),
                     aiPlayer.getRulesSet()
-            )).validateCapturePossibility();
+            ));
             IntStream.iterate(1, i -> ++i)
                     .limit(8)
                     .forEach(i ->

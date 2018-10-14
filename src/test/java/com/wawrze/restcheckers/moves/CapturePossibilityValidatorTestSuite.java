@@ -1,5 +1,6 @@
 package com.wawrze.restcheckers.moves;
 
+import com.wawrze.restcheckers.domain.CapturesFinder;
 import com.wawrze.restcheckers.domain.board.Board;
 import com.wawrze.restcheckers.domain.figures.Pawn;
 import com.wawrze.restcheckers.domain.figures.Queen;
@@ -11,6 +12,7 @@ import org.junit.*;
 public class CapturePossibilityValidatorTestSuite {
 
     private static int counter = 1;
+    private CapturePossibilityValidator capturePossibilityValidator = new CapturePossibilityValidator();
 
     @BeforeClass
     public static void beforeTests(){
@@ -52,7 +54,7 @@ public class CapturePossibilityValidatorTestSuite {
         boolean result;
         //When
         try{
-            (new CapturePossibilityValidator(board,false, ruleSet)).validateCapturePossibility();
+            capturePossibilityValidator.validateCapturePossibility(new CapturesFinder(board, false, ruleSet));
             result = true;
         }
         catch(CapturePossibleException e){
@@ -81,7 +83,7 @@ public class CapturePossibilityValidatorTestSuite {
         boolean result;
         //When
         try{
-            (new CapturePossibilityValidator(board,true, ruleSet)).validateCapturePossibility();
+            capturePossibilityValidator.validateCapturePossibility(new CapturesFinder(board, true, ruleSet));
             result = true;
         }
         catch(CapturePossibleException e){
@@ -110,7 +112,7 @@ public class CapturePossibilityValidatorTestSuite {
         int result;
         //When
         try{
-            (new CapturePossibilityValidator(board,true, ruleSet)).validateCapturePossibility();
+            capturePossibilityValidator.validateCapturePossibility(new CapturesFinder(board,true, ruleSet));
             result = 0;
         }
         catch(CapturePossibleException e){
@@ -140,7 +142,7 @@ public class CapturePossibilityValidatorTestSuite {
         int result;
         //When
         try{
-            (new CapturePossibilityValidator(board,true, ruleSet)).validateCapturePossibility();
+            capturePossibilityValidator.validateCapturePossibility(new CapturesFinder(board,true, ruleSet));
             result = 0;
         }
         catch(CapturePossibleException e){
@@ -170,7 +172,7 @@ public class CapturePossibilityValidatorTestSuite {
         int result;
         //When
         try{
-            (new CapturePossibilityValidator(board,true, ruleSet)).validateCapturePossibility();
+            capturePossibilityValidator.validateCapturePossibility(new CapturesFinder(board,true, ruleSet));
             result = 0;
         }
         catch(CapturePossibleException e){
@@ -200,7 +202,7 @@ public class CapturePossibilityValidatorTestSuite {
         int result;
         //When
         try{
-            (new CapturePossibilityValidator(board,false, ruleSet)).validateCapturePossibility();
+            capturePossibilityValidator.validateCapturePossibility(new CapturesFinder(board,false, ruleSet));
             result = 0;
         }
         catch(CapturePossibleException e){
@@ -230,7 +232,7 @@ public class CapturePossibilityValidatorTestSuite {
         int result;
         //When
         try{
-            (new CapturePossibilityValidator(board,false, ruleSet)).validateCapturePossibility();
+            capturePossibilityValidator.validateCapturePossibility(new CapturesFinder(board,false, ruleSet));
             result = 0;
         }
         catch(CapturePossibleException e){
@@ -260,7 +262,7 @@ public class CapturePossibilityValidatorTestSuite {
         int result;
         //When
         try{
-            (new CapturePossibilityValidator(board,false, ruleSet)).validateCapturePossibility();
+            capturePossibilityValidator.validateCapturePossibility(new CapturesFinder(board,false, ruleSet));
             result = 0;
         }
         catch(CapturePossibleException e){
@@ -290,7 +292,7 @@ public class CapturePossibilityValidatorTestSuite {
         int result;
         //When
         try{
-            (new CapturePossibilityValidator(board,false, ruleSet)).validateCapturePossibility();
+            capturePossibilityValidator.validateCapturePossibility(new CapturesFinder(board,false, ruleSet));
             result = 0;
         }
         catch(CapturePossibleException e){
@@ -320,7 +322,7 @@ public class CapturePossibilityValidatorTestSuite {
         int result;
         //When
         try{
-            (new CapturePossibilityValidator(board,false, ruleSet)).validateCapturePossibility();
+            capturePossibilityValidator.validateCapturePossibility(new CapturesFinder(board,false, ruleSet));
             result = 0;
         }
         catch(CapturePossibleException e){
@@ -350,7 +352,7 @@ public class CapturePossibilityValidatorTestSuite {
         int result;
         //When
         try{
-            (new CapturePossibilityValidator(board,false, ruleSet)).validateCapturePossibility();
+            capturePossibilityValidator.validateCapturePossibility(new CapturesFinder(board,false, ruleSet));
             result = 0;
         }
         catch(CapturePossibleException e){
@@ -380,7 +382,7 @@ public class CapturePossibilityValidatorTestSuite {
         int result;
         //When
         try{
-            (new CapturePossibilityValidator(board,false, ruleSet)).validateCapturePossibility();
+            capturePossibilityValidator.validateCapturePossibility(new CapturesFinder(board,false, ruleSet));
             result = 0;
         }
         catch(CapturePossibleException e){
@@ -410,7 +412,7 @@ public class CapturePossibilityValidatorTestSuite {
         int result;
         //When
         try{
-            (new CapturePossibilityValidator(board,true, ruleSet)).validateCapturePossibility();
+            capturePossibilityValidator.validateCapturePossibility(new CapturesFinder(board,true, ruleSet));
             result = 0;
         }
         catch(CapturePossibleException e){
@@ -440,7 +442,7 @@ public class CapturePossibilityValidatorTestSuite {
         int result;
         //When
         try{
-            (new CapturePossibilityValidator(board,true, ruleSet)).validateCapturePossibility();
+            capturePossibilityValidator.validateCapturePossibility(new CapturesFinder(board,true, ruleSet));
             result = 0;
         }
         catch(CapturePossibleException e){
@@ -448,7 +450,7 @@ public class CapturePossibilityValidatorTestSuite {
             result = sArray.length;
         }
         //Then
-        Assert.assertEquals(2,result);
+        Assert.assertEquals(2, result);
     }
 
     @Test
@@ -470,7 +472,7 @@ public class CapturePossibilityValidatorTestSuite {
         int result;
         //When
         try{
-            (new CapturePossibilityValidator(board,true, ruleSet)).validateCapturePossibility();
+            capturePossibilityValidator.validateCapturePossibility(new CapturesFinder(board,true, ruleSet));
             result = 0;
         }
         catch(CapturePossibleException e){
@@ -500,7 +502,8 @@ public class CapturePossibilityValidatorTestSuite {
         int result1, result2,result3;
         //When
         try{
-            (new CapturePossibilityValidator(board, true, ruleSet)).validateCapturePossibilityForOneFigure('C',6);
+            capturePossibilityValidator.validateCapturePossibilityForOneFigure(
+                    new CapturesFinder(board, true, ruleSet), 'C', 6);
             result1 = 0;
         }
         catch(CapturePossibleException e){
@@ -508,7 +511,8 @@ public class CapturePossibilityValidatorTestSuite {
             result1 = sArray.length;
         }
         try{
-            (new CapturePossibilityValidator(board, true, ruleSet)).validateCapturePossibilityForOneFigure('C',2);
+            capturePossibilityValidator.validateCapturePossibilityForOneFigure(
+                    new CapturesFinder(board, true, ruleSet), 'C',2);
             result2 = 0;
         }
         catch(CapturePossibleException e){
@@ -516,7 +520,8 @@ public class CapturePossibilityValidatorTestSuite {
             result2 = sArray.length;
         }
         try{
-            (new CapturePossibilityValidator(board, true, ruleSet)).validateCapturePossibilityForOneFigure('A',2);
+            capturePossibilityValidator.validateCapturePossibilityForOneFigure(
+                    new CapturesFinder(board, true, ruleSet), 'A',2);
             result3 = 0;
         }
         catch(CapturePossibleException e){
@@ -548,7 +553,7 @@ public class CapturePossibilityValidatorTestSuite {
         int result2;
         //When
         try{
-            (new CapturePossibilityValidator(board,false, ruleSet)).validateCapturePossibility();
+            capturePossibilityValidator.validateCapturePossibility(new CapturesFinder(board, false, ruleSet));
             result1 = "";
             result2 = 0;
         }

@@ -189,7 +189,7 @@ public class GameEnvelopeTest {
         Long id = gameEnvelope.startNewGame(gameDto);
         Game game = gameEnvelope.getGames().get(id);
         IntStream.iterate(0, i -> ++i)
-                .limit(1000)
+                .limit(2000)
                 .forEach(i -> game.getInQueue().offer("next"));
         gameEnvelope.playGame(id);
         GameInfoDto gameInfoDto = gameEnvelope.getGameInfo(id);

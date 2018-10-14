@@ -1,27 +1,19 @@
 package com.wawrze.restcheckers.gameplay.moves;
 
+import com.wawrze.restcheckers.domain.CapturesFinder;
 import com.wawrze.restcheckers.domain.Move;
 import com.wawrze.restcheckers.domain.board.Board;
 import com.wawrze.restcheckers.domain.figures.Figure;
-import com.wawrze.restcheckers.domain.RulesSet;
 import exceptions.*;
+import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-
+@Component
 public class CapturePossibilityValidator {
 
-    private List<String> listOfCaptures;
-    private Board board;
-    private boolean player;
-    private int[] counter;
-    private int maxDepth;
-    private RulesSet rulesSet;
-
-    private void findMaxCaptures() {
-        counter = new int[listOfCaptures.size()];
-        for(String s : listOfCaptures){
-            Board tmpBoard = new Board(this.board);
+    private void findMaxCaptures(CapturesFinder capturesFinder) {
+        capturesFinder.setCounter(new int[capturesFinder.getListOfCaptures().size()]);
+        for(String s : capturesFinder.getListOfCaptures()){
+            Board tmpBoard = new Board(capturesFinder.getBoard());
             String[] sArray = s.split("-");char x1 = sArray[0].charAt(0);
             int y1 = Character.getNumericValue(sArray[0].charAt(1));
             char x2 = sArray[1].charAt(0);
@@ -32,86 +24,81 @@ public class CapturePossibilityValidator {
             }
             catch (IncorrectMoveFormat e) {}
             try {
-                MoveValidator.validateMove(move, tmpBoard, player, rulesSet);
+                MoveValidator.validateMove(move, tmpBoard, capturesFinder.isPlayer(), capturesFinder.getRulesSet());
             }
             catch (CaptureException | IncorrectMoveException e) {
                 CaptureException exception = (CaptureException) e;
                 move.makeCapture(tmpBoard, exception.getRow(), exception.getCol());
             }
             finally {}
-            CapturePossibilityValidator validator = new CapturePossibilityValidator(tmpBoard, this.player, rulesSet);
+            CapturesFinder validator = new CapturesFinder(tmpBoard, capturesFinder.isPlayer(),
+                    capturesFinder.getRulesSet());
             try {
-                validator.validateCapturePossibilityForOneFigure(x2, y2);
-                counter[listOfCaptures.indexOf(s)] = 1;
+                validateCapturePossibilityForOneFigure(validator, x2, y2);
+                capturesFinder.getCounter()[capturesFinder.getListOfCaptures().indexOf(s)] = 1;
             }
             catch(CapturePossibleException e) {
-                counter[listOfCaptures.indexOf(s)] += (validator.getMaxDepth() + 1);
+                capturesFinder.getCounter()[capturesFinder.getListOfCaptures().indexOf(s)] +=
+                        (validator.getMaxDepth() + 1);
             }
         }
-        for(int i = (listOfCaptures.size() - 1);i >= 0;i--) {
-            if (counter[i] < getMaxDepth()) {
-                listOfCaptures.remove(i);
+        for(int i = (capturesFinder.getListOfCaptures().size() - 1);i >= 0;i--) {
+            if (capturesFinder.getCounter()[i] < getMaxDepth(capturesFinder)) {
+                capturesFinder.getListOfCaptures().remove(i);
             }
         }
     }
 
-    public int getMaxDepth() {
-        maxDepth = 0;
-        for(int i : counter)
-            if(i > maxDepth)
-                maxDepth = i;
-        return maxDepth;
+    public int getMaxDepth(CapturesFinder capturesFinder) {
+        capturesFinder.setMaxDepth(0);
+        for(int i : capturesFinder.getCounter())
+            if(i > capturesFinder.getMaxDepth())
+                capturesFinder.setMaxDepth(i);
+        return capturesFinder.getMaxDepth();
     }
 
-    public CapturePossibilityValidator(Board board, boolean player, RulesSet rulesSet){
-        this.listOfCaptures = new ArrayList<>();
-        this.board = board;
-        this.player = player;
-        this.rulesSet = rulesSet;
-    }
-
-    public void validateCapturePossibility()
+    public void validateCapturePossibility(CapturesFinder capturesFinder)
             throws CapturePossibleException {
         for(int i = 65;i<73;i++){
-            for (int j = 1; j < 9; j++){
-                if (board.getFigure((char) i, j).getFigureName().equals(Figure.PAWN)
-                        && board.getFigure((char) i, j).getColor() == player) {
-                    validatePawnCapture((char) i, j, board);
+            for(int j = 1; j < 9; j++){
+                if (capturesFinder.getBoard().getFigure((char) i, j).getFigureName().equals(Figure.PAWN)
+                        && capturesFinder.getBoard().getFigure((char) i, j).getColor() == capturesFinder.isPlayer()) {
+                    validatePawnCapture(capturesFinder, (char) i, j, capturesFinder.getBoard());
                 }
-                else if (board.getFigure((char) i, j).getFigureName().equals(Figure.QUEEN)
-                        && board.getFigure((char) i, j).getColor() == player) {
-                    validateQueenCapture((char) i, j, board);
+                else if(capturesFinder.getBoard().getFigure((char) i, j).getFigureName().equals(Figure.QUEEN)
+                        && capturesFinder.getBoard().getFigure((char) i, j).getColor() == capturesFinder.isPlayer()) {
+                    validateQueenCapture(capturesFinder, (char) i, j, capturesFinder.getBoard());
                 }
             }
         }
-        if(!rulesSet.isCaptureAny()) {
-            findMaxCaptures();
+        if(!capturesFinder.getRulesSet().isCaptureAny()) {
+            findMaxCaptures(capturesFinder);
         }
-        listCheck();
+        listCheck(capturesFinder);
     }
 
-    public void validateCapturePossibilityForOneFigure(char row,int col)
+    public void validateCapturePossibilityForOneFigure(CapturesFinder capturesFinder, char row, int col)
             throws CapturePossibleException {
-        if(board.getFigure(row,col).getFigureName().equals(Figure.PAWN))
-            validatePawnCapture(row,col,board);
+        if(capturesFinder.getBoard().getFigure(row, col).getFigureName().equals(Figure.PAWN))
+            validatePawnCapture(capturesFinder, row, col, capturesFinder.getBoard());
         else
-            validateQueenCapture(row,col,board);
-        if(!rulesSet.isCaptureAny()) {
-            findMaxCaptures();
+            validateQueenCapture(capturesFinder, row, col, capturesFinder.getBoard());
+        if(!capturesFinder.getRulesSet().isCaptureAny()) {
+            findMaxCaptures(capturesFinder);
         }
-        listCheck();
+        listCheck(capturesFinder);
     }
 
-    private void listCheck() throws CapturePossibleException{
-        if(!listOfCaptures.isEmpty()) {
+    private void listCheck(CapturesFinder capturesFinder) throws CapturePossibleException{
+        if(!capturesFinder.getListOfCaptures().isEmpty()) {
             String m = "";
-            for (String s : listOfCaptures)
+            for (String s : capturesFinder.getListOfCaptures())
                 m += s + " ";
             throw new CapturePossibleException(m);
         }
     }
 
-    private void validateQueenCapture(char row1, int col1, Board board){
+    private void validateQueenCapture(CapturesFinder capturesFinder, char row1, int col1, Board board){
         char row2;
         int col2;
         Move move = null;
@@ -126,10 +113,11 @@ public class CapturePossibilityValidator {
                 break;
             }
             try {
-                MoveValidator.validateMove(move, board, board.getFigure(row1, col1).getColor(), rulesSet);
+                MoveValidator.validateMove(move, board, board.getFigure(row1, col1).getColor(),
+                        capturesFinder.getRulesSet());
             } catch (IncorrectMoveException e) {}
             catch (CaptureException e) {
-                listOfCaptures.add("" + row1 + col1 + "-" + row2 + col2);
+                capturesFinder.getListOfCaptures().add("" + row1 + col1 + "-" + row2 + col2);
             }
         }
         for(int i = 2;i<9;i++) {
@@ -142,11 +130,12 @@ public class CapturePossibilityValidator {
                 break;
             }
             try {
-                MoveValidator.validateMove(move, board, board.getFigure(row1, col1).getColor(), rulesSet);
+                MoveValidator.validateMove(move, board, board.getFigure(row1, col1).getColor(),
+                        capturesFinder.getRulesSet());
             }
             catch (IncorrectMoveException e) {}
             catch (CaptureException e) {
-                listOfCaptures.add("" + row1 + col1 + "-" + row2 + col2);
+                capturesFinder.getListOfCaptures().add("" + row1 + col1 + "-" + row2 + col2);
             }
         }
         for(int i = 2;i<9;i++) {
@@ -159,10 +148,11 @@ public class CapturePossibilityValidator {
                 break;
             }
             try {
-                MoveValidator.validateMove(move, board, board.getFigure(row1, col1).getColor(), rulesSet);
+                MoveValidator.validateMove(move, board, board.getFigure(row1, col1).getColor(),
+                        capturesFinder.getRulesSet());
             } catch (IncorrectMoveException e) {
             } catch (CaptureException e) {
-                listOfCaptures.add("" + row1 + col1 + "-" + row2 + col2);
+                capturesFinder.getListOfCaptures().add("" + row1 + col1 + "-" + row2 + col2);
             }
         }
         for(int i = 2;i<9;i++) {
@@ -176,17 +166,18 @@ public class CapturePossibilityValidator {
                 break;
             }
             try{
-                MoveValidator.validateMove(move,board,board.getFigure(row1,col1).getColor(), rulesSet);
+                MoveValidator.validateMove(move,board,board.getFigure(row1,col1).getColor(),
+                        capturesFinder.getRulesSet());
             }
             catch(IncorrectMoveException e){
             }
             catch(CaptureException e){
-                listOfCaptures.add("" + row1 + col1 + "-" + row2  + col2);
+                capturesFinder.getListOfCaptures().add("" + row1 + col1 + "-" + row2  + col2);
             }
         }
     }
 
-    private void validatePawnCapture(char row,int col, Board board){
+    private void validatePawnCapture(CapturesFinder capturesFinder, char row,int col, Board board) {
         char rowCaptureTo;
         int colCaptureTo;
         char rowCaptured;
@@ -196,42 +187,42 @@ public class CapturePossibilityValidator {
         colCaptureTo = col - 2;
         rowCaptured = (char) (((int) row) - 1);
         colCaptured = col - 1;
-        if(isOnBoard((int) rowCaptureTo,colCaptureTo) && isOnBoard((int) rowCaptured, colCaptured))
-            if(validate(row,col,rowCaptureTo,colCaptureTo,rowCaptured,colCaptured,board))
-                listOfCaptures.add("" + row + col + "-" + rowCaptureTo  + colCaptureTo);
+        if(isOnBoard((int) rowCaptureTo, colCaptureTo) && isOnBoard((int) rowCaptured, colCaptured))
+            if(validate(row, col, rowCaptureTo, colCaptureTo, rowCaptured, colCaptured, board))
+                capturesFinder.getListOfCaptures().add("" + row + col + "-" + rowCaptureTo  + colCaptureTo);
         //right-up
         rowCaptureTo = (char) (((int) row) - 2);
         colCaptureTo = col + 2;
         rowCaptured = (char) (((int) row) - 1);
         colCaptured = col + 1;
-        if(isOnBoard((int) rowCaptureTo,colCaptureTo) && isOnBoard((int) rowCaptured, colCaptured))
-            if(validate(row,col,rowCaptureTo,colCaptureTo,rowCaptured,colCaptured,board))
-                listOfCaptures.add("" + row + col + "-" + rowCaptureTo  + colCaptureTo);
+        if(isOnBoard((int) rowCaptureTo, colCaptureTo) && isOnBoard((int) rowCaptured, colCaptured))
+            if(validate(row, col, rowCaptureTo, colCaptureTo, rowCaptured, colCaptured, board))
+                capturesFinder.getListOfCaptures().add("" + row + col + "-" + rowCaptureTo  + colCaptureTo);
         //left-down
         rowCaptureTo = (char) (((int) row) + 2);
         colCaptureTo = col - 2;
         rowCaptured = (char) (((int) row) + 1);
         colCaptured = col - 1;
-        if(isOnBoard((int) rowCaptureTo,colCaptureTo) && isOnBoard((int) rowCaptured, colCaptured))
-            if(validate(row,col,rowCaptureTo,colCaptureTo,rowCaptured,colCaptured,board))
-                listOfCaptures.add("" + row + col + "-" + rowCaptureTo  + colCaptureTo);
+        if(isOnBoard((int) rowCaptureTo, colCaptureTo) && isOnBoard((int) rowCaptured, colCaptured))
+            if(validate(row, col, rowCaptureTo, colCaptureTo, rowCaptured, colCaptured, board))
+                capturesFinder.getListOfCaptures().add("" + row + col + "-" + rowCaptureTo  + colCaptureTo);
         //right-down
         rowCaptureTo = (char) (((int) row) + 2);
         colCaptureTo = col + 2;
         rowCaptured = (char) (((int) row) + 1);
         colCaptured = col + 1;
-        if(isOnBoard((int) rowCaptureTo,colCaptureTo) && isOnBoard((int) rowCaptured, colCaptured))
-            if(validate(row,col,rowCaptureTo,colCaptureTo,rowCaptured,colCaptured,board))
-                listOfCaptures.add("" + row + col + "-" + rowCaptureTo  + colCaptureTo);
+        if(isOnBoard((int) rowCaptureTo, colCaptureTo) && isOnBoard((int) rowCaptured, colCaptured))
+            if(validate(row, col, rowCaptureTo, colCaptureTo, rowCaptured, colCaptured, board))
+                capturesFinder.getListOfCaptures().add("" + row + col + "-" + rowCaptureTo  + colCaptureTo);
     }
 
-    private boolean isOnBoard(int row,int col){
+    private boolean isOnBoard(int row, int col) {
         if(row > 64 && row < 73 && col > 0 && col < 9)
             return true;
         else return false;
     }
 
-    private boolean validate(char row1,int col1,char row2, int col2, char row3, int col3, Board board){
+    private boolean validate(char row1,int col1,char row2, int col2, char row3, int col3, Board board) {
         if(!(board.getFigure(row3,col3).getFigureName().equals(Figure.NONE))
                 && board.getFigure(row1,col1).getColor() != board.getFigure(row3,col3).getColor()
                 && board.getFigure(row2,col2).getFigureName().equals(Figure.NONE)) {

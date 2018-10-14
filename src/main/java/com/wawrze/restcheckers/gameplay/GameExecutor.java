@@ -1,5 +1,6 @@
 package com.wawrze.restcheckers.gameplay;
 
+import com.wawrze.restcheckers.domain.CapturesFinder;
 import com.wawrze.restcheckers.domain.Game;
 import com.wawrze.restcheckers.domain.aiplayer.AIPlayerFactory;
 import com.wawrze.restcheckers.domain.figures.Figure;
@@ -25,10 +26,10 @@ import org.springframework.stereotype.Service;
 @NoArgsConstructor
 @Getter
 public class GameExecutor {
-    
+
     @Autowired
     private FigureFactory figureFactory;
-    
+
     @Autowired
     private RestUI restUI;
 
@@ -40,6 +41,9 @@ public class GameExecutor {
 
     @Autowired
     private VictoryValidator victoryValidator;
+
+    @Autowired
+    private CapturePossibilityValidator capturePossibilityValidator;
 
     private final static Logger LOGGER = LoggerFactory.getLogger(GameExecutor.class);
 
@@ -58,11 +62,11 @@ public class GameExecutor {
     private boolean waitForMove(Game game) {
         String captures = "";
         try {
-            (new CapturePossibilityValidator(
+            capturePossibilityValidator.validateCapturePossibility(new CapturesFinder(
                     game.getBoard(),
                     game.isActivePlayer(),
                     game.getRulesSet()
-            )).validateCapturePossibility();
+            ));
         }
         catch(CapturePossibleException e){
             captures = e.getMessage();
@@ -162,8 +166,12 @@ public class GameExecutor {
     private void multiCapture(Game game, Move move) throws IncorrectMoveFormat, IncorrectMoveException {
         do {
             try{
-                (new CapturePossibilityValidator(game.getBoard(), game.isActivePlayer(), game.getRulesSet()))
-                        .validateCapturePossibilityForOneFigure(move.getRow2(),move.getCol2());
+
+                capturePossibilityValidator.validateCapturePossibilityForOneFigure(new CapturesFinder(
+                        game.getBoard(),
+                        game.isActivePlayer(),
+                        game.getRulesSet()
+                ), move.getRow2(), move.getCol2());
                 break;
             }
             catch(CapturePossibleException e){
@@ -213,5 +221,5 @@ public class GameExecutor {
                 && (move.getRow2()) == 'A')
             game.getBoard().setFigure('A', move.getCol2(), figureFactory.getNewFigure(false, Figure.QUEEN));
     }
-    
+
 }
