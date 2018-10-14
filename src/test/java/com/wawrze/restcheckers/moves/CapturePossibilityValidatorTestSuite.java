@@ -8,11 +8,19 @@ import com.wawrze.restcheckers.domain.RulesSet;
 import com.wawrze.restcheckers.gameplay.moves.CapturePossibilityValidator;
 import exceptions.*;
 import org.junit.*;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class CapturePossibilityValidatorTestSuite {
 
     private static int counter = 1;
-    private CapturePossibilityValidator capturePossibilityValidator = new CapturePossibilityValidator();
+
+    @Autowired
+    private CapturePossibilityValidator capturePossibilityValidator;
 
     @BeforeClass
     public static void beforeTests(){

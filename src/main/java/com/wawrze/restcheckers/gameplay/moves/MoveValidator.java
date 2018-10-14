@@ -5,10 +5,12 @@ import com.wawrze.restcheckers.domain.board.Board;
 import com.wawrze.restcheckers.domain.figures.Figure;
 import com.wawrze.restcheckers.domain.RulesSet;
 import exceptions.*;
+import org.springframework.stereotype.Component;
 
+@Component
 public class MoveValidator {
 
-    public static void validateMove(Move move, Board board, boolean player, RulesSet rulesSet)
+    public void validateMove(Move move, Board board, boolean player, RulesSet rulesSet)
             throws CaptureException, IncorrectMoveException {
         validateBias(move);
         validateField1(move, board);
@@ -20,17 +22,17 @@ public class MoveValidator {
             validateQueenMove(move, board, player, rulesSet);
     }
 
-    private static void validateField1(Move move, Board board) throws IncorrectMoveException {
+    private void validateField1(Move move, Board board) throws IncorrectMoveException {
         if (board.getFigure(move.getRow1(), move.getCol1()).getFigureName().equals(Figure.NONE))
             throw new IncorrectMoveException("No figure to move!");
     }
 
-    private static void validateField2(Move move, Board board) throws IncorrectMoveException {
+    private void validateField2(Move move, Board board) throws IncorrectMoveException {
         if (!(board.getFigure(move.getRow2(), move.getCol2()).getFigureName().equals(Figure.NONE)))
             throw new IncorrectMoveException("Target field is occupied!");
     }
 
-    private static void validateBias(Move move) throws IncorrectMoveException {
+    private void validateBias(Move move) throws IncorrectMoveException {
         int x1 = move.getRow1int();
         int y1 = move.getCol1();
         int x2 = move.getRow2int();
@@ -39,12 +41,12 @@ public class MoveValidator {
             throw new IncorrectMoveException("Fields are not bias!");
     }
 
-    private static void validatePlayer(Move move, Board board, boolean player) throws IncorrectMoveException {
+    private void validatePlayer(Move move, Board board, boolean player) throws IncorrectMoveException {
         if (!(board.getFigure(move.getRow1(), move.getCol1()).getColor() == player))
             throw new IncorrectMoveException("Not your figure!");
     }
 
-    private static void validatePawnMove(Move move, Board board, boolean player, RulesSet rulesSet)
+    private void validatePawnMove(Move move, Board board, boolean player, RulesSet rulesSet)
             throws CaptureException, IncorrectMoveException {
         if(!rulesSet.isPawnCaptureBackward()) {
             validateDirection(move, player);
@@ -57,7 +59,7 @@ public class MoveValidator {
         }
     }
 
-    private static void validateRange(Move move, Board board) throws CaptureException, IncorrectMoveException {
+    private void validateRange(Move move, Board board) throws CaptureException, IncorrectMoveException {
         int x1 = move.getRow1int();
         int y1 = move.getCol1();
         int x2 = move.getRow2int();
@@ -76,7 +78,7 @@ public class MoveValidator {
             throw new IncorrectMoveException("Invalid range!");
     }
 
-    private static void validateDirection(Move move, boolean player) throws IncorrectMoveException {
+    private void validateDirection(Move move, boolean player) throws IncorrectMoveException {
         if (player) {
             if ((move.getRow2int() - move.getRow1int()) < 0)
                 throw new IncorrectMoveException("Invalid direction!");
@@ -86,14 +88,14 @@ public class MoveValidator {
         }
     }
 
-    private static void validateQueenMove(Move move, Board board, boolean player, RulesSet rulesSet)
+    private void validateQueenMove(Move move, Board board, boolean player, RulesSet rulesSet)
             throws IncorrectMoveException, CaptureException {
         if(rulesSet.isQueenRangeOne())
             validateRange(move, board);
         validateOnWay(move, board, player);
     }
 
-    private static void validateOnWay(Move move, Board board, boolean player) throws IncorrectMoveException,
+    private void validateOnWay(Move move, Board board, boolean player) throws IncorrectMoveException,
             CaptureException {
         int x1 = move.getRow1int();
         int y1 = move.getCol1();

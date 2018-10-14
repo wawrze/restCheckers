@@ -30,6 +30,9 @@ public class AIPlayerMoveEvaluator {
     @Autowired
     private CapturePossibilityValidator capturePossibilityValidator;
 
+    @Autowired
+    private MoveValidator moveValidator;
+
     public void evaluateMoves(AIPlayer aiPlayer) {
         Map<Move,Integer> moves = new HashMap<>(aiPlayer.getPossibleMoves());
         boolean capture;
@@ -38,7 +41,7 @@ public class AIPlayerMoveEvaluator {
             Board tmpBoard = new Board(aiPlayer.getBoard());
             capture = false;
             try{
-                MoveValidator.validateMove(entry.getKey(), tmpBoard, aiPlayer.isActivePlayer(), aiPlayer.getRulesSet());
+                moveValidator.validateMove(entry.getKey(), tmpBoard, aiPlayer.isActivePlayer(), aiPlayer.getRulesSet());
                 entry.getKey().makeMove(tmpBoard);
                 if(tmpBoard.getFigure(
                         entry.getKey().getRow2(),
@@ -264,7 +267,7 @@ public class AIPlayerMoveEvaluator {
             return false;
         }
         try {
-            MoveValidator.validateMove(move, aiPlayer.getBoard(), aiPlayer.getBoard().getFigure(row, col).getColor(),
+            moveValidator.validateMove(move, aiPlayer.getBoard(), aiPlayer.getBoard().getFigure(row, col).getColor(),
                     aiPlayer.getRulesSet());
             aiPlayer.getPossibleMoves().put(move, 0);
         } catch (IncorrectMoveException | CaptureException e) {}

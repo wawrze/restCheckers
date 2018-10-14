@@ -5,10 +5,14 @@ import com.wawrze.restcheckers.domain.Move;
 import com.wawrze.restcheckers.domain.board.Board;
 import com.wawrze.restcheckers.domain.figures.Figure;
 import exceptions.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CapturePossibilityValidator {
+
+    @Autowired
+    private MoveValidator moveValidator;
 
     private void findMaxCaptures(CapturesFinder capturesFinder) {
         capturesFinder.setCounter(new int[capturesFinder.getListOfCaptures().size()]);
@@ -24,7 +28,7 @@ public class CapturePossibilityValidator {
             }
             catch (IncorrectMoveFormat e) {}
             try {
-                MoveValidator.validateMove(move, tmpBoard, capturesFinder.isPlayer(), capturesFinder.getRulesSet());
+                moveValidator.validateMove(move, tmpBoard, capturesFinder.isPlayer(), capturesFinder.getRulesSet());
             }
             catch (CaptureException | IncorrectMoveException e) {
                 CaptureException exception = (CaptureException) e;
@@ -113,7 +117,7 @@ public class CapturePossibilityValidator {
                 break;
             }
             try {
-                MoveValidator.validateMove(move, board, board.getFigure(row1, col1).getColor(),
+                moveValidator.validateMove(move, board, board.getFigure(row1, col1).getColor(),
                         capturesFinder.getRulesSet());
             } catch (IncorrectMoveException e) {}
             catch (CaptureException e) {
@@ -130,7 +134,7 @@ public class CapturePossibilityValidator {
                 break;
             }
             try {
-                MoveValidator.validateMove(move, board, board.getFigure(row1, col1).getColor(),
+                moveValidator.validateMove(move, board, board.getFigure(row1, col1).getColor(),
                         capturesFinder.getRulesSet());
             }
             catch (IncorrectMoveException e) {}
@@ -148,7 +152,7 @@ public class CapturePossibilityValidator {
                 break;
             }
             try {
-                MoveValidator.validateMove(move, board, board.getFigure(row1, col1).getColor(),
+                moveValidator.validateMove(move, board, board.getFigure(row1, col1).getColor(),
                         capturesFinder.getRulesSet());
             } catch (IncorrectMoveException e) {
             } catch (CaptureException e) {
@@ -166,7 +170,7 @@ public class CapturePossibilityValidator {
                 break;
             }
             try{
-                MoveValidator.validateMove(move,board,board.getFigure(row1,col1).getColor(),
+                moveValidator.validateMove(move,board,board.getFigure(row1,col1).getColor(),
                         capturesFinder.getRulesSet());
             }
             catch(IncorrectMoveException e){

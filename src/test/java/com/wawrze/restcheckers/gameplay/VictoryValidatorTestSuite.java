@@ -6,12 +6,19 @@ import com.wawrze.restcheckers.domain.board.Board;
 import com.wawrze.restcheckers.domain.figures.Pawn;
 import com.wawrze.restcheckers.domain.figures.Queen;
 import org.junit.*;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class VictoryValidatorTestSuite {
 
     private static int counter = 1;
-    
-    private VictoryValidator victoryValidator = new VictoryValidator();
+
+    @Autowired
+    private VictoryValidator victoryValidator;
     
     @BeforeClass
     public static void beforeTests(){

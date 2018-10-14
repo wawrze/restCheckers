@@ -12,15 +12,16 @@ import org.junit.*;
 public class MoveValidatorTestSuite {
 
     private static int counter = 1;
+    private MoveValidator moveValidator = new MoveValidator();
 
     @BeforeClass
     public static void beforeTests(){
-        System.out.println("MoveValidator tests: started");
+        System.out.println("moveValidator tests: started");
     }
 
     @AfterClass
     public static void afterTests(){
-        System.out.println("MoveValidator tests: finished");
+        System.out.println("moveValidator tests: finished");
     }
 
     @Before
@@ -47,7 +48,7 @@ public class MoveValidatorTestSuite {
         boolean result;
         //When
         try{
-            MoveValidator.validateMove(move,board,true, ruleSet);
+            moveValidator.validateMove(move,board,true, ruleSet);
             result = true;
         }
         catch(IncorrectMoveException | CaptureException e){
@@ -223,7 +224,7 @@ public class MoveValidatorTestSuite {
                 "", "");
         //When
         try{
-            MoveValidator.validateMove(move,board,true, ruleSet);
+            moveValidator.validateMove(move,board,true, ruleSet);
             result = true;
         }
         catch(IncorrectMoveException | CaptureException e){
@@ -319,7 +320,7 @@ public class MoveValidatorTestSuite {
         boolean result;
         //When
         try{
-            MoveValidator.validateMove(move,board,true, ruleSet);
+            moveValidator.validateMove(move,board,true, ruleSet);
             result = true;
         }
         catch(IncorrectMoveException | CaptureException e){
@@ -415,7 +416,7 @@ public class MoveValidatorTestSuite {
         boolean result;
         //When
         try{
-            MoveValidator.validateMove(move,board,true, ruleSet);
+            moveValidator.validateMove(move,board,true, ruleSet);
             result = true;
         }
         catch(IncorrectMoveException | CaptureException e){
@@ -511,7 +512,7 @@ public class MoveValidatorTestSuite {
         boolean result;
         //When
         try{
-            MoveValidator.validateMove(move,board,true, ruleSet);
+            moveValidator.validateMove(move,board,true, ruleSet);
             result = true;
         }
         catch(IncorrectMoveException | CaptureException e){
@@ -625,7 +626,7 @@ public class MoveValidatorTestSuite {
                 "", "");
         //When
         try {
-            MoveValidator.validateMove(move, board, false, ruleSet);
+            moveValidator.validateMove(move, board, false, ruleSet);
             result = false;
         }
         catch (IncorrectMoveException e) {
@@ -651,7 +652,7 @@ public class MoveValidatorTestSuite {
                 "", "");
         //When
         try {
-            MoveValidator.validateMove(move, board, false, ruleSet);
+            moveValidator.validateMove(move, board, false, ruleSet);
             result = true;
         }
         catch (Exception e) {
@@ -747,7 +748,7 @@ public class MoveValidatorTestSuite {
                 "", "");
         //When
         try {
-            MoveValidator.validateMove(move, board, true, ruleSet);
+            moveValidator.validateMove(move, board, true, ruleSet);
             result = false;
         }
         catch (CaptureException e) {
@@ -772,7 +773,7 @@ public class MoveValidatorTestSuite {
                 "", "");
         //When
         try {
-            MoveValidator.validateMove(move, board, true, ruleSet);
+            moveValidator.validateMove(move, board, true, ruleSet);
             result = false;
         }
         catch (CaptureException e) {
@@ -797,7 +798,7 @@ public class MoveValidatorTestSuite {
                 "", "");
         //When
         try {
-            MoveValidator.validateMove(move, board, true, ruleSet);
+            moveValidator.validateMove(move, board, true, ruleSet);
             result = false;
         }
         catch (CaptureException e) {
@@ -827,7 +828,7 @@ public class MoveValidatorTestSuite {
                 "", "");
         //When
         try {
-            MoveValidator.validateMove(move, board, true, ruleSet);
+            moveValidator.validateMove(move, board, true, ruleSet);
             result = false;
         }
         catch (CaptureException e) {
@@ -843,7 +844,7 @@ public class MoveValidatorTestSuite {
     private boolean isIncorrectMove(Board board, Move move, boolean player, boolean capture, RulesSet rulesSet) {
         boolean result;
         try{
-            MoveValidator.validateMove(move, board, player, rulesSet);
+            moveValidator.validateMove(move, board, player, rulesSet);
             result = false;
         }
         catch(IncorrectMoveException e){

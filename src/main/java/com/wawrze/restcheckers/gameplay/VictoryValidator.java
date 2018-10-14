@@ -7,11 +7,15 @@ import com.wawrze.restcheckers.gameplay.moves.MoveValidator;
 import exceptions.CaptureException;
 import exceptions.IncorrectMoveException;
 import exceptions.IncorrectMoveFormat;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class VictoryValidator {
 
+    @Autowired
+    private MoveValidator moveValidator;
+    
     public boolean validateEndOfGame(Game game) {
         game.setDraw(false);
         return validateFigures(game)
@@ -56,7 +60,7 @@ public class VictoryValidator {
                 break;
             }
             try {
-                MoveValidator.validateMove(move, game.getBoard(), game.getBoard().getFigure(row1, col1).getColor(),
+                moveValidator.validateMove(move, game.getBoard(), game.getBoard().getFigure(row1, col1).getColor(),
                         game.getRulesSet());
                 return true;
             } catch (IncorrectMoveException e) {}
@@ -74,7 +78,7 @@ public class VictoryValidator {
                 break;
             }
             try {
-                MoveValidator.validateMove(move, game.getBoard(), game.getBoard().getFigure(row1, col1).getColor(),
+                moveValidator.validateMove(move, game.getBoard(), game.getBoard().getFigure(row1, col1).getColor(),
                         game.getRulesSet());
                 return true;
             }
@@ -93,7 +97,7 @@ public class VictoryValidator {
                 break;
             }
             try {
-                MoveValidator.validateMove(move, game.getBoard(), game.getBoard().getFigure(row1, col1).getColor(),
+                moveValidator.validateMove(move, game.getBoard(), game.getBoard().getFigure(row1, col1).getColor(),
                         game.getRulesSet());
                 return true;
             } catch (IncorrectMoveException e) {}
@@ -112,7 +116,7 @@ public class VictoryValidator {
                 break;
             }
             try{
-                MoveValidator.validateMove(move, game.getBoard(), game.getBoard().getFigure(row1,col1).getColor(),
+                moveValidator.validateMove(move, game.getBoard(), game.getBoard().getFigure(row1,col1).getColor(),
                         game.getRulesSet());
                 return true;
             }

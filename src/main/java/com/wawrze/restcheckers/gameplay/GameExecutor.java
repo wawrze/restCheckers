@@ -45,6 +45,9 @@ public class GameExecutor {
     @Autowired
     private CapturePossibilityValidator capturePossibilityValidator;
 
+    @Autowired
+    private MoveValidator moveValidator;
+
     private final static Logger LOGGER = LoggerFactory.getLogger(GameExecutor.class);
 
     public void play(Game game) {
@@ -116,7 +119,7 @@ public class GameExecutor {
         int y2 = Character.getNumericValue(s[3].charAt(0));
         Move move = new Move(x1, y1, x2, y2);
         try {
-            MoveValidator.validateMove(move, game.getBoard(), game.isActivePlayer(), game.getRulesSet());
+            moveValidator.validateMove(move, game.getBoard(), game.isActivePlayer(), game.getRulesSet());
             game.getMovesList().add((game.isActivePlayer() ? "black: " : "white: ") + move);
             move.makeMove(game.getBoard());
             if(game.getBoard().getFigure(move.getRow2(),move.getCol2()).getFigureName().equals(Figure.QUEEN)){
@@ -201,7 +204,7 @@ public class GameExecutor {
                     int y2 = Character.getNumericValue(s[3].charAt(0));
                     move = new Move(x1, y1, x2, y2);
                     try{
-                        MoveValidator.validateMove(move, game.getBoard(), game.isActivePlayer(), game.getRulesSet());
+                        moveValidator.validateMove(move, game.getBoard(), game.isActivePlayer(), game.getRulesSet());
                     }
                     catch(CaptureException e1){
                         game.getMovesList().add((game.isActivePlayer() ? "black: " : "white: ") + move);
