@@ -89,13 +89,13 @@ public class GameExecutor {
                 do {
                     t = restUI.getMoveOrOption(game, captures);
                 }
-                while(t == null);
+                while(t.length == 0);
             }
         }
         else {
             s = restUI.getMoveOrOption(game, captures);
         }
-        if(s == null)
+        if(s.length == 0)
             return true;
         else if(s.length == 1) {
             return !s[0].equals("x");
@@ -195,7 +195,7 @@ public class GameExecutor {
                 else {
                     s = restUI.getMoveOrOption(game, e.getMessage());
                 }
-                if(s == null)
+                if(s.length == 0)
                     continue;
                 else {
                     char x1 = s[0].charAt(0);

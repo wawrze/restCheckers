@@ -61,7 +61,7 @@ public class GameInfoMapperTest {
         GameInfoDto gameInfoDto = new GameInfoDto();
         //When
         game.updateLastAction();
-        gameInfoDto = gameInfoMapper.mapToGameProgressDetailsDto(game);
+        gameInfoDto = gameInfoMapper.mapToGameInfoDto(game);
         //Then
         assertEquals(game.getName(), gameInfoDto.getName());
         assertEquals(game.getRulesSet().getName(), gameInfoDto.getRulesName());

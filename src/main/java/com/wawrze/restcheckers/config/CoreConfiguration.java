@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.validation.Errors;
 import org.springframework.validation.MessageCodesResolver;
 import org.springframework.validation.Validator;
 import org.springframework.web.client.RestTemplate;
@@ -50,58 +51,108 @@ public class CoreConfiguration implements WebMvcConfigurer {
     }
 
     @Override
-    public void configurePathMatch(PathMatchConfigurer configurer) {}
+    public void configurePathMatch(PathMatchConfigurer configurer) {
+        // Do nothing because it's not used in project
+    }
 
     @Override
-    public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {}
+    public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
+        // Do nothing because it's not used in project
+    }
 
     @Override
-    public void configureAsyncSupport(AsyncSupportConfigurer configurer) {}
+    public void configureAsyncSupport(AsyncSupportConfigurer configurer) {
+        // Do nothing because it's not used in project
+    }
 
     @Override
-    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {}
+    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+        // Do nothing because it's not used in project
+    }
 
     @Override
-    public void addFormatters(FormatterRegistry registry) {}
+    public void addFormatters(FormatterRegistry registry) {
+        // Do nothing because it's not used in project
+    }
 
     @Override
-    public void addInterceptors(InterceptorRegistry registry) {}
+    public void addInterceptors(InterceptorRegistry registry) {
+        // Do nothing because it's not used in project
+    }
 
     @Override
-    public void addCorsMappings(CorsRegistry registry) {}
+    public void addCorsMappings(CorsRegistry registry) {
+        // Do nothing because it's not used in project
+    }
 
     @Override
-    public void addViewControllers(ViewControllerRegistry registry) {}
+    public void addViewControllers(ViewControllerRegistry registry) {
+        // Do nothing because it's not used in project
+    }
 
     @Override
-    public void configureViewResolvers(ViewResolverRegistry registry) {}
+    public void configureViewResolvers(ViewResolverRegistry registry) {
+        // Do nothing because it's not used in project
+    }
 
     @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {}
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+        // Do nothing because it's not used in project
+    }
 
     @Override
-    public void addReturnValueHandlers(List<HandlerMethodReturnValueHandler> returnValueHandlers) {}
+    public void addReturnValueHandlers(List<HandlerMethodReturnValueHandler> returnValueHandlers) {
+        // Do nothing because it's not used in project
+    }
 
     @Override
-    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {}
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        // Do nothing because it's not used in project
+    }
 
     @Override
-    public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {}
+    public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+        // Do nothing because it's not used in project
+    }
 
     @Override
-    public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {}
+    public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {
+        // Do nothing because it's not used in project
+    }
 
     @Override
-    public void extendHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {}
+    public void extendHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {
+        // Do nothing because it's not used in project
+    }
 
     @Override
     public Validator getValidator() {
-        return null;
+        return new Validator() {
+            @Override
+            public boolean supports(Class<?> clazz) {
+                return false;
+            }
+
+            @Override
+            public void validate(Object target, Errors errors) {
+                // Do nothing because it's not used in project
+            }
+        };
     }
 
     @Override
     public MessageCodesResolver getMessageCodesResolver() {
-        return null;
+        return new MessageCodesResolver() {
+            @Override
+            public String[] resolveMessageCodes(String errorCode, String objectName) {
+                return new String[0];
+            }
+
+            @Override
+            public String[] resolveMessageCodes(String errorCode, String objectName, String field, Class<?> fieldType) {
+                return new String[0];
+            }
+        };
     }
 
 }

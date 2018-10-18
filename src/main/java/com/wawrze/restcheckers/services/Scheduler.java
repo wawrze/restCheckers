@@ -50,7 +50,7 @@ public class Scheduler {
         LOGGER.info("Starting to archive non-active games...");
         Map<Long, Game> games = new HashMap<>(gameEnvelope.getGames());
         games.entrySet().stream()
-                .map(entry -> entry.getValue())
+                .map(Map.Entry::getValue)
                 .filter(game -> game.getLastAction() != null)
                 .filter(game -> (game.getLastAction().plusMinutes(5L).isBefore(LocalDateTime.now())))
                 .forEach(game -> {

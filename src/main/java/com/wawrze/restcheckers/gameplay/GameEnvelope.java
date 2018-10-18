@@ -9,7 +9,7 @@ import com.wawrze.restcheckers.dtos.mappers.GameInfoMapper;
 import com.wawrze.restcheckers.dtos.mappers.GameListMapper;
 import com.wawrze.restcheckers.dtos.mappers.RulesSetsMapper;
 import com.wawrze.restcheckers.services.dbservices.DBService;
-import exceptions.httpExceptions.*;
+import exceptions.MethodFailureException;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,10 +58,6 @@ public class GameEnvelope {
                 gameDto.getIsBlackAIPlayer().equals("true"),
                 gameDto.getIsWhiteAIPlayer().equals("true")
         );
-        if(game == null) {
-            LOGGER.warn("Unknown error! Game not created!");
-            throw new MethodFailureException("Unknown error! Game not created!");
-        }
         dbService.saveGame(game);
         games.put(game.getId(), game);
         LOGGER.info("Game \"" + game.getName() + "\" (id " + game.getId() + ") created.");
@@ -126,9 +122,10 @@ public class GameEnvelope {
             Thread.sleep(1000);
         }
         catch(InterruptedException e) {
-            throw new MethodFailureException("Application error!");
+            LOGGER.warn("Interrupted exception in getGameInfo: " + e);
+            Thread.currentThread().interrupt();
         }
-        GameInfoDto gameInfoDto = gameInfoMapper.mapToGameProgressDetailsDto(game);
+        GameInfoDto gameInfoDto = gameInfoMapper.mapToGameInfoDto(game);
         if(game.isFinished()) {
             games.remove(gameId);
             game.updateLastAction();

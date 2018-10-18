@@ -18,11 +18,11 @@ public abstract class Figure {
 
     public String getFigureName() {
 	    if(this instanceof Pawn)
-	        return this.PAWN;
+	        return Figure.PAWN;
 	    else if(this instanceof Queen)
-            return this.QUEEN;
+            return Figure.QUEEN;
 	    else
-	        return this.NONE;
+	        return Figure.NONE;
     }
 
 }

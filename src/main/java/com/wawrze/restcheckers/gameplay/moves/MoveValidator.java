@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class MoveValidator {
 
+    private static final String SFOTW = "Some figure on the way!";
+
     public void validateMove(Move move, Board board, boolean player, RulesSet rulesSet)
             throws CaptureException, IncorrectMoveException {
         validateBias(move);
@@ -37,12 +39,12 @@ public class MoveValidator {
         int y1 = move.getCol1();
         int x2 = move.getRow2int();
         int y2 = move.getCol2();
-        if (!(Math.abs(x1 - x2) == Math.abs(y1 - y2)))
+        if (Math.abs(x1 - x2) != Math.abs(y1 - y2))
             throw new IncorrectMoveException("Fields are not bias!");
     }
 
     private void validatePlayer(Move move, Board board, boolean player) throws IncorrectMoveException {
-        if (!(board.getFigure(move.getRow1(), move.getCol1()).getColor() == player))
+        if (board.getFigure(move.getRow1(), move.getCol1()).getColor() != player)
             throw new IncorrectMoveException("Not your figure!");
     }
 
@@ -111,7 +113,7 @@ public class MoveValidator {
                 figure = board.getFigure((char) (64 + x1 - i), y1 - i);
                 if (!(figure.getFigureName().equals(Figure.NONE))) {
                     if (figure.getColor() == player)
-                        throw new IncorrectMoveException("Some figure on the way!");
+                        throw new IncorrectMoveException(SFOTW);
                     else {
                         x = (char) (64 + x1 - i);
                         y = y1 - i;
@@ -123,7 +125,7 @@ public class MoveValidator {
                 figure = board.getFigure((char) (64 + x2 + 1), y1 - x1 + x2 + 1);
                 if (!(figure.getFigureName().equals(Figure.NONE))) {
                     if (figure.getColor() == player)
-                        throw new IncorrectMoveException("Some figure on the way!");
+                        throw new IncorrectMoveException(SFOTW);
                     else {
                         x = (char) (64 + +x2 + 1);
                         y = y1 - x1 + x2 + 1;
@@ -134,7 +136,7 @@ public class MoveValidator {
             if (counter == 1)
                 throw new CaptureException(x, y);
             if (counter != 0)
-                throw new IncorrectMoveException("Some figure on the way!");
+                throw new IncorrectMoveException(SFOTW);
         }
         //right-up
         else if (x1 > x2 && y1 < y2) {
@@ -142,7 +144,7 @@ public class MoveValidator {
                 figure = board.getFigure((char) (64 + x1 - i), y1 + i);
                 if (!(figure.getFigureName().equals(Figure.NONE))) {
                     if (figure.getColor() == player)
-                        throw new IncorrectMoveException("Some figure on the way!");
+                        throw new IncorrectMoveException(SFOTW);
                     else {
                         x = (char) (64 + x1 - i);
                         y = y1 + i;
@@ -154,7 +156,7 @@ public class MoveValidator {
                 figure = board.getFigure((char) (64 + x2 + 1), y1 + x1 - x2 - 1);
                 if (!(figure.getFigureName().equals(Figure.NONE))) {
                     if (figure.getColor() == player)
-                        throw new IncorrectMoveException("Some figure on the way!");
+                        throw new IncorrectMoveException(SFOTW);
                     else {
                         x = (char) (64 + +x2 + 1);
                         y = y1 + x1 - x2 - 1;
@@ -165,7 +167,7 @@ public class MoveValidator {
             if (counter == 1)
                 throw new CaptureException(x, y);
             if (counter != 0)
-                throw new IncorrectMoveException("Some figure on the way!");
+                throw new IncorrectMoveException(SFOTW);
         }
         //left-down
         else if (x1 < x2 && y1 > y2) {
@@ -173,7 +175,7 @@ public class MoveValidator {
                 figure = board.getFigure((char) (64 + x1 + i), y1 - i);
                 if (!(figure.getFigureName().equals(Figure.NONE))) {
                     if (figure.getColor() == player)
-                        throw new IncorrectMoveException("Some figure on the way!");
+                        throw new IncorrectMoveException(SFOTW);
                     else {
                         x = (char) (64 + x1 + i);
                         y = y1 - i;
@@ -185,7 +187,7 @@ public class MoveValidator {
                 figure = board.getFigure((char) (64 + x2 - 1), y1 - x2 + x1 + 1);
                 if (!(figure.getFigureName().equals(Figure.NONE))) {
                     if (figure.getColor() == player)
-                        throw new IncorrectMoveException("Some figure on the way!");
+                        throw new IncorrectMoveException(SFOTW);
                     else {
                         x = (char) (64 + x2 - 1);
                         y = y1 - x2 + x1 + 1;
@@ -196,7 +198,7 @@ public class MoveValidator {
             if (counter == 1)
                 throw new CaptureException(x, y);
             if (counter != 0)
-                throw new IncorrectMoveException("Some figure on the way!");
+                throw new IncorrectMoveException(SFOTW);
         }
         //right-down
         else if (x1 < x2 && y1 < y2) {
@@ -204,7 +206,7 @@ public class MoveValidator {
                 figure = board.getFigure((char) (64 + x1 + i), y1 + i);
                 if (!(figure.getFigureName().equals(Figure.NONE))) {
                     if (figure.getColor() == player)
-                        throw new IncorrectMoveException("Some figure on the way!");
+                        throw new IncorrectMoveException(SFOTW);
                     else {
                         x = (char) (64 + x1 + i);
                         y = y1 + i;
@@ -216,7 +218,7 @@ public class MoveValidator {
                 figure = board.getFigure((char) (64 + x2 - 1), y1 + x2 - x1 - 1);
                 if (!(figure.getFigureName().equals(Figure.NONE))) {
                     if (figure.getColor() == player)
-                        throw new IncorrectMoveException("Some figure on the way!");
+                        throw new IncorrectMoveException(SFOTW);
                     else {
                         x = (char) (64 + x2 - 1);
                         y = y1 + x2 - x1 - 1;
@@ -227,7 +229,7 @@ public class MoveValidator {
             if (counter == 1)
                 throw new CaptureException(x, y);
             if (counter != 0)
-                throw new IncorrectMoveException("Some figure on the way!");
+                throw new IncorrectMoveException(SFOTW);
         }
     }
 }

@@ -13,7 +13,7 @@ import java.util.Map;
 public class AIPlayer {
 
     private Board board;
-    private boolean AIPlayer;
+    private boolean player;
     private boolean activePlayer;
     private RulesSet rulesSet;
     private int whiteQueenMoves;
@@ -21,12 +21,12 @@ public class AIPlayer {
     private int depth;
     private Map<Move,Integer> possibleMoves;
 
-    public void setWhiteQueenMoves(int whiteQueenMoves) {
-        this.whiteQueenMoves = whiteQueenMoves;
+    public void increaseWhiteQueenMoves() {
+        this.whiteQueenMoves++;
     }
 
-    public void setBlackQueenMoves(int blackQueenMoves) {
-        this.blackQueenMoves = blackQueenMoves;
+    public void increaseBlackQueenMoves() {
+        this.blackQueenMoves++;
     }
 
 }

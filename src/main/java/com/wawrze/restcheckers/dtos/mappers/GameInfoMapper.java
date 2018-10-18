@@ -1,5 +1,6 @@
 package com.wawrze.restcheckers.dtos.mappers;
 
+import com.wawrze.restcheckers.domain.figures.Figure;
 import com.wawrze.restcheckers.domain.figures.Pawn;
 import com.wawrze.restcheckers.domain.figures.Queen;
 import com.wawrze.restcheckers.domain.Game;
@@ -17,20 +18,17 @@ public class GameInfoMapper {
     @Autowired
     private BoardMapper boardMapper;
 
-    public GameInfoDto mapToGameProgressDetailsDto(Game game) {
-        String movesHistory;
+    public GameInfoDto mapToGameInfoDto(Game game) {
+        StringBuilder movesHistory = new StringBuilder();
         List<String> moves = game.getMovesList();
-        if(moves.isEmpty()) {
-            movesHistory = "";
-        }
-        else {
+        if(!moves.isEmpty()) {
             int i = moves.size() - 1;
-            movesHistory = (i + 1) + ". " + moves.get(i);
+            movesHistory.append("" + (i + 1) + ". " + moves.get(i));
             for (i--; i >= 0; i--) {
                 if (moves.get(i).charAt(0) == moves.get(i + 1).charAt(0)) {
-                    movesHistory += ("\n" + (i + 1) + ". " + moves.get(i));
+                    movesHistory.append("\n" + (i + 1) + ". " + moves.get(i));
                 } else {
-                    movesHistory += ("\n\n" + (i + 1) + ". " + moves.get(i));
+                    movesHistory.append("\n\n" + (i + 1) + ". " + moves.get(i));
                 }
             }
         }
@@ -38,7 +36,7 @@ public class GameInfoMapper {
                 game.getName(),
                 game.getRulesSet().getName(),
                 game.getGameStatus(),
-                movesHistory,
+                movesHistory.toString(),
                 boardMapper.mapToBoardDto(game.getBoard()),
                 game.isActivePlayer(),
                 game.isWhiteAIPlayer(),
@@ -71,7 +69,7 @@ public class GameInfoMapper {
         return (int) game.getBoard().getRows().entrySet().stream()
                 .flatMap(entry -> entry.getValue().getFigures().stream())
                 .filter(figure -> figure instanceof Pawn)
-                .filter(figure -> figure.getColor())
+                .filter(Figure::getColor)
                 .count();
     }
 
@@ -87,7 +85,7 @@ public class GameInfoMapper {
         return (int) game.getBoard().getRows().entrySet().stream()
                 .flatMap(entry -> entry.getValue().getFigures().stream())
                 .filter(figure -> figure instanceof Queen)
-                .filter(figure -> figure.getColor())
+                .filter(Figure::getColor)
                 .count();
     }
 

@@ -31,8 +31,4 @@ public class GameInfoDto {
     private DateTimeDto startTime;
     private DateTimeDto lastAction;
 
-    public void setBoard(BoardDto board) {
-        this.board = board;
-    }
-
 }

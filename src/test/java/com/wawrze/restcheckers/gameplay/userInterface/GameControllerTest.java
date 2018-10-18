@@ -6,7 +6,7 @@ import com.wawrze.restcheckers.domain.FinishedGame;
 import com.wawrze.restcheckers.dtos.*;
 import com.wawrze.restcheckers.dtos.mappers.BoardMapper;
 import com.wawrze.restcheckers.gameplay.GameEnvelope;
-import exceptions.httpExceptions.MethodFailureException;
+import exceptions.MethodFailureException;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -111,7 +111,7 @@ public class GameControllerTest {
         //When & Then
         mockMvc.perform(get("/v1/games/1")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(420));
+                .andExpect(status().is(500));
         verify(gameEnvelope, times(1)).getGameInfo(any());
     }
 
@@ -163,7 +163,7 @@ public class GameControllerTest {
         //When & Then
         mockMvc.perform(get("/v1/rules/classic")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(420));
+                .andExpect(status().is(500));
         verify(gameEnvelope, times(1)).getRulesSet(any());
     }
 
@@ -272,7 +272,7 @@ public class GameControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .content(jsonContent))
-                .andExpect(status().is(420));
+                .andExpect(status().is(500));
         verify(gameEnvelope, times(1)).startNewGame(any());
     }
 
@@ -294,7 +294,7 @@ public class GameControllerTest {
         //When & Then
         mockMvc.perform(post("/v1/games/1")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(420));
+                .andExpect(status().is(500));
         verify(gameEnvelope, times(1)).playGame(any());
     }
 
@@ -323,7 +323,7 @@ public class GameControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .content(jsonContent))
-                .andExpect(status().is(420));
+                .andExpect(status().is(500));
         verify(gameEnvelope, times(1)).sendMove(anyLong(), any());
     }
 
@@ -345,7 +345,7 @@ public class GameControllerTest {
         //When & Then
         mockMvc.perform(delete("/v1/games/1")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(420));
+                .andExpect(status().is(500));
         verify(gameEnvelope, times(1)).deleteGame(any());
     }
 

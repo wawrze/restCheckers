@@ -6,6 +6,7 @@ import com.wawrze.restcheckers.dtos.GameListDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
@@ -19,12 +20,8 @@ public class GameListMapper {
 
     public GameListDto mapToGameListDto() {
         return new GameListDto(gameEnvelope.getGames().entrySet().stream()
-                .map(entry -> entry.getValue())
-                .map(game -> {
-                    GameInfoDto gameInfoDto = gameInfoMapper.mapToGameProgressDetailsDto(game);
-                    gameInfoDto.setBoard(null);
-                    return gameInfoDto;
-                })
+                .map(Map.Entry::getValue)
+                .map(gameInfoMapper::mapToGameInfoDto)
                 .collect(Collectors.toList()));
     }
 

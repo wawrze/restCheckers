@@ -13,7 +13,8 @@ import org.openqa.selenium.support.ui.Select;
 
 public class FirefoxCheckersTestSuite {
 
-    private static final String BASE_URL = "https://wawrze.github.io/checkers/checkers.html";
+    //private static final String BASE_URL = "https://wawrze.github.io/checkers/checkers.html";
+    private static final String BASE_URL = "file:///C:/Users/Wawra/Documents/Java_Projects/RestCheckers/front-end/index.html";
     private WebDriver driver;
 
     private static final String XPATH_GAME_NAME = "/html/body/div/div[1]/div[1]/fieldset/input";

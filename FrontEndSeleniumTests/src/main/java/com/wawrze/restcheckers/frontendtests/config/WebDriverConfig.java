@@ -6,8 +6,12 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class WebDriverConfig {
 
-    public final static String FIREFOX = "FIREFOX_DRIVER";
-    public final static String CHROME = "CHROME_DRIVER";
+    public static final String FIREFOX = "FIREFOX_DRIVER";
+    public static final String CHROME = "CHROME_DRIVER";
+
+    private WebDriverConfig() {
+        throw new IllegalStateException("Utility class");
+    }
 
     public static WebDriver getDriver(final String driver) {
         System.setProperty("webdriver.gecko.driver","C:\\Selenium-drivers\\Firefox\\geckodriver.exe");

@@ -11,7 +11,7 @@ public class RestUI  {
         String[] options = {"next", "x"};
         String s;
         if(game.getInQueue().isEmpty())
-            return null;
+            return new String[0];
         s = game.getInQueue().poll();
         s = s.toLowerCase();
         String[] result;
@@ -39,12 +39,12 @@ public class RestUI  {
             }
             else {
                 printCaptureObligatory(game);
-                return null;
+                return new String[0];
             }
         }
         catch(IncorrectMoveFormat e) {
             printIncorrectMoveFormat(game);
-            return null;
+            return new String[0];
         }
         return result;
     }

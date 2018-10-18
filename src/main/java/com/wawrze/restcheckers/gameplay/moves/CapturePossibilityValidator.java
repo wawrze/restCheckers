@@ -14,7 +14,7 @@ public class CapturePossibilityValidator {
     @Autowired
     private MoveValidator moveValidator;
 
-    private void findMaxCaptures(CapturesFinder capturesFinder) {
+    private void findMaxCaptures(CapturesFinder capturesFinder) throws IncorrectMoveFormat {
         capturesFinder.setCounter(new int[capturesFinder.getListOfCaptures().size()]);
         for(String s : capturesFinder.getListOfCaptures()){
             Board tmpBoard = new Board(capturesFinder.getBoard());
@@ -22,11 +22,8 @@ public class CapturePossibilityValidator {
             int y1 = Character.getNumericValue(sArray[0].charAt(1));
             char x2 = sArray[1].charAt(0);
             int y2 = Character.getNumericValue(sArray[1].charAt(1));
-            Move move = null;
-            try {
-                move = new Move(x1, y1, x2, y2);
-            }
-            catch (IncorrectMoveFormat e) {}
+            Move move;
+            move = new Move(x1, y1, x2, y2);
             try {
                 moveValidator.validateMove(move, tmpBoard, capturesFinder.isPlayer(), capturesFinder.getRulesSet());
             }
@@ -76,7 +73,10 @@ public class CapturePossibilityValidator {
             }
         }
         if(!capturesFinder.getRulesSet().isCaptureAny()) {
-            findMaxCaptures(capturesFinder);
+            try {
+                findMaxCaptures(capturesFinder);
+            }
+            catch(IncorrectMoveFormat e) {}
         }
         listCheck(capturesFinder);
     }
@@ -88,7 +88,10 @@ public class CapturePossibilityValidator {
         else
             validateQueenCapture(capturesFinder, row, col, capturesFinder.getBoard());
         if(!capturesFinder.getRulesSet().isCaptureAny()) {
-            findMaxCaptures(capturesFinder);
+            try {
+                findMaxCaptures(capturesFinder);
+            }
+            catch(IncorrectMoveFormat e) {}
         }
         listCheck(capturesFinder);
     }

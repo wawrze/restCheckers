@@ -3,7 +3,6 @@ package com.wawrze.restcheckers.gameplay.moves;
 import com.wawrze.restcheckers.domain.CapturesFinder;
 import com.wawrze.restcheckers.domain.aiplayer.AIPlayer;
 import com.wawrze.restcheckers.domain.Game;
-import com.wawrze.restcheckers.domain.RulesSet;
 import com.wawrze.restcheckers.domain.aiplayer.AIPlayerFactory;
 import com.wawrze.restcheckers.domain.board.Board;
 import com.wawrze.restcheckers.domain.figures.Figure;
@@ -48,9 +47,9 @@ public class AIPlayerMoveEvaluator {
                         entry.getKey().getCol2()).getFigureName().equals(Figure.QUEEN)
                         ) {
                     if(aiPlayer.isActivePlayer())
-                        aiPlayer.setBlackQueenMoves(aiPlayer.getBlackQueenMoves() + 1);
+                        aiPlayer.increaseBlackQueenMoves();
                     else
-                        aiPlayer.setWhiteQueenMoves(aiPlayer.getWhiteQueenMoves() + 1);
+                        aiPlayer.increaseWhiteQueenMoves();
                 }
                 Game tmpGame = new Game(
                         "tmpGame",
@@ -102,14 +101,14 @@ public class AIPlayerMoveEvaluator {
             catch(IncorrectMoveException e) {
                 value = 0;
             }
-            if(aiPlayer.isActivePlayer() != aiPlayer.isAIPlayer())
+            if(aiPlayer.isActivePlayer() != aiPlayer.isPlayer())
                 value *= -1;
             value += getFigureSetEvaluation(aiPlayer, tmpBoard);
             if(aiPlayer.getDepth() < MAX_DEPTH){
                 if(capture) {
                     AIPlayer nextMove = aiPlayerFactory.newAIPlayer(
                             tmpBoard,
-                            aiPlayer.isAIPlayer(),
+                            aiPlayer.isPlayer(),
                             aiPlayer.isActivePlayer(),
                             aiPlayer.getRulesSet(),
                             aiPlayer.getWhiteQueenMoves(),
@@ -123,7 +122,7 @@ public class AIPlayerMoveEvaluator {
                 else {
                     AIPlayer nextMove = aiPlayerFactory.newAIPlayer(
                             tmpBoard,
-                            aiPlayer.isAIPlayer(),
+                            aiPlayer.isPlayer(),
                             !aiPlayer.isActivePlayer(),
                             aiPlayer.getRulesSet(),
                             aiPlayer.getWhiteQueenMoves(),
@@ -216,7 +215,7 @@ public class AIPlayerMoveEvaluator {
                     else
                         value += board.getFigure((char) j, i).getColor() ? -(j - 64) : -(j - 73);
                 }
-        if(aiPlayer.isActivePlayer() != aiPlayer.isAIPlayer())
+        if(aiPlayer.isActivePlayer() != aiPlayer.isPlayer())
             value *= -1;
         return value;
     }

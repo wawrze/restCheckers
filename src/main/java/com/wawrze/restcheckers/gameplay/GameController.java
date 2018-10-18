@@ -2,7 +2,7 @@ package com.wawrze.restcheckers.gameplay;
 
 import com.wawrze.restcheckers.domain.FinishedGame;
 import com.wawrze.restcheckers.dtos.*;
-import exceptions.httpExceptions.MethodFailureException;
+import exceptions.MethodFailureException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

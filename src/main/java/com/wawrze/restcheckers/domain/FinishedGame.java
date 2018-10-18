@@ -2,6 +2,7 @@ package com.wawrze.restcheckers.domain;
 
 import com.wawrze.restcheckers.dtos.mappers.GameInfoMapper;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "finished_games")
 @NoArgsConstructor
+@Setter
 public class FinishedGame {
 
     private Long id;
@@ -97,42 +99,6 @@ public class FinishedGame {
     @Column(name = "finish_time")
     public LocalDateTime getFinishTime() {
         return finishTime;
-    }
-
-    private void setId(Long id) {
-        this.id = id;
-    }
-
-    private void setName(String name) {
-        this.name = name;
-    }
-
-    private void setTypeOfVictoryAndWinner(String typeOfVictoryAndWinner) {
-        this.typeOfVictoryAndWinner = typeOfVictoryAndWinner;
-    }
-
-    public void setMoves(int moves) {
-        this.moves = moves;
-    }
-
-    private void setRulesSet(RulesSet rulesSet) {
-        this.rulesSet = rulesSet;
-    }
-
-    private void setBlackAIPlayer(boolean blackAIPlayer) {
-        isBlackAIPlayer = blackAIPlayer;
-    }
-
-    private void setWhiteAIPlayer(boolean whiteAIPlayer) {
-        isWhiteAIPlayer = whiteAIPlayer;
-    }
-
-    private void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
-    }
-
-    private void setFinishTime(LocalDateTime finishTime) {
-        this.finishTime = finishTime;
     }
 
 }

@@ -1,9 +1,8 @@
-package exceptions.httpExceptions;
+package exceptions;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.METHOD_FAILURE)
+@ResponseStatus
 public class MethodFailureException extends RuntimeException {
 
     public MethodFailureException(String message) {

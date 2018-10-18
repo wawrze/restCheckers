@@ -12,7 +12,7 @@ import java.util.*;
 @NoArgsConstructor
 public class Game {
 
-    private Long Id;
+    private Long id;
     private Board board;
     private List<String> moves;
     private Deque<String> inQueue = new ArrayDeque<>();
@@ -55,7 +55,7 @@ public class Game {
     @GeneratedValue
     @Column(name = "id")
     public Long getId() {
-        return Id;
+        return id;
     }
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -155,7 +155,7 @@ public class Game {
     }
 
     private void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
 
     private void setMoves(String moves) {
