@@ -4,6 +4,8 @@ import com.wawrze.restcheckers.domain.Game;
 import exceptions.IncorrectMoveFormat;
 import org.springframework.stereotype.Service;
 
+import java.util.stream.Collectors;
+
 @Service
 public class RestUI  {
 
@@ -12,6 +14,8 @@ public class RestUI  {
         String s;
         if(game.getInQueue().isEmpty())
             return new String[0];
+        System.out.println(game.getInQueue().stream()
+                .collect(Collectors.joining(", ", "Getting move from moves queue: ", ".")));
         s = game.getInQueue().poll();
         s = s.toLowerCase();
         String[] result;
