@@ -35,23 +35,23 @@ public class GameEnvelopeTest {
     private static int counter = 1;
 
     @BeforeClass
-    public static void beforeTests(){
+    public static void beforeTests() {
         System.out.println("GameEnvelope tests: started");
     }
 
     @AfterClass
-    public static void afterTests(){
+    public static void afterTests() {
         System.out.println("GameEnvelope tests: finished");
     }
 
     @Before
-    public void before(){
+    public void before() {
         System.out.println("Test #" + counter + ": started");
         gameEnvelope.getGames().clear();
     }
 
     @After
-    public void after(){
+    public void after() {
         System.out.println("Test #" + counter + ": finished");
         counter++;
     }
@@ -100,8 +100,7 @@ public class GameEnvelopeTest {
         //When
         try {
             gameEnvelope.sendMove(0L, moveDto);
-        }
-        catch(MethodFailureException e) {
+        } catch (MethodFailureException e) {
             result = true;
         }
         //Then
@@ -134,8 +133,7 @@ public class GameEnvelopeTest {
         //When
         try {
             gameEnvelope.getGameInfo(0L);
-        }
-        catch(MethodFailureException e) {
+        } catch (MethodFailureException e) {
             result = true;
         }
         //Then
@@ -167,9 +165,9 @@ public class GameEnvelopeTest {
         boolean result = false;
         //When
         try {
+            //noinspection unused
             RulesSetDto rulesSetDto = gameEnvelope.getRulesSet("not existing name");
-        }
-        catch(MethodFailureException e) {
+        } catch (MethodFailureException e) {
             result = true;
         }
         //Then
@@ -227,8 +225,7 @@ public class GameEnvelopeTest {
         //When
         try {
             gameEnvelope.deleteGame(0L);
-        }
-        catch(MethodFailureException e) {
+        } catch (MethodFailureException e) {
             result = true;
         }
         //Then

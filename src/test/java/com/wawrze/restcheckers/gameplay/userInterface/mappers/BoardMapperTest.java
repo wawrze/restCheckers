@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -26,22 +26,22 @@ public class BoardMapperTest {
     private static int counter = 1;
 
     @BeforeClass
-    public static void beforeTests(){
+    public static void beforeTests() {
         System.out.println("BoardMapper tests: started");
     }
 
     @AfterClass
-    public static void afterTests(){
+    public static void afterTests() {
         System.out.println("BoardMapper tests: finished");
     }
 
     @Before
-    public void before(){
+    public void before() {
         System.out.println("Test #" + counter + ": started");
     }
 
     @After
-    public void after(){
+    public void after() {
         System.out.println("Test #" + counter + ": finished");
         counter++;
     }
@@ -50,8 +50,8 @@ public class BoardMapperTest {
     public void testMapToBoardDto() {
         //Given
         Board board = new Board.BoardBuilder().build().getNewBoard();
-        List<String> moves = new ArrayList<>();
-        BoardDto boardDto = new BoardDto();
+        @SuppressWarnings("MismatchedQueryAndUpdateOfCollection") List<String> moves = new ArrayList<>();
+        BoardDto boardDto;
         //When
         moves.add("white: A1-B2");
         moves.add("white: C3-D4");

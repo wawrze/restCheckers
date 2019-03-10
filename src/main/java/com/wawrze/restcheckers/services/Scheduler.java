@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
 @Component
 public class Scheduler {
 
@@ -49,8 +50,7 @@ public class Scheduler {
     private void archiveGamesToDB() {
         LOGGER.info("Starting to archive non-active games...");
         Map<Long, Game> games = new HashMap<>(gameEnvelope.getGames());
-        games.entrySet().stream()
-                .map(Map.Entry::getValue)
+        games.values().stream()
                 .filter(game -> game.getLastAction() != null)
                 .filter(game -> (game.getLastAction().plusMinutes(5L).isBefore(LocalDateTime.now())))
                 .forEach(game -> {
@@ -73,7 +73,7 @@ public class Scheduler {
                     LOGGER.info("Game \"" + game.getName() + "\" deleted from DB.");
                 });
         games.stream()
-                .filter(game -> game.isFinished())
+                .filter(Game::isFinished)
                 .forEach(game -> {
                     dbService.saveFinishedGame(game);
                     dbService.deleteGame(game.getId());

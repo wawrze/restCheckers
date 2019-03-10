@@ -1,10 +1,11 @@
 package com.wawrze.restcheckers.gameplay.moves;
 
 import com.wawrze.restcheckers.domain.Move;
+import com.wawrze.restcheckers.domain.RulesSet;
 import com.wawrze.restcheckers.domain.board.Board;
 import com.wawrze.restcheckers.domain.figures.Figure;
-import com.wawrze.restcheckers.domain.RulesSet;
-import exceptions.*;
+import exceptions.CaptureException;
+import exceptions.IncorrectMoveException;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -50,11 +51,10 @@ public class MoveValidator {
 
     private void validatePawnMove(Move move, Board board, boolean player, RulesSet rulesSet)
             throws CaptureException, IncorrectMoveException {
-        if(!rulesSet.isPawnCaptureBackward()) {
+        if (!rulesSet.isPawnCaptureBackward()) {
             validateDirection(move, player);
             validateRange(move, board);
-        }
-        else {
+        } else {
             validateRange(move, board);
             if (!rulesSet.isPawnMoveBackward())
                 validateDirection(move, player);
@@ -72,8 +72,7 @@ public class MoveValidator {
             if (!(board.getFigure(x, y).getFigureName().equals(Figure.NONE))
                     && board.getFigure(x, y).getColor() != board.getFigure(move.getRow1(), move.getCol1()).getColor()) {
                 throw new CaptureException(x, y);
-            }
-            else {
+            } else {
                 throw new IncorrectMoveException("Invalid range!");
             }
         } else if ((Math.abs(x1 - x2) != 1) || (Math.abs(y1 - y2) != 1))
@@ -92,7 +91,7 @@ public class MoveValidator {
 
     private void validateQueenMove(Move move, Board board, boolean player, RulesSet rulesSet)
             throws IncorrectMoveException, CaptureException {
-        if(rulesSet.isQueenRangeOne())
+        if (rulesSet.isQueenRangeOne())
             validateRange(move, board);
         validateOnWay(move, board, player);
     }

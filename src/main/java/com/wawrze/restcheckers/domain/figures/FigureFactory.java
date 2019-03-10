@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 public class FigureFactory {
 
     public Figure getNewFigure(boolean color, String figureName) {
-        switch(figureName) {
+        switch (figureName) {
             case Figure.PAWN:
                 return new Pawn(color);
             case Figure.QUEEN:

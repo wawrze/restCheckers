@@ -13,8 +13,8 @@ import org.openqa.selenium.support.ui.Select;
 
 public class FirefoxCheckersTestSuite {
 
-    //private static final String BASE_URL = "https://wawrze.github.io/checkers/checkers.html";
-    private static final String BASE_URL = "file:///C:/Users/Wawra/Documents/Java_Projects/RestCheckers/front-end/index.html";
+    private static final String BASE_URL = "https://wawrze.github.io/checkers/checkers.html";
+    //    private static final String BASE_URL = "file:///C:/Users/Wawra/Documents/Java_Projects/RestCheckers/front-end/index.html";
     private WebDriver driver;
 
     private static final String XPATH_GAME_NAME = "/html/body/div/div[1]/div[1]/fieldset/input";
@@ -89,10 +89,9 @@ public class FirefoxCheckersTestSuite {
             Thread.sleep(1200);
             try {
                 nextMoveButton.click();
-            }
-            catch(ElementNotInteractableException e) {
+            } catch (ElementNotInteractableException e) {
                 WebElement finishedGame = driver.findElement(By.xpath(XPATH_GAME_FINISHED));
-                if(finishedGame.getCssValue("display").equals("none"))
+                if (finishedGame.getCssValue("display").equals("none"))
                     throw new RuntimeException();
             }
         }
@@ -123,10 +122,9 @@ public class FirefoxCheckersTestSuite {
             Thread.sleep(1200);
             try {
                 nextMoveButton.click();
-            }
-            catch(ElementNotInteractableException e) {
+            } catch (ElementNotInteractableException e) {
                 WebElement finishedGame = driver.findElement(By.xpath(XPATH_GAME_FINISHED));
-                if(finishedGame.getCssValue("display").equals("none"))
+                if (finishedGame.getCssValue("display").equals("none"))
                     throw new RuntimeException();
             }
         }
@@ -157,10 +155,9 @@ public class FirefoxCheckersTestSuite {
             Thread.sleep(1200);
             try {
                 nextMoveButton.click();
-            }
-            catch(ElementNotInteractableException e) {
+            } catch (ElementNotInteractableException e) {
                 WebElement finishedGame = driver.findElement(By.xpath(XPATH_GAME_FINISHED));
-                if(finishedGame.getCssValue("display").equals("none"))
+                if (finishedGame.getCssValue("display").equals("none"))
                     throw new RuntimeException();
             }
         }
@@ -263,7 +260,7 @@ public class FirefoxCheckersTestSuite {
         nextMoveButton.click();
         Thread.sleep(3000);
         WebElement finishedGame = driver.findElement(By.xpath(XPATH_GAME_FINISHED));
-        if(finishedGame.getCssValue("display").equals("none"))
+        if (finishedGame.getCssValue("display").equals("none"))
             throw new RuntimeException();
     }
 
@@ -404,7 +401,7 @@ public class FirefoxCheckersTestSuite {
 
         Thread.sleep(3000);
         WebElement finishedGame = driver.findElement(By.xpath(XPATH_GAME_FINISHED));
-        if(finishedGame.getCssValue("display").equals("none"))
+        if (finishedGame.getCssValue("display").equals("none"))
             throw new RuntimeException();
     }
 

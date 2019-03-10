@@ -9,12 +9,10 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 
+@SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
 @Transactional
 @Service
 public class DBService {
-
-    @Autowired
-    BoardDao boardDao;
 
     @Autowired
     GameDao gameDAO;
@@ -28,7 +26,7 @@ public class DBService {
     /////// RULES ////////////////////////////////////////////////
 
     public void saveRulesSet(RulesSet rulesSet) {
-        if(!rulesSetDao.existsByName(rulesSet.getName()))
+        if (!rulesSetDao.existsByName(rulesSet.getName()))
             rulesSetDao.save(rulesSet);
     }
 
@@ -51,7 +49,7 @@ public class DBService {
     }
 
     public Game getGameById(Long id) {
-        return  gameDAO.findById(id);
+        return gameDAO.findById(id);
     }
 
     public List<Game> getAllGames() {

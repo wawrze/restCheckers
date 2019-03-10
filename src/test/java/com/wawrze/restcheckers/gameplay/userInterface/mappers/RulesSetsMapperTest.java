@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -26,22 +26,22 @@ public class RulesSetsMapperTest {
     private static int counter = 1;
 
     @BeforeClass
-    public static void beforeTests(){
+    public static void beforeTests() {
         System.out.println("RulesSetsMapper tests: started");
     }
 
     @AfterClass
-    public static void afterTests(){
+    public static void afterTests() {
         System.out.println("RulesSetsMapper tests: finished");
     }
 
     @Before
-    public void before(){
+    public void before() {
         System.out.println("Test #" + counter + ": started");
     }
 
     @After
-    public void after(){
+    public void after() {
         System.out.println("Test #" + counter + ": finished");
         counter++;
     }
@@ -50,7 +50,7 @@ public class RulesSetsMapperTest {
     public void testMapToRulesSetDto() {
         //Given
         RulesSet rulesSet = rulesSets.updateRules().get(0);
-        RulesSetDto rulesSetDto = new RulesSetDto();
+        RulesSetDto rulesSetDto;
         //When
         rulesSetDto = rulesSetsMapper.mapToRulesSetDto(rulesSet);
         //Then
@@ -67,7 +67,7 @@ public class RulesSetsMapperTest {
     @Test
     public void testMapToRulesSetsDto() {
         //Given
-        RulesSetsDto rulesSetsDto = new RulesSetsDto();
+        RulesSetsDto rulesSetsDto;
         //When
         rulesSetsDto = rulesSetsMapper.mapToRulesSetsDto();
         //Then

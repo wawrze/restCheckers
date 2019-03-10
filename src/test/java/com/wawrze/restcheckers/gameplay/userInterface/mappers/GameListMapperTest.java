@@ -2,16 +2,16 @@ package com.wawrze.restcheckers.gameplay.userInterface.mappers;
 
 import com.wawrze.restcheckers.domain.Game;
 import com.wawrze.restcheckers.domain.RulesSets;
+import com.wawrze.restcheckers.dtos.GameListDto;
 import com.wawrze.restcheckers.dtos.mappers.GameListMapper;
 import com.wawrze.restcheckers.gameplay.GameEnvelope;
-import com.wawrze.restcheckers.dtos.GameListDto;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -29,23 +29,23 @@ public class GameListMapperTest {
     private static int counter = 1;
 
     @BeforeClass
-    public static void beforeTests(){
+    public static void beforeTests() {
         System.out.println("GameListMapper tests: started");
     }
 
     @AfterClass
-    public static void afterTests(){
+    public static void afterTests() {
         System.out.println("GameListMapper tests: finished");
     }
 
     @Before
-    public void before(){
+    public void before() {
         System.out.println("Test #" + counter + ": started");
         gameEnvelope.getGames().clear();
     }
 
     @After
-    public void after(){
+    public void after() {
         System.out.println("Test #" + counter + ": finished");
         counter++;
     }
@@ -71,11 +71,10 @@ public class GameListMapperTest {
                 false,
                 true
         ));
-        GameListDto gameListDto = new GameListDto();
+        GameListDto gameListDto;
         //When
-        gameEnvelope.getGames().entrySet().stream()
-                .map(entry -> entry.getValue())
-                .forEach(game -> game.updateLastAction());
+        gameEnvelope.getGames().values()
+                .forEach(Game::updateLastAction);
         gameListDto = gameListMapper.mapToGameListDto();
         //Then
         assertEquals(3, gameListDto.getGamesList().size());

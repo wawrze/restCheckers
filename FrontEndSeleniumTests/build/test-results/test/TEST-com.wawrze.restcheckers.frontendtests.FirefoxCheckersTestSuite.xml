@@ -1,24 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.wawrze.restcheckers.frontendtests.FirefoxCheckersTestSuite" tests="6" skipped="6" failures="0" errors="0" timestamp="2018-10-15T07:54:17" hostname="WawraHyperbook" time="0.0">
-  <properties/>
-  <testcase name="shouldPlay2xAIGameClassicRules" classname="com.wawrze.restcheckers.frontendtests.FirefoxCheckersTestSuite" time="0.0">
-    <skipped/>
-  </testcase>
-  <testcase name="shouldPlayHumanVsHumanGame" classname="com.wawrze.restcheckers.frontendtests.FirefoxCheckersTestSuite" time="0.0">
-    <skipped/>
-  </testcase>
-  <testcase name="shouldCreateAndDeleteNewGame" classname="com.wawrze.restcheckers.frontendtests.FirefoxCheckersTestSuite" time="0.0">
-    <skipped/>
-  </testcase>
-  <testcase name="shouldPlay2xAIGamePoddavkiRules" classname="com.wawrze.restcheckers.frontendtests.FirefoxCheckersTestSuite" time="0.0">
-    <skipped/>
-  </testcase>
-  <testcase name="shouldPlayHumanVsComputerGame" classname="com.wawrze.restcheckers.frontendtests.FirefoxCheckersTestSuite" time="0.0">
-    <skipped/>
-  </testcase>
-  <testcase name="shouldPlay2xAIGameEnglishRules" classname="com.wawrze.restcheckers.frontendtests.FirefoxCheckersTestSuite" time="0.0">
-    <skipped/>
-  </testcase>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
+<testsuite name="com.wawrze.restcheckers.frontendtests.FirefoxCheckersTestSuite" tests="6" skipped="6" failures="0"
+           errors="0" timestamp="2018-10-15T07:54:17" hostname="WawraHyperbook" time="0.0">
+    <properties/>
+    <testcase name="shouldPlay2xAIGameClassicRules"
+              classname="com.wawrze.restcheckers.frontendtests.FirefoxCheckersTestSuite" time="0.0">
+        <skipped/>
+    </testcase>
+    <testcase name="shouldPlayHumanVsHumanGame"
+              classname="com.wawrze.restcheckers.frontendtests.FirefoxCheckersTestSuite" time="0.0">
+        <skipped/>
+    </testcase>
+    <testcase name="shouldCreateAndDeleteNewGame"
+              classname="com.wawrze.restcheckers.frontendtests.FirefoxCheckersTestSuite" time="0.0">
+        <skipped/>
+    </testcase>
+    <testcase name="shouldPlay2xAIGamePoddavkiRules"
+              classname="com.wawrze.restcheckers.frontendtests.FirefoxCheckersTestSuite" time="0.0">
+        <skipped/>
+    </testcase>
+    <testcase name="shouldPlayHumanVsComputerGame"
+              classname="com.wawrze.restcheckers.frontendtests.FirefoxCheckersTestSuite" time="0.0">
+        <skipped/>
+    </testcase>
+    <testcase name="shouldPlay2xAIGameEnglishRules"
+              classname="com.wawrze.restcheckers.frontendtests.FirefoxCheckersTestSuite" time="0.0">
+        <skipped/>
+    </testcase>
+    <system-out><![CDATA[]]></system-out>
+    <system-err><![CDATA[]]></system-err>
 </testsuite>

@@ -11,40 +11,40 @@ public class BoardRowTestSuite {
     private static int counter = 1;
 
     @BeforeClass
-    public static void beforeTests(){
+    public static void beforeTests() {
         System.out.println("BoardRow tests: started");
     }
 
     @AfterClass
-    public static void afterTests(){
+    public static void afterTests() {
         System.out.println("BoardRow tests: finished");
     }
 
     @Before
-    public void before(){
+    public void before() {
         System.out.println("Test #" + counter + ": started");
     }
 
     @After
-    public void after(){
+    public void after() {
         System.out.println("Test #" + counter + ": finished");
         counter++;
     }
 
     @Test
-    public void testConstructor(){
+    public void testConstructor() {
         //Given
         BoardRow boardRow = new BoardRow(true);
         boolean result = true;
         //When
-        for(int i = 1;i < 9;i++)
-                result = result && (boardRow.getFigure(i) instanceof None);
+        for (int i = 1; i < 9; i++)
+            result = result && (boardRow.getFigure(i) instanceof None);
         //Then
         Assert.assertTrue(result);
     }
 
     @Test
-    public void testSetGetFigure(){
+    public void testSetGetFigure() {
         //Given
         BoardRow boardRow = new BoardRow(true);
         Pawn pawn1 = new Pawn(true);

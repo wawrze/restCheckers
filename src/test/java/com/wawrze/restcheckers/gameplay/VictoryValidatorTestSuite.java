@@ -19,57 +19,57 @@ public class VictoryValidatorTestSuite {
 
     @Autowired
     private VictoryValidator victoryValidator;
-    
+
     @BeforeClass
-    public static void beforeTests(){
+    public static void beforeTests() {
         System.out.println("CapturePossibilityValidator tests: started");
     }
 
     @AfterClass
-    public static void afterTests(){
+    public static void afterTests() {
         System.out.println("CapturePossibilityValidator tests: finished");
     }
 
     @Before
-    public void before(){
+    public void before() {
         System.out.println("Test #" + counter + ": started");
     }
 
     @After
-    public void after(){
+    public void after() {
         System.out.println("Test #" + counter + ": finished");
         counter++;
     }
 
-       /*******************
-      * REVERSED RULES *
-    ******************/
+    /*******************
+     * REVERSED RULES *
+     ******************/
 
     @Test
-    public void testNoEndOfGame1rev(){
+    public void testNoEndOfGame1rev() {
         //Given
         Board board = new Board.BoardBuilder()
-                .addFigure('A',8, new Pawn(true))
-                .addFigure('B',3, new Pawn(true))
-                .addFigure('C',4, new Pawn(true))
-                .addFigure('D',5, new Pawn(true))
-                .addFigure('E',4, new Pawn(true))
-                .addFigure('F',7, new Pawn(true))
-                .addFigure('H',5, new Queen(true))
-                .addFigure('G',8, new Queen(true))
-                .addFigure('A',4, new Queen(false))
-                .addFigure('B',1, new Pawn(false))
-                .addFigure('C',6, new Pawn(false))
-                .addFigure('D',7, new Pawn(false))
-                .addFigure('E',2, new Pawn(false))
-                .addFigure('F',5, new Pawn(false))
-                .addFigure('H',1, new Pawn(false))
-                .addFigure('A',2, new Queen(true))
+                .addFigure('A', 8, new Pawn(true))
+                .addFigure('B', 3, new Pawn(true))
+                .addFigure('C', 4, new Pawn(true))
+                .addFigure('D', 5, new Pawn(true))
+                .addFigure('E', 4, new Pawn(true))
+                .addFigure('F', 7, new Pawn(true))
+                .addFigure('H', 5, new Queen(true))
+                .addFigure('G', 8, new Queen(true))
+                .addFigure('A', 4, new Queen(false))
+                .addFigure('B', 1, new Pawn(false))
+                .addFigure('C', 6, new Pawn(false))
+                .addFigure('D', 7, new Pawn(false))
+                .addFigure('E', 2, new Pawn(false))
+                .addFigure('F', 5, new Pawn(false))
+                .addFigure('H', 1, new Pawn(false))
+                .addFigure('A', 2, new Queen(true))
                 .build();
         RulesSet ruleSet = new RulesSet(true, false, false,
                 false, true, false,
                 "", "");
-        boolean result1,result2;
+        boolean result1, result2;
         Game game = new Game("test", ruleSet, false, false);
         //When
         game.setBoard(board);
@@ -86,20 +86,20 @@ public class VictoryValidatorTestSuite {
     }
 
     @Test
-    public void testNoEndOfGame2rev(){
+    public void testNoEndOfGame2rev() {
         //Given
         Board board = new Board.BoardBuilder()
-                .addFigure('A',8, new Pawn(true))
-                .addFigure('A',2, new Queen(false))
-                .addFigure('C',6, new Pawn(true))
-                .addFigure('C',4, new Pawn(false))
-                .addFigure('F',1, new Queen(true))
-                .addFigure('D',1, new Pawn(false))
+                .addFigure('A', 8, new Pawn(true))
+                .addFigure('A', 2, new Queen(false))
+                .addFigure('C', 6, new Pawn(true))
+                .addFigure('C', 4, new Pawn(false))
+                .addFigure('F', 1, new Queen(true))
+                .addFigure('D', 1, new Pawn(false))
                 .build();
         RulesSet ruleSet = new RulesSet(true, false, false,
                 false, true, false,
                 "", "");
-        boolean result1,result2;
+        boolean result1, result2;
         Game game = new Game("test", ruleSet, false, false);
         //When
         game.setBoard(board);
@@ -116,20 +116,20 @@ public class VictoryValidatorTestSuite {
     }
 
     @Test
-    public void testNoEndOfGame3rev(){
+    public void testNoEndOfGame3rev() {
         //Given
         Board board = new Board.BoardBuilder()
-                .addFigure('A',2, new Pawn(true))
-                .addFigure('D',5, new Queen(true))
-                .addFigure('E',2, new Pawn(true))
-                .addFigure('F',7, new Pawn(true))
-                .addFigure('B',3, new Queen(false))
-                .addFigure('C',2, new Pawn(false))
+                .addFigure('A', 2, new Pawn(true))
+                .addFigure('D', 5, new Queen(true))
+                .addFigure('E', 2, new Pawn(true))
+                .addFigure('F', 7, new Pawn(true))
+                .addFigure('B', 3, new Queen(false))
+                .addFigure('C', 2, new Pawn(false))
                 .build();
         RulesSet ruleSet = new RulesSet(true, false, false,
                 false, true, false,
                 "", "");
-        boolean result1,result2;
+        boolean result1, result2;
         Game game = new Game("test", ruleSet, false, false);
         //When
         game.setBoard(board);
@@ -146,20 +146,20 @@ public class VictoryValidatorTestSuite {
     }
 
     @Test
-    public void testNoEndOfGame4rev(){
+    public void testNoEndOfGame4rev() {
         //Given
         Board board = new Board.BoardBuilder()
-                .addFigure('G',2, new Pawn(true))
-                .addFigure('E',2, new Queen(false))
-                .addFigure('A',4, new Pawn(true))
-                .addFigure('F',3, new Pawn(false))
-                .addFigure('D',3, new Queen(false))
-                .addFigure('H',7, new Pawn(false))
+                .addFigure('G', 2, new Pawn(true))
+                .addFigure('E', 2, new Queen(false))
+                .addFigure('A', 4, new Pawn(true))
+                .addFigure('F', 3, new Pawn(false))
+                .addFigure('D', 3, new Queen(false))
+                .addFigure('H', 7, new Pawn(false))
                 .build();
         RulesSet ruleSet = new RulesSet(true, false, false,
                 false, true, false,
                 "", "");
-        boolean result1,result2;
+        boolean result1, result2;
         Game game = new Game("test", ruleSet, false, false);
         //When
         game.setBoard(board);
@@ -176,29 +176,29 @@ public class VictoryValidatorTestSuite {
     }
 
     @Test
-    public void testNoEndOfGame5rev(){
+    public void testNoEndOfGame5rev() {
         //Given
         Board board = new Board.BoardBuilder()
-                .addFigure('A',8, new Pawn(true))
-                .addFigure('B',3, new Pawn(true))
-                .addFigure('C',4, new Pawn(true))
-                .addFigure('D',5, new Pawn(true))
-                .addFigure('E',2, new Pawn(true))
-                .addFigure('F',7, new Pawn(true))
-                .addFigure('H',5, new Queen(true))
-                .addFigure('G',8, new Queen(true))
-                .addFigure('A',4, new Queen(false))
-                .addFigure('B',3, new Pawn(false))
-                .addFigure('C',6, new Pawn(false))
-                .addFigure('D',7, new Pawn(false))
-                .addFigure('F',5, new Pawn(false))
-                .addFigure('H',3, new Pawn(false))
-                .addFigure('G',2, new Queen(false))
+                .addFigure('A', 8, new Pawn(true))
+                .addFigure('B', 3, new Pawn(true))
+                .addFigure('C', 4, new Pawn(true))
+                .addFigure('D', 5, new Pawn(true))
+                .addFigure('E', 2, new Pawn(true))
+                .addFigure('F', 7, new Pawn(true))
+                .addFigure('H', 5, new Queen(true))
+                .addFigure('G', 8, new Queen(true))
+                .addFigure('A', 4, new Queen(false))
+                .addFigure('B', 3, new Pawn(false))
+                .addFigure('C', 6, new Pawn(false))
+                .addFigure('D', 7, new Pawn(false))
+                .addFigure('F', 5, new Pawn(false))
+                .addFigure('H', 3, new Pawn(false))
+                .addFigure('G', 2, new Queen(false))
                 .build();
         RulesSet ruleSet = new RulesSet(true, false, false,
                 false, true, false,
                 "", "");
-        boolean result1,result2;
+        boolean result1, result2;
         Game game = new Game("test", ruleSet, false, false);
         //When
         game.setBoard(board);
@@ -215,34 +215,34 @@ public class VictoryValidatorTestSuite {
     }
 
     @Test
-    public void testNoEndOfGame6rev(){
+    public void testNoEndOfGame6rev() {
         //Given
         Board board = new Board.BoardBuilder()
-                .addFigure('B',1, new Pawn(false))
-                .addFigure('D',1, new Pawn(false))
-                .addFigure('C',2, new Pawn(false))
-                .addFigure('D',3, new Pawn(false))
-                .addFigure('E',4, new Pawn(false))
-                .addFigure('G',4, new Pawn(false))
-                .addFigure('D',5, new Pawn(false))
-                .addFigure('F',5, new Pawn(false))
-                .addFigure('H',5, new Pawn(false))
-                .addFigure('E',6, new Pawn(true))
-                .addFigure('A',2, new Pawn(true))
-                .addFigure('A',4, new Pawn(true))
-                .addFigure('B',3, new Pawn(true))
-                .addFigure('B',5, new Pawn(true))
-                .addFigure('C',4, new Pawn(true))
-                .addFigure('F',1, new Pawn(true))
-                .addFigure('F',3, new Pawn(true))
-                .addFigure('G',2, new Pawn(true))
-                .addFigure('H',1, new Pawn(true))
-                .addFigure('H',3, new Pawn(true))
+                .addFigure('B', 1, new Pawn(false))
+                .addFigure('D', 1, new Pawn(false))
+                .addFigure('C', 2, new Pawn(false))
+                .addFigure('D', 3, new Pawn(false))
+                .addFigure('E', 4, new Pawn(false))
+                .addFigure('G', 4, new Pawn(false))
+                .addFigure('D', 5, new Pawn(false))
+                .addFigure('F', 5, new Pawn(false))
+                .addFigure('H', 5, new Pawn(false))
+                .addFigure('E', 6, new Pawn(true))
+                .addFigure('A', 2, new Pawn(true))
+                .addFigure('A', 4, new Pawn(true))
+                .addFigure('B', 3, new Pawn(true))
+                .addFigure('B', 5, new Pawn(true))
+                .addFigure('C', 4, new Pawn(true))
+                .addFigure('F', 1, new Pawn(true))
+                .addFigure('F', 3, new Pawn(true))
+                .addFigure('G', 2, new Pawn(true))
+                .addFigure('H', 1, new Pawn(true))
+                .addFigure('H', 3, new Pawn(true))
                 .build();
         RulesSet ruleSet = new RulesSet(true, false, false,
                 false, true, false,
                 "", "");
-        boolean result1,result2;
+        boolean result1, result2;
         Game game = new Game("test", ruleSet, false, false);
         //When
         game.setBoard(board);
@@ -259,20 +259,20 @@ public class VictoryValidatorTestSuite {
     }
 
     @Test
-    public void testNoMovesBlackrev(){
+    public void testNoMovesBlackrev() {
         //Given
         Board board = new Board.BoardBuilder()
-                .addFigure('A',8, new Pawn(true))
-                .addFigure('H',1, new Queen(true))
-                .addFigure('H',5, new Queen(false))
-                .addFigure('G',2, new Queen(false))
-                .addFigure('A',4, new Queen(false))
-                .addFigure('B',7, new Pawn(false))
-                .addFigure('C',6, new Pawn(false))
-                .addFigure('D',7, new Pawn(false))
-                .addFigure('F',3, new Pawn(false))
-                .addFigure('H',3, new Pawn(false))
-                .addFigure('G',2, new Queen(false))
+                .addFigure('A', 8, new Pawn(true))
+                .addFigure('H', 1, new Queen(true))
+                .addFigure('H', 5, new Queen(false))
+                .addFigure('G', 2, new Queen(false))
+                .addFigure('A', 4, new Queen(false))
+                .addFigure('B', 7, new Pawn(false))
+                .addFigure('C', 6, new Pawn(false))
+                .addFigure('D', 7, new Pawn(false))
+                .addFigure('F', 3, new Pawn(false))
+                .addFigure('H', 3, new Pawn(false))
+                .addFigure('G', 2, new Queen(false))
                 .build();
         RulesSet ruleSet = new RulesSet(true, false, false,
                 false, true, false,
@@ -292,21 +292,21 @@ public class VictoryValidatorTestSuite {
     }
 
     @Test
-    public void testNoMovesWhiterev(){
+    public void testNoMovesWhiterev() {
         //Given
         Board board = new Board.BoardBuilder()
-                .addFigure('H',1, new Pawn(false))
-                .addFigure('H',7, new Pawn(false))
-                .addFigure('G',2, new Pawn(true))
-                .addFigure('G',4, new Pawn(true))
-                .addFigure('F',1, new Pawn(true))
-                .addFigure('F',3, new Pawn(true))
-                .addFigure('H',3, new Queen(false))
-                .addFigure('H',5, new Queen(false))
-                .addFigure('G',6, new Queen(true))
-                .addFigure('G',8, new Queen(true))
-                .addFigure('F',5, new Queen(true))
-                .addFigure('F',7, new Queen(true))
+                .addFigure('H', 1, new Pawn(false))
+                .addFigure('H', 7, new Pawn(false))
+                .addFigure('G', 2, new Pawn(true))
+                .addFigure('G', 4, new Pawn(true))
+                .addFigure('F', 1, new Pawn(true))
+                .addFigure('F', 3, new Pawn(true))
+                .addFigure('H', 3, new Queen(false))
+                .addFigure('H', 5, new Queen(false))
+                .addFigure('G', 6, new Queen(true))
+                .addFigure('G', 8, new Queen(true))
+                .addFigure('F', 5, new Queen(true))
+                .addFigure('F', 7, new Queen(true))
                 .build();
         RulesSet ruleSet = new RulesSet(true, false, false,
                 false, true, false,
@@ -326,11 +326,11 @@ public class VictoryValidatorTestSuite {
     }
 
     @Test
-    public void testQueens15MovesRev(){
+    public void testQueens15MovesRev() {
         //Given
         Board board = new Board.BoardBuilder()
-                .addFigure('A',2, new Queen(true))
-                .addFigure('H',7, new Queen(false))
+                .addFigure('A', 2, new Queen(true))
+                .addFigure('H', 7, new Queen(false))
                 .build();
         RulesSet ruleSet = new RulesSet(true, false, false,
                 false, true, false,
@@ -349,15 +349,15 @@ public class VictoryValidatorTestSuite {
     }
 
     @Test
-    public void testNoFiguresBlackRev(){
+    public void testNoFiguresBlackRev() {
         //Given
         Board board = new Board.BoardBuilder()
-                .addFigure('B',1, new Pawn(true))
-                .addFigure('B',5, new Pawn(true))
-                .addFigure('D',3, new Pawn(true))
-                .addFigure('D',7, new Pawn(true))
-                .addFigure('A',4, new Queen(true))
-                .addFigure('H',7, new Queen(true))
+                .addFigure('B', 1, new Pawn(true))
+                .addFigure('B', 5, new Pawn(true))
+                .addFigure('D', 3, new Pawn(true))
+                .addFigure('D', 7, new Pawn(true))
+                .addFigure('A', 4, new Queen(true))
+                .addFigure('H', 7, new Queen(true))
                 .build();
         RulesSet ruleSet = new RulesSet(true, false, false,
                 false, true, false,
@@ -376,15 +376,15 @@ public class VictoryValidatorTestSuite {
     }
 
     @Test
-    public void testNoFiguresWhiteRev(){
+    public void testNoFiguresWhiteRev() {
         //Given
         Board board = new Board.BoardBuilder()
-                .addFigure('B',1, new Pawn(false))
-                .addFigure('B',5, new Pawn(false))
-                .addFigure('D',3, new Pawn(false))
-                .addFigure('D',7, new Pawn(false))
-                .addFigure('A',4, new Queen(false))
-                .addFigure('H',7, new Queen(false))
+                .addFigure('B', 1, new Pawn(false))
+                .addFigure('B', 5, new Pawn(false))
+                .addFigure('D', 3, new Pawn(false))
+                .addFigure('D', 7, new Pawn(false))
+                .addFigure('A', 4, new Queen(false))
+                .addFigure('H', 7, new Queen(false))
                 .build();
         RulesSet ruleSet = new RulesSet(true, false, false,
                 false, true, false,
@@ -402,35 +402,35 @@ public class VictoryValidatorTestSuite {
         Assert.assertTrue(game.isWinner());
     }
 
-      /*****************
+    /*****************
      * STANDARD RULES *
-    ****************/
+     ****************/
 
     @Test
-    public void testNoEndOfGame1std(){
+    public void testNoEndOfGame1std() {
         //Given
         Board board = new Board.BoardBuilder()
-                .addFigure('A',8, new Pawn(true))
-                .addFigure('B',3, new Pawn(true))
-                .addFigure('C',4, new Pawn(true))
-                .addFigure('D',5, new Pawn(true))
-                .addFigure('E',4, new Pawn(true))
-                .addFigure('F',7, new Pawn(true))
-                .addFigure('H',5, new Queen(true))
-                .addFigure('G',8, new Queen(true))
-                .addFigure('A',4, new Queen(false))
-                .addFigure('B',1, new Pawn(false))
-                .addFigure('C',6, new Pawn(false))
-                .addFigure('D',7, new Pawn(false))
-                .addFigure('E',2, new Pawn(false))
-                .addFigure('F',5, new Pawn(false))
-                .addFigure('H',1, new Pawn(false))
-                .addFigure('A',2, new Queen(true))
+                .addFigure('A', 8, new Pawn(true))
+                .addFigure('B', 3, new Pawn(true))
+                .addFigure('C', 4, new Pawn(true))
+                .addFigure('D', 5, new Pawn(true))
+                .addFigure('E', 4, new Pawn(true))
+                .addFigure('F', 7, new Pawn(true))
+                .addFigure('H', 5, new Queen(true))
+                .addFigure('G', 8, new Queen(true))
+                .addFigure('A', 4, new Queen(false))
+                .addFigure('B', 1, new Pawn(false))
+                .addFigure('C', 6, new Pawn(false))
+                .addFigure('D', 7, new Pawn(false))
+                .addFigure('E', 2, new Pawn(false))
+                .addFigure('F', 5, new Pawn(false))
+                .addFigure('H', 1, new Pawn(false))
+                .addFigure('A', 2, new Queen(true))
                 .build();
         RulesSet ruleSet = new RulesSet(false, false, false,
                 false, true, false,
                 "", "");
-        boolean result1,result2;
+        boolean result1, result2;
         Game game = new Game("test", ruleSet, false, false);
         //When
         game.setBoard(board);
@@ -447,20 +447,20 @@ public class VictoryValidatorTestSuite {
     }
 
     @Test
-    public void testNoEndOfGame2std(){
+    public void testNoEndOfGame2std() {
         //Given
         Board board = new Board.BoardBuilder()
-                .addFigure('A',8, new Pawn(true))
-                .addFigure('A',2, new Queen(false))
-                .addFigure('C',6, new Pawn(true))
-                .addFigure('C',4, new Pawn(false))
-                .addFigure('F',1, new Queen(true))
-                .addFigure('D',1, new Pawn(false))
+                .addFigure('A', 8, new Pawn(true))
+                .addFigure('A', 2, new Queen(false))
+                .addFigure('C', 6, new Pawn(true))
+                .addFigure('C', 4, new Pawn(false))
+                .addFigure('F', 1, new Queen(true))
+                .addFigure('D', 1, new Pawn(false))
                 .build();
         RulesSet ruleSet = new RulesSet(false, false, false,
                 false, true, false,
                 "", "");
-        boolean result1,result2;
+        boolean result1, result2;
         Game game = new Game("test", ruleSet, false, false);
         //When
         game.setBoard(board);
@@ -477,50 +477,20 @@ public class VictoryValidatorTestSuite {
     }
 
     @Test
-    public void testNoEndOfGame3std(){
+    public void testNoEndOfGame3std() {
         //Given
         Board board = new Board.BoardBuilder()
-                .addFigure('A',2, new Pawn(true))
-                .addFigure('D',5, new Queen(true))
-                .addFigure('E',2, new Pawn(true))
-                .addFigure('F',7, new Pawn(true))
-                .addFigure('B',3, new Queen(false))
-                .addFigure('C',2, new Pawn(false))
+                .addFigure('A', 2, new Pawn(true))
+                .addFigure('D', 5, new Queen(true))
+                .addFigure('E', 2, new Pawn(true))
+                .addFigure('F', 7, new Pawn(true))
+                .addFigure('B', 3, new Queen(false))
+                .addFigure('C', 2, new Pawn(false))
                 .build();
         RulesSet ruleSet = new RulesSet(false, false, false,
                 false, true, false,
                 "", "");
-        boolean result1,result2;
-        Game game = new Game("test", ruleSet, false, false);
-        //When
-        game.setBoard(board);
-        game.setWhiteQueenMoves(0);
-        game.setBlackQueenMoves(0);
-        game.setActivePlayer(true);
-        result1 = victoryValidator.validateEndOfGame(game);
-        game.setActivePlayer(false);
-        result2 = victoryValidator.validateEndOfGame(game);
-        //Then
-        Assert.assertFalse(result1);
-        Assert.assertFalse(result2);
-        Assert.assertFalse(game.isDraw());
-    }
-
-    @Test
-    public void testNoEndOfGame4std(){
-        //Given
-        Board board = new Board.BoardBuilder()
-                .addFigure('G',2, new Pawn(true))
-                .addFigure('E',2, new Queen(false))
-                .addFigure('A',4, new Pawn(true))
-                .addFigure('F',3, new Pawn(false))
-                .addFigure('D',3, new Queen(false))
-                .addFigure('H',7, new Pawn(false))
-                .build();
-        RulesSet ruleSet = new RulesSet(false, false, false,
-                false, true, false,
-                "", "");
-        boolean result1,result2;
+        boolean result1, result2;
         Game game = new Game("test", ruleSet, false, false);
         //When
         game.setBoard(board);
@@ -537,29 +507,20 @@ public class VictoryValidatorTestSuite {
     }
 
     @Test
-    public void testNoEndOfGame5std(){
+    public void testNoEndOfGame4std() {
         //Given
         Board board = new Board.BoardBuilder()
-                .addFigure('A',8, new Pawn(true))
-                .addFigure('B',3, new Pawn(true))
-                .addFigure('C',4, new Pawn(true))
-                .addFigure('D',5, new Pawn(true))
-                .addFigure('E',2, new Pawn(true))
-                .addFigure('F',7, new Pawn(true))
-                .addFigure('H',5, new Queen(true))
-                .addFigure('G',8, new Queen(true))
-                .addFigure('A',4, new Queen(false))
-                .addFigure('B',3, new Pawn(false))
-                .addFigure('C',6, new Pawn(false))
-                .addFigure('D',7, new Pawn(false))
-                .addFigure('F',5, new Pawn(false))
-                .addFigure('H',3, new Pawn(false))
-                .addFigure('G',2, new Queen(false))
+                .addFigure('G', 2, new Pawn(true))
+                .addFigure('E', 2, new Queen(false))
+                .addFigure('A', 4, new Pawn(true))
+                .addFigure('F', 3, new Pawn(false))
+                .addFigure('D', 3, new Queen(false))
+                .addFigure('H', 7, new Pawn(false))
                 .build();
         RulesSet ruleSet = new RulesSet(false, false, false,
                 false, true, false,
                 "", "");
-        boolean result1,result2;
+        boolean result1, result2;
         Game game = new Game("test", ruleSet, false, false);
         //When
         game.setBoard(board);
@@ -576,34 +537,29 @@ public class VictoryValidatorTestSuite {
     }
 
     @Test
-    public void testNoEndOfGame6std(){
+    public void testNoEndOfGame5std() {
         //Given
         Board board = new Board.BoardBuilder()
-                .addFigure('B',1, new Pawn(false))
-                .addFigure('D',1, new Pawn(false))
-                .addFigure('C',2, new Pawn(false))
-                .addFigure('D',3, new Pawn(false))
-                .addFigure('E',4, new Pawn(false))
-                .addFigure('G',4, new Pawn(false))
-                .addFigure('D',5, new Pawn(false))
-                .addFigure('F',5, new Pawn(false))
-                .addFigure('H',5, new Pawn(false))
-                .addFigure('E',6, new Pawn(true))
-                .addFigure('A',2, new Pawn(true))
-                .addFigure('A',4, new Pawn(true))
-                .addFigure('B',3, new Pawn(true))
-                .addFigure('B',5, new Pawn(true))
-                .addFigure('C',4, new Pawn(true))
-                .addFigure('F',1, new Pawn(true))
-                .addFigure('F',3, new Pawn(true))
-                .addFigure('G',2, new Pawn(true))
-                .addFigure('H',1, new Pawn(true))
-                .addFigure('H',3, new Pawn(true))
+                .addFigure('A', 8, new Pawn(true))
+                .addFigure('B', 3, new Pawn(true))
+                .addFigure('C', 4, new Pawn(true))
+                .addFigure('D', 5, new Pawn(true))
+                .addFigure('E', 2, new Pawn(true))
+                .addFigure('F', 7, new Pawn(true))
+                .addFigure('H', 5, new Queen(true))
+                .addFigure('G', 8, new Queen(true))
+                .addFigure('A', 4, new Queen(false))
+                .addFigure('B', 3, new Pawn(false))
+                .addFigure('C', 6, new Pawn(false))
+                .addFigure('D', 7, new Pawn(false))
+                .addFigure('F', 5, new Pawn(false))
+                .addFigure('H', 3, new Pawn(false))
+                .addFigure('G', 2, new Queen(false))
                 .build();
         RulesSet ruleSet = new RulesSet(false, false, false,
                 false, true, false,
                 "", "");
-        boolean result1,result2;
+        boolean result1, result2;
         Game game = new Game("test", ruleSet, false, false);
         //When
         game.setBoard(board);
@@ -620,20 +576,64 @@ public class VictoryValidatorTestSuite {
     }
 
     @Test
-    public void testNoMovesBlackstd(){
+    public void testNoEndOfGame6std() {
         //Given
         Board board = new Board.BoardBuilder()
-                .addFigure('A',8, new Pawn(true))
-                .addFigure('H',1, new Queen(true))
-                .addFigure('H',5, new Queen(false))
-                .addFigure('G',2, new Queen(false))
-                .addFigure('A',4, new Queen(false))
-                .addFigure('B',7, new Pawn(false))
-                .addFigure('C',6, new Pawn(false))
-                .addFigure('D',7, new Pawn(false))
-                .addFigure('F',3, new Pawn(false))
-                .addFigure('H',3, new Pawn(false))
-                .addFigure('G',2, new Queen(false))
+                .addFigure('B', 1, new Pawn(false))
+                .addFigure('D', 1, new Pawn(false))
+                .addFigure('C', 2, new Pawn(false))
+                .addFigure('D', 3, new Pawn(false))
+                .addFigure('E', 4, new Pawn(false))
+                .addFigure('G', 4, new Pawn(false))
+                .addFigure('D', 5, new Pawn(false))
+                .addFigure('F', 5, new Pawn(false))
+                .addFigure('H', 5, new Pawn(false))
+                .addFigure('E', 6, new Pawn(true))
+                .addFigure('A', 2, new Pawn(true))
+                .addFigure('A', 4, new Pawn(true))
+                .addFigure('B', 3, new Pawn(true))
+                .addFigure('B', 5, new Pawn(true))
+                .addFigure('C', 4, new Pawn(true))
+                .addFigure('F', 1, new Pawn(true))
+                .addFigure('F', 3, new Pawn(true))
+                .addFigure('G', 2, new Pawn(true))
+                .addFigure('H', 1, new Pawn(true))
+                .addFigure('H', 3, new Pawn(true))
+                .build();
+        RulesSet ruleSet = new RulesSet(false, false, false,
+                false, true, false,
+                "", "");
+        boolean result1, result2;
+        Game game = new Game("test", ruleSet, false, false);
+        //When
+        game.setBoard(board);
+        game.setWhiteQueenMoves(0);
+        game.setBlackQueenMoves(0);
+        game.setActivePlayer(true);
+        result1 = victoryValidator.validateEndOfGame(game);
+        game.setActivePlayer(false);
+        result2 = victoryValidator.validateEndOfGame(game);
+        //Then
+        Assert.assertFalse(result1);
+        Assert.assertFalse(result2);
+        Assert.assertFalse(game.isDraw());
+    }
+
+    @Test
+    public void testNoMovesBlackstd() {
+        //Given
+        Board board = new Board.BoardBuilder()
+                .addFigure('A', 8, new Pawn(true))
+                .addFigure('H', 1, new Queen(true))
+                .addFigure('H', 5, new Queen(false))
+                .addFigure('G', 2, new Queen(false))
+                .addFigure('A', 4, new Queen(false))
+                .addFigure('B', 7, new Pawn(false))
+                .addFigure('C', 6, new Pawn(false))
+                .addFigure('D', 7, new Pawn(false))
+                .addFigure('F', 3, new Pawn(false))
+                .addFigure('H', 3, new Pawn(false))
+                .addFigure('G', 2, new Queen(false))
                 .build();
         RulesSet ruleSet = new RulesSet(false, false, false,
                 false, true, false,
@@ -653,21 +653,21 @@ public class VictoryValidatorTestSuite {
     }
 
     @Test
-    public void testNoMovesWhitestd(){
+    public void testNoMovesWhitestd() {
         //Given
         Board board = new Board.BoardBuilder()
-                .addFigure('H',1, new Pawn(false))
-                .addFigure('H',7, new Pawn(false))
-                .addFigure('G',2, new Pawn(true))
-                .addFigure('G',4, new Pawn(true))
-                .addFigure('F',1, new Pawn(true))
-                .addFigure('F',3, new Pawn(true))
-                .addFigure('H',3, new Queen(false))
-                .addFigure('H',5, new Queen(false))
-                .addFigure('G',6, new Queen(true))
-                .addFigure('G',8, new Queen(true))
-                .addFigure('F',5, new Queen(true))
-                .addFigure('F',7, new Queen(true))
+                .addFigure('H', 1, new Pawn(false))
+                .addFigure('H', 7, new Pawn(false))
+                .addFigure('G', 2, new Pawn(true))
+                .addFigure('G', 4, new Pawn(true))
+                .addFigure('F', 1, new Pawn(true))
+                .addFigure('F', 3, new Pawn(true))
+                .addFigure('H', 3, new Queen(false))
+                .addFigure('H', 5, new Queen(false))
+                .addFigure('G', 6, new Queen(true))
+                .addFigure('G', 8, new Queen(true))
+                .addFigure('F', 5, new Queen(true))
+                .addFigure('F', 7, new Queen(true))
                 .build();
         RulesSet ruleSet = new RulesSet(false, false, false,
                 false, true, false,
@@ -687,11 +687,11 @@ public class VictoryValidatorTestSuite {
     }
 
     @Test
-    public void testQueens15Movesstd(){
+    public void testQueens15Movesstd() {
         //Given
         Board board = new Board.BoardBuilder()
-                .addFigure('A',2, new Queen(true))
-                .addFigure('H',7, new Queen(false))
+                .addFigure('A', 2, new Queen(true))
+                .addFigure('H', 7, new Queen(false))
                 .build();
         RulesSet ruleSet = new RulesSet(false, false, false,
                 false, true, false,
@@ -710,15 +710,15 @@ public class VictoryValidatorTestSuite {
     }
 
     @Test
-    public void testNoFiguresBlackstd(){
+    public void testNoFiguresBlackstd() {
         //Given
         Board board = new Board.BoardBuilder()
-                .addFigure('B',1, new Pawn(true))
-                .addFigure('B',5, new Pawn(true))
-                .addFigure('D',3, new Pawn(true))
-                .addFigure('D',7, new Pawn(true))
-                .addFigure('A',4, new Queen(true))
-                .addFigure('H',7, new Queen(true))
+                .addFigure('B', 1, new Pawn(true))
+                .addFigure('B', 5, new Pawn(true))
+                .addFigure('D', 3, new Pawn(true))
+                .addFigure('D', 7, new Pawn(true))
+                .addFigure('A', 4, new Queen(true))
+                .addFigure('H', 7, new Queen(true))
                 .build();
         RulesSet ruleSet = new RulesSet(false, false, false,
                 false, true, false,
@@ -737,15 +737,15 @@ public class VictoryValidatorTestSuite {
     }
 
     @Test
-    public void testNoFiguresWhitestd(){
+    public void testNoFiguresWhitestd() {
         //Given
         Board board = new Board.BoardBuilder()
-                .addFigure('B',1, new Pawn(false))
-                .addFigure('B',5, new Pawn(false))
-                .addFigure('D',3, new Pawn(false))
-                .addFigure('D',7, new Pawn(false))
-                .addFigure('A',4, new Queen(false))
-                .addFigure('H',7, new Queen(false))
+                .addFigure('B', 1, new Pawn(false))
+                .addFigure('B', 5, new Pawn(false))
+                .addFigure('D', 3, new Pawn(false))
+                .addFigure('D', 7, new Pawn(false))
+                .addFigure('A', 4, new Queen(false))
+                .addFigure('H', 7, new Queen(false))
                 .build();
         RulesSet ruleSet = new RulesSet(false, false, false,
                 false, true, false,

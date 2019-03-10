@@ -19,24 +19,24 @@ public class GameTestSuite {
 
     @Autowired
     private GameExecutor gameExecutor;
-    
+
     @BeforeClass
-    public static void beforeTests(){
+    public static void beforeTests() {
         System.out.println("InGameUI tests: started");
     }
 
     @AfterClass
-    public static void afterTests(){
+    public static void afterTests() {
         System.out.println("InGameUI tests: finished");
     }
 
     @Before
-    public void before(){
+    public void before() {
         System.out.println("Test #" + counter + ": started");
     }
 
     @After
-    public void after(){
+    public void after() {
         System.out.println("Test #" + counter + ": finished");
         counter++;
     }
@@ -53,32 +53,28 @@ public class GameTestSuite {
         game.getInQueue().offer("x");
         try {
             gameExecutor.play(game);
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             result = true;
         }
         game.getInQueue().offer("A1-Q9");
         game.getInQueue().offer("x");
         try {
             gameExecutor.play(game);
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             result = true;
         }
         game.getInQueue().offer("Abc");
         game.getInQueue().offer("x");
         try {
             gameExecutor.play(game);
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             result = true;
         }
         game.getInQueue().offer("A1-A2");
         game.getInQueue().offer("x");
         try {
             gameExecutor.play(game);
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             result = true;
         }
         //Then
@@ -96,8 +92,8 @@ public class GameTestSuite {
         int whiteQueenMovesCounter;
         boolean result = false;
         //When
-        for(int i = 1;i < 9;i++) {
-            for(int j = 1;j < 9;j++)
+        for (int i = 1; i < 9; i++) {
+            for (int j = 1; j < 9; j++)
                 game.getBoard().setFigure((char) (i + 64), j, new None(true));
         }
         game.getBoard().setFigure('A', 8, new Queen(true));
@@ -108,8 +104,7 @@ public class GameTestSuite {
         game.getInQueue().offer("x");
         try {
             gameExecutor.play(game);
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             result = true;
         }
         blackQueenMovesCounter = game.getBlackQueenMoves();
@@ -129,8 +124,8 @@ public class GameTestSuite {
         Game game = new Game("", rulesSet, false, false);
         boolean result = false;
         //When
-        for(int i = 1;i < 9;i++) {
-            for(int j = 1;j < 9;j++)
+        for (int i = 1; i < 9; i++) {
+            for (int j = 1; j < 9; j++)
                 game.getBoard().setFigure((char) (i + 64), j, new None(true));
         }
         game.getBoard().setFigure('B', 7, new Pawn(false));
@@ -140,8 +135,7 @@ public class GameTestSuite {
         game.getInQueue().offer("x");
         try {
             gameExecutor.play(game);
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             result = true;
         }
         //Then
@@ -159,8 +153,8 @@ public class GameTestSuite {
         Game game = new Game("", rulesSet, false, true);
         boolean result = false;
         //When
-        for(int i = 1;i < 9;i++) {
-            for(int j = 1;j < 9;j++)
+        for (int i = 1; i < 9; i++) {
+            for (int j = 1; j < 9; j++)
                 game.getBoard().setFigure((char) (i + 64), j, new None(true));
         }
         game.getBoard().setFigure('B', 3, new Pawn(true));
@@ -176,8 +170,7 @@ public class GameTestSuite {
         game.getInQueue().offer("x");
         try {
             gameExecutor.play(game);
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             result = true;
         }
         //Then
@@ -193,8 +186,8 @@ public class GameTestSuite {
         Game game = new Game("", rulesSet, true, false);
         boolean result = false;
         //When
-        for(int i = 1;i < 9;i++) {
-            for(int j = 1;j < 9;j++)
+        for (int i = 1; i < 9; i++) {
+            for (int j = 1; j < 9; j++)
                 game.getBoard().setFigure((char) (i + 64), j, new None(true));
         }
         game.getBoard().setFigure('B', 3, new Pawn(true));
@@ -212,8 +205,7 @@ public class GameTestSuite {
         game.getInQueue().offer("x");
         try {
             gameExecutor.play(game);
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             result = true;
         }
         //Then

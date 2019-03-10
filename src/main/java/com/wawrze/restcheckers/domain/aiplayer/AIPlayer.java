@@ -19,7 +19,7 @@ public class AIPlayer {
     private int whiteQueenMoves;
     private int blackQueenMoves;
     private int depth;
-    private Map<Move,Integer> possibleMoves;
+    private Map<Move, Integer> possibleMoves;
 
     public void increaseWhiteQueenMoves() {
         this.whiteQueenMoves++;

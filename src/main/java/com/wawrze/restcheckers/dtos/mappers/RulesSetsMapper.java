@@ -1,9 +1,9 @@
 package com.wawrze.restcheckers.dtos.mappers;
 
 import com.wawrze.restcheckers.domain.RulesSet;
+import com.wawrze.restcheckers.domain.RulesSets;
 import com.wawrze.restcheckers.dtos.RulesSetDto;
 import com.wawrze.restcheckers.dtos.RulesSetsDto;
-import com.wawrze.restcheckers.domain.RulesSets;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 @Component
 public class RulesSetsMapper {
 
+    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
     @Autowired
     RulesSets rulesSets;
 

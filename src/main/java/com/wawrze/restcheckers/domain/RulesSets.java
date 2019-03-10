@@ -11,6 +11,7 @@ import java.util.List;
 @DependsOn("DBService")
 public class RulesSets {
 
+    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
     @Autowired
     private DBService dbService;
 

@@ -1,8 +1,8 @@
 package com.wawrze.restcheckers.gameplay.userInterface;
 
 import com.google.gson.Gson;
-import com.wawrze.restcheckers.domain.board.Board;
 import com.wawrze.restcheckers.domain.FinishedGame;
+import com.wawrze.restcheckers.domain.board.Board;
 import com.wawrze.restcheckers.dtos.*;
 import com.wawrze.restcheckers.dtos.mappers.BoardMapper;
 import com.wawrze.restcheckers.gameplay.GameEnvelope;
@@ -20,10 +20,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest
@@ -43,23 +45,23 @@ public class GameControllerTest {
     private Gson gson;
 
     @BeforeClass
-    public static void beforeTests(){
+    public static void beforeTests() {
         System.out.println("Controller tests: started");
     }
 
     @AfterClass
-    public static void afterTests(){
+    public static void afterTests() {
         System.out.println("Controller tests: finished");
     }
 
     @Before
-    public void before(){
+    public void before() {
         System.out.println("Test #" + counter + ": started");
         gson = new Gson();
     }
 
     @After
-    public void after(){
+    public void after() {
         System.out.println("Test #" + counter + ": finished");
         counter++;
     }

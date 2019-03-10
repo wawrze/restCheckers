@@ -13,12 +13,9 @@ public interface GameDao extends CrudRepository<Game, Long> {
 
     Game findById(Long id);
 
-    boolean existsByName(String name);
-
-    Game getByName(String name);
-
     void deleteById(Long id);
 
+    @SuppressWarnings("unchecked")
     @Override
     Game save(Game game);
 

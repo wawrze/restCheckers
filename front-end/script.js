@@ -76,10 +76,10 @@
             }
         });
     }
-    
+
     function createGame() {
         const requestUrl = apiRoot + 'games/new';
-        
+
         gameName = $('[game-name]').val();
         var gameRulesName = $('[rules-set-select]').val();
         var blackPlayer = "false";
@@ -103,7 +103,7 @@
         }
 
         gStatus.text("Game started.");
-        
+
         $.ajax({
             url: requestUrl,
             method: 'POST',
@@ -124,7 +124,7 @@
                 gStatus.text("Application error.");
             }
         });
-        
+
         $('[created-game-name]').text(gameName);
         $('[new-game-section]')[0].style.display = 'none';
         $('[created-game-section]')[0].style.display = 'block';
@@ -133,20 +133,19 @@
         $('[status]')[1].style.display = 'block';
         $('[next-move]')[0].style.display = 'inline-block';
         $('[send-move-button]')[0].style.display = 'inline-block';
-        
+
         if (blackPlayer == "true" && whitePlayer == "true") {
             gStatus[0].style.display = 'none';
             $('[next-move-input]').text("Enter button to see next move:");
             $('[next-move]')[0].style.display = 'none';
             $('[send-move-button]').text("Next move");
             $('[send-move-button]').focus();
-        }
-        else {
+        } else {
             $('[next-move-input]').text("Enter your next move:");
             $('[send-move-button]').text("Send move");
             $('[next-move]').focus();
         }
-        
+
     }
 
     function playGame() {
@@ -165,8 +164,7 @@
 
         if ($('[black-player-select]').val() == "Computer" && $('[white-player-select]').val() == "Computer") {
             moveToSend = "next";
-        }
-        else {
+        } else {
             moveToSend = $('[next-move]').val();
         }
 
@@ -203,8 +201,8 @@
             method: 'GET',
             contentType: "application/json;charset=UTF-8",
             success: function (gameInfo) {
-                for (var i = 0; i < 7; i+=2) {
-                    for (var j = 2; j < 9; j+=2) {
+                for (var i = 0; i < 7; i += 2) {
+                    for (var j = 2; j < 9; j += 2) {
                         for (var k = 0; k < 4; k++) {
                             board.children()[i].children[j].children[k].style.display = 'none';
                         }
@@ -218,46 +216,44 @@
                     }
                 }
                 gStatus.text(gameInfo.gameStatus);
-                gameInfo.board.rows.forEach(row => {
-                    row.figures.forEach(figure =>  {
-                        if (figure.name == "pawn") {
-                            if (figure.color == "true") {
-                                board.children()[row.name].children[figure.col].children[0].style.display = 'block';
-                            }
-                            else {
-                                board.children()[row.name].children[figure.col].children[2].style.display = 'block';
-                            }
-                        }
-                        if (figure.name == "queen") {
-                            if (figure.color == "true") {
-                                board.children()[row.name].children[figure.col].children[1].style.display = 'block';
-                            }
-                            else {
-                                board.children()[row.name].children[figure.col].children[3].style.display = 'block';
-                            }
-                        }   
-                    });
-                });
+                gameInfo.board.rows.forEach(row = > {
+                    row.figures.forEach(figure = > {
+                        if(figure.name == "pawn"
+            )
+                {
+                    if (figure.color == "true") {
+                        board.children()[row.name].children[figure.col].children[0].style.display = 'block';
+                    } else {
+                        board.children()[row.name].children[figure.col].children[2].style.display = 'block';
+                    }
+                }
+                if (figure.name == "queen") {
+                    if (figure.color == "true") {
+                        board.children()[row.name].children[figure.col].children[1].style.display = 'block';
+                    } else {
+                        board.children()[row.name].children[figure.col].children[3].style.display = 'block';
+                    }
+                }
+            })
+                ;
+            })
+                ;
                 mHistory.text(gameInfo.movesHistory);
                 if (gameInfo.blackAIPlayer) {
                     blackPlayer.text("(Computer)");
-                }
-                else {
+                } else {
                     if (gameInfo.activePlayer) {
                         blackPlayer.text("(Human)\n(ACTIVE)");
-                    }
-                    else {
+                    } else {
                         blackPlayer.text("(Human)");
                     }
                 }
                 if (gameInfo.whiteAIPlayer) {
                     whitePlayer.text("(Computer)");
-                }
-                else {
+                } else {
                     if (gameInfo.activePlayer) {
                         whitePlayer.text("(Human)");
-                    }
-                    else {
+                    } else {
                         whitePlayer.text("(Human)\n(ACTIVE)");
                     }
                 }
@@ -266,8 +262,7 @@
                     status.children()[1].style.background = 'black';
                     status.children()[0].style.color = 'white';
                     status.children()[1].style.color = 'white';
-                }
-                else {
+                } else {
                     status.children()[0].style.background = "white";
                     status.children()[1].style.background = "white";
                     status.children()[0].style.color = 'black';
@@ -281,8 +276,7 @@
                     $('[next-move]')[0].style.display = 'none';
                     $('[send-move-button]').text("Next move");
                     $('[send-move-button]').focus();
-                }
-                else {
+                } else {
                     $('[next-move-input]').text("Enter your next move:");
                     $('[send-move-button]').text("Send move");
                     $('[next-move]').focus();
@@ -298,8 +292,7 @@
                         $('[next-move-section]')[0].style.background = 'grey';
                         $('[winner-or-draw]').text("DRAW");
                         $('[type-of-game-finish]').text("(Each player has done 15 moves in the row by a king.)");
-                    }
-                    else {
+                    } else {
                         $('[type-of-game-finish]').text("(" + gameInfo.typeOfWin + ")");
                         if (gameInfo.winner) {
                             $('[winner-or-draw]').text("BLACK WINS");
@@ -307,8 +300,7 @@
                             $('[game-finished]')[0].style.color = 'white';
                             $('[status]')[1].style.background = 'black';
                             $('[next-move-section]')[0].style.background = 'black';
-                        }
-                        else {
+                        } else {
                             $('[winner-or-draw]').text("WHITE WINS");
                             $('[game-finished]')[0].style.background = 'white';
                             $('[game-finished]')[0].style.color = 'black';
@@ -321,8 +313,7 @@
                     $('[next-move-input]')[0].style.display = 'none';
                     $('[next-move]')[0].style.display = 'none';
                     $('[send-move-button]')[0].style.display = 'none';
-                }
-                else {
+                } else {
                     $('[game-in-progress]')[0].style.display = 'block';
                     $('[game-finished]')[0].style.display = 'none';
                     $('[moves-done]').text(gameInfo.moves);
@@ -380,5 +371,5 @@
     $('[rules-set-select]').change(function () {
         getSelectedRulesSet();
     });
-        
+
 });

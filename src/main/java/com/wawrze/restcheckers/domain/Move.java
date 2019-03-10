@@ -3,7 +3,7 @@ package com.wawrze.restcheckers.domain;
 import com.wawrze.restcheckers.domain.board.Board;
 import com.wawrze.restcheckers.domain.figures.Figure;
 import com.wawrze.restcheckers.domain.figures.FigureFactory;
-import exceptions.*;
+import exceptions.IncorrectMoveFormat;
 
 public class Move {
 
@@ -66,12 +66,12 @@ public class Move {
         board.setFigure(this.row1, this.col1, figureFactory.getNewFigure(false, Figure.NONE));
     }
 
-    public void makeCapture(Board board, char row, int col){
+    public void makeCapture(Board board, char row, int col) {
         this.makeMove(board);
         board.setFigure(
                 row,
                 col,
-                figureFactory.getNewFigure(board.getFigure(this.row1,this.col1).getColor(), Figure.NONE)
+                figureFactory.getNewFigure(board.getFigure(this.row1, this.col1).getColor(), Figure.NONE)
         );
     }
 

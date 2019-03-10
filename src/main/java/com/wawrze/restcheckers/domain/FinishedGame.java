@@ -36,16 +36,15 @@ public class FinishedGame {
 
     private String getTypeOfVictoryAndWinner(Game game) {
         String result;
-        if(game.isDraw()) {
+        if (game.isDraw()) {
             result = "draw";
-        }
-        else {
-            if(game.isWinner())
+        } else {
+            if (game.isWinner())
                 result = "black, ";
             else
                 result = "white, ";
             String typeOfWin = new GameInfoMapper().typeOfWin(game);
-            if(typeOfWin.contains("lost all his figures"))
+            if (typeOfWin.contains("lost all his figures"))
                 result += "lost figures";
             else
                 result += "blocked";

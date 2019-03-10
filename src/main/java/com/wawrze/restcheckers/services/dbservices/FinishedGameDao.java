@@ -11,6 +11,7 @@ import java.util.List;
 @Repository
 public interface FinishedGameDao extends CrudRepository<FinishedGame, Long> {
 
+    @SuppressWarnings("unchecked")
     @Override
     FinishedGame save(FinishedGame finishedGame);
 

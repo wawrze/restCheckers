@@ -13,6 +13,7 @@ public interface RulesSetDao extends CrudRepository<RulesSet, Long> {
 
     boolean existsByName(String name);
 
+    @SuppressWarnings("unchecked")
     @Override
     RulesSet save(RulesSet rulesSet);
 

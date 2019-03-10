@@ -13,6 +13,7 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class GameController {
 
+    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
     @Autowired
     GameEnvelope gameEnvelope;
 

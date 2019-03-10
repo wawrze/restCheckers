@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
 @Service
 @Getter
 public class GameEnvelope {
@@ -66,7 +67,7 @@ public class GameEnvelope {
 
     public void playGame(Long gameId) throws MethodFailureException {
         Game game = games.get(gameId);
-        if(game == null) {
+        if (game == null) {
             LOGGER.warn("There is no game with id = " + gameId + "! Game not started!");
             throw new MethodFailureException("There is no game with id = " + gameId + "! Game not started!");
         }
@@ -78,9 +79,9 @@ public class GameEnvelope {
     public boolean sendMove(Long gameId, MoveDto moveDto) throws MethodFailureException {
         String s = moveDto.getMove();
         Game game = games.get(gameId);
-        if(game == null) {
+        if (game == null) {
             game = dbService.getGameById(gameId);
-            if(game == null) {
+            if (game == null) {
                 LOGGER.warn("There is no game with id = \"" + gameId + "\"! Move not served!");
                 throw new MethodFailureException("There is no game with id = \"" + gameId + "\"! Move not served!");
             }
@@ -104,7 +105,7 @@ public class GameEnvelope {
                 .filter(rule -> rule.getName().equals(rulesSetName))
                 .collect(Collectors.toList());
         RulesSet rulesSet = list.size() == 0 ? null : list.get(0);
-        if(rulesSet == null) {
+        if (rulesSet == null) {
             LOGGER.warn("There is no rules set named \"" + rulesSetName + "\"! Rules set not sent!");
             throw new MethodFailureException("There is no rules set named \"" + rulesSetName + "\"! Rules set not sent!");
         }
@@ -114,27 +115,25 @@ public class GameEnvelope {
 
     public GameInfoDto getGameInfo(Long gameId) throws MethodFailureException {
         Game game = games.get(gameId);
-        if(game == null) {
+        if (game == null) {
             LOGGER.warn("There is no game with id = \"" + gameId + "\"! Game info not sent!");
             throw new MethodFailureException("There is no game with id = \"" + gameId + "\"! Game info not sent!");
         }
         try {
             Thread.sleep(1000);
-        }
-        catch(InterruptedException e) {
+        } catch (InterruptedException e) {
             LOGGER.warn("Interrupted exception in getGameInfo: " + e);
             Thread.currentThread().interrupt();
         }
         GameInfoDto gameInfoDto = gameInfoMapper.mapToGameInfoDto(game);
-        if(game.isFinished()) {
+        if (game.isFinished()) {
             games.remove(gameId);
             game.updateLastAction();
             dbService.saveFinishedGame(game);
             dbService.deleteGame(gameId);
             LOGGER.info("Game \"" + game.getName() + "\" (id " + game.getId() + ") finished. Game info sent. " +
                     "Game archived in DB.");
-        }
-        else {
+        } else {
             LOGGER.info("Game \"" + game.getName() + "\" (id " + game.getId() + ") info sent.");
         }
         game.updateLastAction();
@@ -143,7 +142,7 @@ public class GameEnvelope {
 
     public void deleteGame(Long gameId) throws MethodFailureException {
         Game game = games.get(gameId);
-        if(game == null) {
+        if (game == null) {
             LOGGER.warn("There is no game with id = \"" + gameId + "\"! Game not removed!");
             throw new MethodFailureException("There is no game with id = \"" + gameId + "\"! Game not removed!");
         }
@@ -159,17 +158,16 @@ public class GameEnvelope {
     public List<FinishedGame> getFinishedGames() {
         List<FinishedGame> finishedGames = dbService.getFinishedGames();
         LOGGER.info("========> List of finished games:");
-        finishedGames.stream()
-                .forEach(game -> {
-                    LOGGER.info("\tGame #" + game.getId() + ": \"" + game.getName() + "\"");
-                    LOGGER.info("\t\tWinner/type of victory: " + game.getTypeOfVictoryAndWinner());
-                    LOGGER.info("\t\tNumber of moves: " + game.getMoves());
-                    LOGGER.info("\t\tRules set name: " + game.getRulesSet().getName());
-                    LOGGER.info("\t\tBlack player: " + (game.isBlackAIPlayer() ? "computer" : "human"));
-                    LOGGER.info("\t\tWhite player: " + (game.isWhiteAIPlayer() ? "computer" : "human"));
-                    LOGGER.info("\t\tStart time: " + gameInfoMapper.mapDateTimeToString(game.getStartTime()));
-                    LOGGER.info("\t\tFinish time: " + gameInfoMapper.mapDateTimeToString(game.getFinishTime()));
-                });
+        finishedGames.forEach(game -> {
+            LOGGER.info("\tGame #" + game.getId() + ": \"" + game.getName() + "\"");
+            LOGGER.info("\t\tWinner/type of victory: " + game.getTypeOfVictoryAndWinner());
+            LOGGER.info("\t\tNumber of moves: " + game.getMoves());
+            LOGGER.info("\t\tRules set name: " + game.getRulesSet().getName());
+            LOGGER.info("\t\tBlack player: " + (game.isBlackAIPlayer() ? "computer" : "human"));
+            LOGGER.info("\t\tWhite player: " + (game.isWhiteAIPlayer() ? "computer" : "human"));
+            LOGGER.info("\t\tStart time: " + gameInfoMapper.mapDateTimeToString(game.getStartTime()));
+            LOGGER.info("\t\tFinish time: " + gameInfoMapper.mapDateTimeToString(game.getFinishTime()));
+        });
         LOGGER.info("<================================");
         return finishedGames;
     }

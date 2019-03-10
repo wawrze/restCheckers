@@ -115,11 +115,12 @@ public class Board {
         return id;
     }
 
+    @SuppressWarnings("unused")
     @Column(name = "string_representation")
     public String getStringRepresentation() {
         String result = "";
-        for(int i = 65;i < 73;i++) {
-            for(int j = 1;j < 9;j++) {
+        for (int i = 65; i < 73; i++) {
+            for (int j = 1; j < 9; j++) {
                 Figure f = rows.get((char) i).getFigures().get(j);
                 if (f.getFigureName().equals(Figure.PAWN))
                     result += "p";
@@ -127,7 +128,7 @@ public class Board {
                     result += "q";
                 else
                     result += "n";
-                if(f.getColor())
+                if (f.getColor())
                     result += "b";
                 else
                     result += "w";
@@ -136,32 +137,31 @@ public class Board {
         return result;
     }
 
+    @SuppressWarnings("unused")
     public void setStringRepresentation(String stringRepresentation) {
         char[] string = stringRepresentation.toCharArray();
         Board board = new Board.BoardBuilder().build();
         int c = 0;
-        for(int i = 65;i < 73;i++) {
-            for(int j = 1;j < 9;j++) {
+        for (int i = 65; i < 73; i++) {
+            for (int j = 1; j < 9; j++) {
                 Figure f;
-                if(string[c] == 'p') {
+                if (string[c] == 'p') {
                     c++;
-                    if(string[c] == 'b')
+                    if (string[c] == 'b')
                         f = figureFactory.getNewFigure(true, Figure.PAWN);
                     else
                         f = figureFactory.getNewFigure(false, Figure.PAWN);
                     c++;
-                }
-                else if(string[c] == 'q') {
+                } else if (string[c] == 'q') {
                     c++;
-                    if(string[c] == 'b')
+                    if (string[c] == 'b')
                         f = figureFactory.getNewFigure(true, Figure.QUEEN);
                     else
                         f = figureFactory.getNewFigure(false, Figure.QUEEN);
                     c++;
-                }
-                else {
+                } else {
                     c++;
-                    if(string[c] == 'b')
+                    if (string[c] == 'b')
                         f = figureFactory.getNewFigure(true, Figure.NONE);
                     else
                         f = figureFactory.getNewFigure(false, Figure.NONE);

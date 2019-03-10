@@ -27,7 +27,7 @@ public class RulesSet {
         this.isPawnMoveBackward = isPawnMoveBackward;
         this.isPawnCaptureBackward = isPawnCaptureBackward;
         this.isQueenRangeOne = isQueenRangeOne;
-        if(isQueenRangeOne)
+        if (isQueenRangeOne)
             this.isQueenRangeOneAfterCapture = true;
         else
             this.isQueenRangeOneAfterCapture = isQueenRangeOneAfterCapture;
@@ -82,38 +82,47 @@ public class RulesSet {
         return description;
     }
 
+    @SuppressWarnings("unused")
     private void setId(Long id) {
         this.id = id;
     }
 
+    @SuppressWarnings("unused")
     private void setVictoryConditionsReversed(boolean victoryConditionsReversed) {
         isVictoryConditionsReversed = victoryConditionsReversed;
     }
 
+    @SuppressWarnings("unused")
     private void setQueenRangeOne(boolean queenRangeOne) {
         isQueenRangeOne = queenRangeOne;
     }
 
+    @SuppressWarnings("unused")
     private void setCaptureAny(boolean captureAny) {
         isCaptureAny = captureAny;
     }
 
+    @SuppressWarnings("unused")
     private void setPawnMoveBackward(boolean pawnMoveBackward) {
         isPawnMoveBackward = pawnMoveBackward;
     }
 
+    @SuppressWarnings("unused")
     private void setPawnCaptureBackward(boolean pawnCaptureBackward) {
         isPawnCaptureBackward = pawnCaptureBackward;
     }
 
+    @SuppressWarnings("unused")
     private void setQueenRangeOneAfterCapture(boolean queenRangeOneAfterCapture) {
         isQueenRangeOneAfterCapture = queenRangeOneAfterCapture;
     }
 
+    @SuppressWarnings("unused")
     private void setName(String name) {
         this.name = name;
     }
 
+    @SuppressWarnings("unused")
     private void setDescription(String description) {
         this.description = description;
     }

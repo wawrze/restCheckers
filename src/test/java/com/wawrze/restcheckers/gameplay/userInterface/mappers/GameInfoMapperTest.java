@@ -11,7 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -29,22 +30,22 @@ public class GameInfoMapperTest {
     private static int counter = 1;
 
     @BeforeClass
-    public static void beforeTests(){
+    public static void beforeTests() {
         System.out.println("GameProgressDetailsMapper tests: started");
     }
 
     @AfterClass
-    public static void afterTests(){
+    public static void afterTests() {
         System.out.println("GameProgressDetailsMapper tests: finished");
     }
 
     @Before
-    public void before(){
+    public void before() {
         System.out.println("Test #" + counter + ": started");
     }
 
     @After
-    public void after(){
+    public void after() {
         System.out.println("Test #" + counter + ": finished");
         counter++;
     }
@@ -58,7 +59,7 @@ public class GameInfoMapperTest {
                 true,
                 true
         );
-        GameInfoDto gameInfoDto = new GameInfoDto();
+        GameInfoDto gameInfoDto;
         //When
         game.updateLastAction();
         gameInfoDto = gameInfoMapper.mapToGameInfoDto(game);

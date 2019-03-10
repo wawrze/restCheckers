@@ -71,12 +71,12 @@ public class Game {
 
     @Column(name = "moves", length = 5000)
     public String getMoves() {
-        String result = "";
-        if(moves == null)
-            return result;
-        for(String s : moves)
-            result += (s + ",");
-        return result;
+        StringBuilder result = new StringBuilder();
+        if (moves == null)
+            return result.toString();
+        for (String s : moves)
+            result.append(s).append(",");
+        return result.toString();
     }
 
     @Transient
@@ -154,19 +154,21 @@ public class Game {
         this.board = board;
     }
 
+    @SuppressWarnings("unused")
     private void setId(Long id) {
         this.id = id;
     }
 
+    @SuppressWarnings("unused")
     private void setMoves(String moves) {
         this.moves = new LinkedList<>();
         if (!moves.equals("")) {
             String[] movesList = moves.split(",");
-            for (String s : movesList)
-                this.moves.add(s);
+            Collections.addAll(this.moves, movesList);
         }
     }
 
+    @SuppressWarnings("unused")
     private void setInQueue(Deque<String> inQueue) {
         this.inQueue = new ArrayDeque<>();
     }
@@ -207,18 +209,22 @@ public class Game {
         this.rulesSet = rulesSet;
     }
 
+    @SuppressWarnings("unused")
     private void setBlackAIPlayer(boolean blackAIPlayer) {
         isBlackAIPlayer = blackAIPlayer;
     }
 
+    @SuppressWarnings("unused")
     private void setWhiteAIPlayer(boolean whiteAIPlayer) {
         isWhiteAIPlayer = whiteAIPlayer;
     }
 
+    @SuppressWarnings("unused")
     private void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
 
+    @SuppressWarnings("unused")
     private void setLastAction(LocalDateTime lastAction) {
         this.lastAction = lastAction;
     }

@@ -5,287 +5,383 @@
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="new-game" new-game-section>
-                <fieldset class="new-game-fieldset">
-                    <label class="fieldset-header">Create new game:</label>
-                    <br /><br />
-                    <label>Game name:</label>
-                    <input type="text" name="game-name" placeholder="Enter game name." game-name>
-                    <label class="fieldset-label">Rules set:</label>
-                    <select class="" name="rules-set" rules-set-select>
-                        <option disabled selected>select rules set</option>
-                    </select>
-                    <br />
-                    <label class="fieldset-label">White player:</label>
-                    <select class="" name="white-player-select" white-player-select>
-                        <option selected>Human</option>
-                        <option>Computer</option>
-                    </select>
-                    <label class="fieldset-label">Black player:</label>
-                    <select class="" name="black-player-select" black-player-select>
-                        <option selected>Human</option>
-                        <option>Computer</option>
-                    </select>
-                    <br />
-                    <button create-game-button class="">Create game</button>
-                </fieldset>
+<div class="container">
+    <div class="header">
+        <div class="new-game" new-game-section>
+            <fieldset class="new-game-fieldset">
+                <label class="fieldset-header">Create new game:</label>
+                <br/><br/>
+                <label>Game name:</label>
+                <input type="text" name="game-name" placeholder="Enter game name." game-name>
+                <label class="fieldset-label">Rules set:</label>
+                <select class="" name="rules-set" rules-set-select>
+                    <option disabled selected>select rules set</option>
+                </select>
+                <br/>
+                <label class="fieldset-label">White player:</label>
+                <select class="" name="white-player-select" white-player-select>
+                    <option selected>Human</option>
+                    <option>Computer</option>
+                </select>
+                <label class="fieldset-label">Black player:</label>
+                <select class="" name="black-player-select" black-player-select>
+                    <option selected>Human</option>
+                    <option>Computer</option>
+                </select>
+                <br/>
+                <button create-game-button class="">Create game</button>
+            </fieldset>
+        </div>
+        <div class="created-game" created-game-section>
+            <fieldset class="new-game-fieldset">
+                <br/><br/>
+                <label class="fieldset-header">"</label>
+                <label class="fieldset-header" created-game-name>no name</label>
+                <label class="fieldset-header">" GAME</label>
+                <br/><br/><br/>
+                <button surrender>End this game</button>
+                <label game-id class="always-hidden"></label>
+            </fieldset>
+        </div>
+        <div class="rules">
+            <fieldset class="rules-fieldset">
+                <label class="fieldset-header">Rules set: </label>
+                <label class="fieldset-header" rules-set-name>select rules set</label>
+                <br/><br/>
+                <label class="fieldset-label" rules-set-description>select rules set</label>
+                <div class="empty-line"></div>
+                <div class="rules-details-col">
+                    <label class="fieldset-label">Victory conditions: </label>
+                    <label class="fieldset-label" victory-conditions>n/a</label>
+                    <br/>
+                    <label class="fieldset-label">Capture: </label>
+                    <label class="fieldset-label" capture>n/a</label>
+                </div>
+                <div class="rules-details-col">
+                    <label class="fieldset-label">Man move backward: </label>
+                    <label class="fieldset-label" man-move-backward>n/a</label>
+                    <br/>
+                    <label class="fieldset-label">Man capture backward: </label>
+                    <label class="fieldset-label" man-capture-backward>n/a</label>
+                </div>
+                <div class="rules-details-col">
+                    <label class="fieldset-label">King range: </label>
+                    <label class="fieldset-label" king-range>n/a</label>
+                    <br/>
+                    <label class="fieldset-label">King move after capture: </label>
+                    <label class="fieldset-label" king-move-after-capture>n/a</label>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+    <div class="board">
+        <div class="row-board-top">
+            <div class="col col-board-edges-sides black"></div>
+            <div class="col col-board-edges black">1</div>
+            <div class="col col-board-edges white">2</div>
+            <div class="col col-board-edges black">3</div>
+            <div class="col col-board-edges white">4</div>
+            <div class="col col-board-edges black">5</div>
+            <div class="col col-board-edges white">6</div>
+            <div class="col col-board-edges black">7</div>
+            <div class="col col-board-edges white">8</div>
+            <div class="col col-board-edges-sides white"></div>
+        </div>
+        <div class="chessboard" board>
+            <div class="row-chessboard">
+                <div class="col col-board-sides black" somename>A</div>
+                <div class="col col-1 white"></div>
+                <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure"/><img
+                        src="images/black_queen.jpg" class="figure"/><img src="images/white_pawn.jpg"
+                                                                          class="figure"/><img
+                        src="images/white_queen.jpg" class="figure"/></div>
+                <div class="col col-1 white"></div>
+                <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure"/><img
+                        src="images/black_queen.jpg" class="figure"/><img src="images/white_pawn.jpg"
+                                                                          class="figure"/><img
+                        src="images/white_queen.jpg" class="figure"/></div>
+                <div class="col col-1 white"></div>
+                <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure"/><img
+                        src="images/black_queen.jpg" class="figure"/><img src="images/white_pawn.jpg"
+                                                                          class="figure"/><img
+                        src="images/white_queen.jpg" class="figure"/></div>
+                <div class="col col-1 white"></div>
+                <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure"/><img
+                        src="images/black_queen.jpg" class="figure"/><img src="images/white_pawn.jpg"
+                                                                          class="figure"/><img
+                        src="images/white_queen.jpg" class="figure"/></div>
+                <div class="col col-board-sides white">A</div>
             </div>
-            <div class="created-game" created-game-section>
-                <fieldset class="new-game-fieldset">
-                    <br /><br />
-                    <label class="fieldset-header">"</label>
-                    <label class="fieldset-header" created-game-name>no name</label>
-                    <label class="fieldset-header">" GAME</label>
-                    <br /><br /><br />
-                    <button surrender>End this game</button>
-                    <label game-id class="always-hidden"></label>
-                </fieldset>
+            <div class="row-chessboard">
+                <div class="col col-board-sides white">B</div>
+                <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure"/><img
+                        src="images/black_queen.jpg" class="figure"/><img src="images/white_pawn.jpg"
+                                                                          class="figure"/><img
+                        src="images/white_queen.jpg" class="figure"/></div>
+                <div class="col col-1 white"></div>
+                <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure"/><img
+                        src="images/black_queen.jpg" class="figure"/><img src="images/white_pawn.jpg"
+                                                                          class="figure"/><img
+                        src="images/white_queen.jpg" class="figure"/></div>
+                <div class="col col-1 white"></div>
+                <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure"/><img
+                        src="images/black_queen.jpg" class="figure"/><img src="images/white_pawn.jpg"
+                                                                          class="figure"/><img
+                        src="images/white_queen.jpg" class="figure"/></div>
+                <div class="col col-1 white"></div>
+                <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure"/><img
+                        src="images/black_queen.jpg" class="figure"/><img src="images/white_pawn.jpg"
+                                                                          class="figure"/><img
+                        src="images/white_queen.jpg" class="figure"/></div>
+                <div class="col col-1 white"></div>
+                <div class="col col-board-sides black">B</div>
             </div>
-            <div class="rules">
-                <fieldset class="rules-fieldset">
-                    <label class="fieldset-header">Rules set: </label>
-                    <label class="fieldset-header" rules-set-name>select rules set</label>
-                    <br /><br />
-                          <label class="fieldset-label" rules-set-description>select rules set</label>
-                    <div class="empty-line"></div>
-                    <div class="rules-details-col">
-                        <label class="fieldset-label">Victory conditions: </label>
-                        <label class="fieldset-label" victory-conditions>n/a</label>
-                        <br />
-                        <label class="fieldset-label">Capture: </label>
-                        <label class="fieldset-label" capture>n/a</label>
+            <div class="row-chessboard">
+                <div class="col col-board-sides black">C</div>
+                <div class="col col-1 white"></div>
+                <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure"/><img
+                        src="images/black_queen.jpg" class="figure"/><img src="images/white_pawn.jpg"
+                                                                          class="figure"/><img
+                        src="images/white_queen.jpg" class="figure"/></div>
+                <div class="col col-1 white"></div>
+                <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure"/><img
+                        src="images/black_queen.jpg" class="figure"/><img src="images/white_pawn.jpg"
+                                                                          class="figure"/><img
+                        src="images/white_queen.jpg" class="figure"/></div>
+                <div class="col col-1 white"></div>
+                <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure"/><img
+                        src="images/black_queen.jpg" class="figure"/><img src="images/white_pawn.jpg"
+                                                                          class="figure"/><img
+                        src="images/white_queen.jpg" class="figure"/></div>
+                <div class="col col-1 white"></div>
+                <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure"/><img
+                        src="images/black_queen.jpg" class="figure"/><img src="images/white_pawn.jpg"
+                                                                          class="figure"/><img
+                        src="images/white_queen.jpg" class="figure"/></div>
+                <div class="col col-board-sides white">C</div>
+            </div>
+            <div class="row-chessboard">
+                <div class="col col-board-sides white">D</div>
+                <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure"/><img
+                        src="images/black_queen.jpg" class="figure"/><img src="images/white_pawn.jpg"
+                                                                          class="figure"/><img
+                        src="images/white_queen.jpg" class="figure"/></div>
+                <div class="col col-1 white"></div>
+                <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure"/><img
+                        src="images/black_queen.jpg" class="figure"/><img src="images/white_pawn.jpg"
+                                                                          class="figure"/><img
+                        src="images/white_queen.jpg" class="figure"/></div>
+                <div class="col col-1 white"></div>
+                <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure"/><img
+                        src="images/black_queen.jpg" class="figure"/><img src="images/white_pawn.jpg"
+                                                                          class="figure"/><img
+                        src="images/white_queen.jpg" class="figure"/></div>
+                <div class="col col-1 white"></div>
+                <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure"/><img
+                        src="images/black_queen.jpg" class="figure"/><img src="images/white_pawn.jpg"
+                                                                          class="figure"/><img
+                        src="images/white_queen.jpg" class="figure"/></div>
+                <div class="col col-1 white"></div>
+                <div class="col col-board-sides black">D</div>
+            </div>
+            <div class="row-chessboard">
+                <div class="col col-board-sides black">E</div>
+                <div class="col col-1 white"></div>
+                <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure"/><img
+                        src="images/black_queen.jpg" class="figure"/><img src="images/white_pawn.jpg"
+                                                                          class="figure"/><img
+                        src="images/white_queen.jpg" class="figure"/></div>
+                <div class="col col-1 white"></div>
+                <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure"/><img
+                        src="images/black_queen.jpg" class="figure"/><img src="images/white_pawn.jpg"
+                                                                          class="figure"/><img
+                        src="images/white_queen.jpg" class="figure"/></div>
+                <div class="col col-1 white"></div>
+                <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure"/><img
+                        src="images/black_queen.jpg" class="figure"/><img src="images/white_pawn.jpg"
+                                                                          class="figure"/><img
+                        src="images/white_queen.jpg" class="figure"/></div>
+                <div class="col col-1 white"></div>
+                <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure"/><img
+                        src="images/black_queen.jpg" class="figure"/><img src="images/white_pawn.jpg"
+                                                                          class="figure"/><img
+                        src="images/white_queen.jpg" class="figure"/></div>
+                <div class="col col-board-sides white">E</div>
+            </div>
+            <div class="row-chessboard">
+                <div class="col col-board-sides white">F</div>
+                <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure"/><img
+                        src="images/black_queen.jpg" class="figure"/><img src="images/white_pawn.jpg"
+                                                                          class="figure"/><img
+                        src="images/white_queen.jpg" class="figure"/></div>
+                <div class="col col-1 white"></div>
+                <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure"/><img
+                        src="images/black_queen.jpg" class="figure"/><img src="images/white_pawn.jpg"
+                                                                          class="figure"/><img
+                        src="images/white_queen.jpg" class="figure"/></div>
+                <div class="col col-1 white"></div>
+                <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure"/><img
+                        src="images/black_queen.jpg" class="figure"/><img src="images/white_pawn.jpg"
+                                                                          class="figure"/><img
+                        src="images/white_queen.jpg" class="figure"/></div>
+                <div class="col col-1 white"></div>
+                <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure"/><img
+                        src="images/black_queen.jpg" class="figure"/><img src="images/white_pawn.jpg"
+                                                                          class="figure"/><img
+                        src="images/white_queen.jpg" class="figure"/></div>
+                <div class="col col-1 white"></div>
+                <div class="col col-board-sides black">F</div>
+            </div>
+            <div class="row-chessboard">
+                <div class="col col-board-sides black">G</div>
+                <div class="col col-1 white"></div>
+                <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure"/><img
+                        src="images/black_queen.jpg" class="figure"/><img src="images/white_pawn.jpg"
+                                                                          class="figure"/><img
+                        src="images/white_queen.jpg" class="figure"/></div>
+                <div class="col col-1 white"></div>
+                <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure"/><img
+                        src="images/black_queen.jpg" class="figure"/><img src="images/white_pawn.jpg"
+                                                                          class="figure"/><img
+                        src="images/white_queen.jpg" class="figure"/></div>
+                <div class="col col-1 white"></div>
+                <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure"/><img
+                        src="images/black_queen.jpg" class="figure"/><img src="images/white_pawn.jpg"
+                                                                          class="figure"/><img
+                        src="images/white_queen.jpg" class="figure"/></div>
+                <div class="col col-1 white"></div>
+                <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure"/><img
+                        src="images/black_queen.jpg" class="figure"/><img src="images/white_pawn.jpg"
+                                                                          class="figure"/><img
+                        src="images/white_queen.jpg" class="figure"/></div>
+                <div class="col col-board-sides white">G</div>
+            </div>
+            <div class="row-chessboard">
+                <div class="col col-board-sides white">H</div>
+                <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure"/><img
+                        src="images/black_queen.jpg" class="figure"/><img src="images/white_pawn.jpg"
+                                                                          class="figure"/><img
+                        src="images/white_queen.jpg" class="figure"/></div>
+                <div class="col col-1 white"></div>
+                <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure"/><img
+                        src="images/black_queen.jpg" class="figure"/><img src="images/white_pawn.jpg"
+                                                                          class="figure"/><img
+                        src="images/white_queen.jpg" class="figure"/></div>
+                <div class="col col-1 white"></div>
+                <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure"/><img
+                        src="images/black_queen.jpg" class="figure"/><img src="images/white_pawn.jpg"
+                                                                          class="figure"/><img
+                        src="images/white_queen.jpg" class="figure"/></div>
+                <div class="col col-1 white"></div>
+                <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure"/><img
+                        src="images/black_queen.jpg" class="figure"/><img src="images/white_pawn.jpg"
+                                                                          class="figure"/><img
+                        src="images/white_queen.jpg" class="figure"/></div>
+                <div class="col col-1 white"></div>
+                <div class="col col-board-sides black">H</div>
+            </div>
+        </div>
+        <div class="row-board-bottom">
+            <div class="col col-board-edges-sides white"></div>
+            <div class="col col-board-edges white">1</div>
+            <div class="col col-board-edges black">2</div>
+            <div class="col col-board-edges white">3</div>
+            <div class="col col-board-edges black">4</div>
+            <div class="col col-board-edges white">5</div>
+            <div class="col col-board-edges black">6</div>
+            <div class="col col-board-edges white">7</div>
+            <div class="col col-board-edges black">8</div>
+            <div class="col col-board-edges-sides black"></div>
+        </div>
+    </div>
+    <div class="side-menu">
+        <div class="legend-container">
+            <div class="legend">
+                <div class="legend-row-top">
+                    <div class="legend-col">PAWN</div>
+                    <div class="legend-col">QUEEN</div>
+                    <div class="legend-col-right"></div>
+                </div>
+                <div class="legend-row">
+                    <div class="legend-col"><img src="images/black_pawn.jpg"/></div>
+                    <div class="legend-col"><img src="images/black_queen.jpg"/></div>
+                    <div class="legend-col-right">
+                        BLACK<br/>
+                        <label isBlackAIPlayer class="is-ai-player"></label>
                     </div>
-                    <div class="rules-details-col">
-                        <label class="fieldset-label">Man move backward: </label>
-                        <label class="fieldset-label" man-move-backward>n/a</label>
-                        <br />
-                        <label class="fieldset-label">Man capture backward: </label>
-                        <label class="fieldset-label" man-capture-backward>n/a</label>
+                </div>
+                <div class="legend-row">
+                    <div class="legend-col"><img src="images/white_pawn.jpg"/></div>
+                    <div class="legend-col"><img src="images/white_queen.jpg"/></div>
+                    <div class="legend-col-right">
+                        WHITE<br/>
+                        <label isWhiteAIPlayer class="is-ai-player"></label>
                     </div>
-                    <div class="rules-details-col">
-                        <label class="fieldset-label">King range: </label>
-                        <label class="fieldset-label" king-range>n/a</label>
-                        <br />
-                        <label class="fieldset-label">King move after capture: </label>
-                        <label class="fieldset-label" king-move-after-capture>n/a</label>
-                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="moves-history-container">
+            <div class="moves-history">
+                <div class="moves-history-header">MOVES HISTORY</div>
+                <fieldset class="moves-history-list">
+                    <label movesHistory></label>
                 </fieldset>
             </div>
         </div>
-        <div class="board">
-            <div class="row-board-top">
-                <div class="col col-board-edges-sides black"></div>
-                <div class="col col-board-edges black">1</div>
-                <div class="col col-board-edges white">2</div>
-                <div class="col col-board-edges black">3</div>
-                <div class="col col-board-edges white">4</div>
-                <div class="col col-board-edges black">5</div>
-                <div class="col col-board-edges white">6</div>
-                <div class="col col-board-edges black">7</div>
-                <div class="col col-board-edges white">8</div>
-                <div class="col col-board-edges-sides white"></div>
+        <div status class="status-container">
+            <div status class="status">
+                <fieldset class="fieldset">
+                    <label gameStatus></label>
+                </fieldset>
             </div>
-            <div class="chessboard" board>
-                <div class="row-chessboard">
-                    <div class="col col-board-sides black" somename>A</div>
-                    <div class="col col-1 white"></div>
-                    <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure" /><img src="images/black_queen.jpg" class="figure" /><img src="images/white_pawn.jpg" class="figure" /><img src="images/white_queen.jpg" class="figure" /></div>
-                    <div class="col col-1 white"></div>
-                    <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure" /><img src="images/black_queen.jpg" class="figure" /><img src="images/white_pawn.jpg" class="figure" /><img src="images/white_queen.jpg" class="figure" /></div>
-                    <div class="col col-1 white"></div>
-                    <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure" /><img src="images/black_queen.jpg" class="figure" /><img src="images/white_pawn.jpg" class="figure" /><img src="images/white_queen.jpg" class="figure" /></div>
-                    <div class="col col-1 white"></div>
-                    <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure" /><img src="images/black_queen.jpg" class="figure" /><img src="images/white_pawn.jpg" class="figure" /><img src="images/white_queen.jpg" class="figure" /></div>
-                    <div class="col col-board-sides white">A</div>
-                </div>
-                <div class="row-chessboard">
-                    <div class="col col-board-sides white">B</div>
-                    <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure" /><img src="images/black_queen.jpg" class="figure" /><img src="images/white_pawn.jpg" class="figure" /><img src="images/white_queen.jpg" class="figure" /></div>
-                    <div class="col col-1 white"></div>
-                    <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure" /><img src="images/black_queen.jpg" class="figure" /><img src="images/white_pawn.jpg" class="figure" /><img src="images/white_queen.jpg" class="figure" /></div>
-                    <div class="col col-1 white"></div>
-                    <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure" /><img src="images/black_queen.jpg" class="figure" /><img src="images/white_pawn.jpg" class="figure" /><img src="images/white_queen.jpg" class="figure" /></div>
-                    <div class="col col-1 white"></div>
-                    <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure" /><img src="images/black_queen.jpg" class="figure" /><img src="images/white_pawn.jpg" class="figure" /><img src="images/white_queen.jpg" class="figure" /></div>
-                    <div class="col col-1 white"></div>
-                    <div class="col col-board-sides black">B</div>
-                </div>
-                <div class="row-chessboard">
-                    <div class="col col-board-sides black">C</div>
-                    <div class="col col-1 white"></div>
-                    <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure" /><img src="images/black_queen.jpg" class="figure" /><img src="images/white_pawn.jpg" class="figure" /><img src="images/white_queen.jpg" class="figure" /></div>
-                    <div class="col col-1 white"></div>
-                    <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure" /><img src="images/black_queen.jpg" class="figure" /><img src="images/white_pawn.jpg" class="figure" /><img src="images/white_queen.jpg" class="figure" /></div>
-                    <div class="col col-1 white"></div>
-                    <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure" /><img src="images/black_queen.jpg" class="figure" /><img src="images/white_pawn.jpg" class="figure" /><img src="images/white_queen.jpg" class="figure" /></div>
-                    <div class="col col-1 white"></div>
-                    <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure" /><img src="images/black_queen.jpg" class="figure" /><img src="images/white_pawn.jpg" class="figure" /><img src="images/white_queen.jpg" class="figure" /></div>
-                    <div class="col col-board-sides white">C</div>
-                </div>
-                <div class="row-chessboard">
-                    <div class="col col-board-sides white">D</div>
-                    <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure" /><img src="images/black_queen.jpg" class="figure" /><img src="images/white_pawn.jpg" class="figure" /><img src="images/white_queen.jpg" class="figure" /></div>
-                    <div class="col col-1 white"></div>
-                    <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure" /><img src="images/black_queen.jpg" class="figure" /><img src="images/white_pawn.jpg" class="figure" /><img src="images/white_queen.jpg" class="figure" /></div>
-                    <div class="col col-1 white"></div>
-                    <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure" /><img src="images/black_queen.jpg" class="figure" /><img src="images/white_pawn.jpg" class="figure" /><img src="images/white_queen.jpg" class="figure" /></div>
-                    <div class="col col-1 white"></div>
-                    <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure" /><img src="images/black_queen.jpg" class="figure" /><img src="images/white_pawn.jpg" class="figure" /><img src="images/white_queen.jpg" class="figure" /></div>
-                    <div class="col col-1 white"></div>
-                    <div class="col col-board-sides black">D</div>
-                </div>
-                <div class="row-chessboard">
-                    <div class="col col-board-sides black">E</div>
-                    <div class="col col-1 white"></div>
-                    <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure" /><img src="images/black_queen.jpg" class="figure" /><img src="images/white_pawn.jpg" class="figure" /><img src="images/white_queen.jpg" class="figure" /></div>
-                    <div class="col col-1 white"></div>
-                    <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure" /><img src="images/black_queen.jpg" class="figure" /><img src="images/white_pawn.jpg" class="figure" /><img src="images/white_queen.jpg" class="figure" /></div>
-                    <div class="col col-1 white"></div>
-                    <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure" /><img src="images/black_queen.jpg" class="figure" /><img src="images/white_pawn.jpg" class="figure" /><img src="images/white_queen.jpg" class="figure" /></div>
-                    <div class="col col-1 white"></div>
-                    <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure" /><img src="images/black_queen.jpg" class="figure" /><img src="images/white_pawn.jpg" class="figure" /><img src="images/white_queen.jpg" class="figure" /></div>
-                    <div class="col col-board-sides white">E</div>
-                </div>
-                <div class="row-chessboard">
-                    <div class="col col-board-sides white">F</div>
-                    <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure" /><img src="images/black_queen.jpg" class="figure" /><img src="images/white_pawn.jpg" class="figure" /><img src="images/white_queen.jpg" class="figure" /></div>
-                    <div class="col col-1 white"></div>
-                    <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure" /><img src="images/black_queen.jpg" class="figure" /><img src="images/white_pawn.jpg" class="figure" /><img src="images/white_queen.jpg" class="figure" /></div>
-                    <div class="col col-1 white"></div>
-                    <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure" /><img src="images/black_queen.jpg" class="figure" /><img src="images/white_pawn.jpg" class="figure" /><img src="images/white_queen.jpg" class="figure" /></div>
-                    <div class="col col-1 white"></div>
-                    <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure" /><img src="images/black_queen.jpg" class="figure" /><img src="images/white_pawn.jpg" class="figure" /><img src="images/white_queen.jpg" class="figure" /></div>
-                    <div class="col col-1 white"></div>
-                    <div class="col col-board-sides black">F</div>
-                </div>
-                <div class="row-chessboard">
-                    <div class="col col-board-sides black">G</div>
-                    <div class="col col-1 white"></div>
-                    <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure" /><img src="images/black_queen.jpg" class="figure" /><img src="images/white_pawn.jpg" class="figure" /><img src="images/white_queen.jpg" class="figure" /></div>
-                    <div class="col col-1 white"></div>
-                    <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure" /><img src="images/black_queen.jpg" class="figure" /><img src="images/white_pawn.jpg" class="figure" /><img src="images/white_queen.jpg" class="figure" /></div>
-                    <div class="col col-1 white"></div>
-                    <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure" /><img src="images/black_queen.jpg" class="figure" /><img src="images/white_pawn.jpg" class="figure" /><img src="images/white_queen.jpg" class="figure" /></div>
-                    <div class="col col-1 white"></div>
-                    <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure" /><img src="images/black_queen.jpg" class="figure" /><img src="images/white_pawn.jpg" class="figure" /><img src="images/white_queen.jpg" class="figure" /></div>
-                    <div class="col col-board-sides white">G</div>
-                </div>
-                <div class="row-chessboard">
-                    <div class="col col-board-sides white">H</div>
-                    <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure" /><img src="images/black_queen.jpg" class="figure" /><img src="images/white_pawn.jpg" class="figure" /><img src="images/white_queen.jpg" class="figure" /></div>
-                    <div class="col col-1 white"></div>
-                    <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure" /><img src="images/black_queen.jpg" class="figure" /><img src="images/white_pawn.jpg" class="figure" /><img src="images/white_queen.jpg" class="figure" /></div>
-                    <div class="col col-1 white"></div>
-                    <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure" /><img src="images/black_queen.jpg" class="figure" /><img src="images/white_pawn.jpg" class="figure" /><img src="images/white_queen.jpg" class="figure" /></div>
-                    <div class="col col-1 white"></div>
-                    <div class="col col-1 black"><img src="images/black_pawn.jpg" class="figure" /><img src="images/black_queen.jpg" class="figure" /><img src="images/white_pawn.jpg" class="figure" /><img src="images/white_queen.jpg" class="figure" /></div>
-                    <div class="col col-1 white"></div>
-                    <div class="col col-board-sides black">H</div>
-                </div>
+            <div class="next-move" next-move-section>
+                <fieldset class="fieldset">
+                    <label class="" next-move-input>
+                        Enter your next move:
+                    </label>
+                    <input type="text" name="next-move" next-move placeholder="eg. F2-E1">
+                    <br/>
+                    <button type="submit" name="send-move" send-move-button class="">Send move</button>
+                </fieldset>
             </div>
-            <div class="row-board-bottom">
-                <div class="col col-board-edges-sides white"></div>
-                <div class="col col-board-edges white">1</div>
-                <div class="col col-board-edges black">2</div>
-                <div class="col col-board-edges white">3</div>
-                <div class="col col-board-edges black">4</div>
-                <div class="col col-board-edges white">5</div>
-                <div class="col col-board-edges black">6</div>
-                <div class="col col-board-edges white">7</div>
-                <div class="col col-board-edges black">8</div>
-                <div class="col col-board-edges-sides black"></div>
+            <div class="game-progress-details" game-in-progress>
+                <label class="game-progress-header">Moves done: </label>
+                <label moves-done>n/a</label>
+                <br/><br/>
+                <label class="game-progress-header">Figures: </label>
+                <br/>
+                <label>White man: </label>
+                <label white-man>n/a</label>
+                <br/>
+                <label>White kings: </label>
+                <label white-kings>n/a</label>
+                <br/><br/>
+                <label>Black man: </label>
+                <label black-man>n/a</label>
+                <br/>
+                <label>Black kings:: </label>
+                <label black-kings>n/a</label>
+                <br/><br/>
+                <label class="game-progress-header">Kings moves:</label>
+                <br/>
+                <label>White kings moves in a row: </label>
+                <label white-kings-moves>n/a</label>
+                <br/>
+                <label>Black kings moves in a row: </label>
+                <label black-kings-moves>n/a</label>
             </div>
-        </div>
-        <div class="side-menu">
-            <div class="legend-container">
-                <div class="legend">
-                    <div class="legend-row-top">
-                        <div class="legend-col">PAWN</div>
-                        <div class="legend-col">QUEEN</div>
-                        <div class="legend-col-right"></div>
-                    </div>
-                    <div class="legend-row">
-                        <div class="legend-col"><img src="images/black_pawn.jpg" /></div>
-                        <div class="legend-col"><img src="images/black_queen.jpg" /></div>
-                        <div class="legend-col-right">
-                            BLACK<br />
-                            <label isBlackAIPlayer class="is-ai-player"></label>
-                        </div>
-                    </div>
-                    <div class="legend-row">
-                        <div class="legend-col"><img src="images/white_pawn.jpg" /></div>
-                        <div class="legend-col"><img src="images/white_queen.jpg" /></div>
-                        <div class="legend-col-right">
-                            WHITE<br />
-                            <label isWhiteAIPlayer class="is-ai-player"></label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="moves-history-container">
-                <div class="moves-history">
-                    <div class="moves-history-header">MOVES HISTORY</div>
-                    <fieldset class="moves-history-list">
-                        <label movesHistory></label>
-                    </fieldset>
-                </div>
-            </div>
-            <div status class="status-container">
-                <div status class="status">
-                    <fieldset class="fieldset">
-                        <label gameStatus></label>
-                    </fieldset>
-                </div>
-                <div class="next-move" next-move-section>
-                    <fieldset class="fieldset">
-                        <label class="" next-move-input>
-                            Enter your next move:
-                        </label>
-                        <input type="text" name="next-move" next-move placeholder="eg. F2-E1">
-                        <br />
-                        <button type="submit" name="send-move" send-move-button class="">Send move</button>
-                    </fieldset>
-                </div>
-                <div class="game-progress-details" game-in-progress>
-                    <label class="game-progress-header">Moves done: </label>
-                    <label moves-done>n/a</label>
-                    <br /><br />
-                    <label class="game-progress-header">Figures: </label>
-                    <br />
-                    <label>White man: </label>
-                    <label white-man>n/a</label>
-                    <br />
-                    <label>White kings: </label>
-                    <label white-kings>n/a</label>
-                    <br /><br />
-                    <label>Black man: </label>
-                    <label black-man>n/a</label>
-                    <br />
-                    <label>Black kings:: </label>
-                    <label black-kings>n/a</label>
-                    <br /><br />
-                    <label class="game-progress-header">Kings moves:</label>
-                    <br />
-                    <label>White kings moves in a row: </label>
-                    <label white-kings-moves>n/a</label>
-                    <br />
-                    <label>Black kings moves in a row: </label>
-                    <label black-kings-moves>n/a</label>
-                </div>
-                <div class="game-progress-details game-finished" game-finished>
-                    <br /><br />
-                    <label class="game-finished-header">Game finished!</label>
-                    <br /><br />
-                    <label class="game-finished-header" winner-or-draw>n/a</label>
-                    <br /><br />
-                    <label class="game-progress-header" type-of-game-finish>n/a</label>
-                </div>
+            <div class="game-progress-details game-finished" game-finished>
+                <br/><br/>
+                <label class="game-finished-header">Game finished!</label>
+                <br/><br/>
+                <label class="game-finished-header" winner-or-draw>n/a</label>
+                <br/><br/>
+                <label class="game-progress-header" type-of-game-finish>n/a</label>
             </div>
         </div>
     </div>
-    <script src="jquery-3.2.1.min.js"></script>
-    <script src="script.js"></script>
+</div>
+<script src="jquery-3.2.1.min.js"></script>
+<script src="script.js"></script>
 </body>
 </html>

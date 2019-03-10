@@ -13,21 +13,22 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmailService {
 
+    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
     @Autowired
     private JavaMailSender javaMailSender;
 
+    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
     @Autowired
     AppInfoConfig appInfoConfig;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EmailService.class);
 
-    public void send(final String receiverEmail, final String subject, final String message) {
+    void send(final String receiverEmail, final String subject, final String message) {
         LOGGER.info("Starting email preparation...");
         try {
             javaMailSender.send(createMimeMessage(receiverEmail, subject, message));
             LOGGER.info("Email has been sent.");
-        }
-        catch(MailException e) {
+        } catch (MailException e) {
             LOGGER.error("Email sending failed: ", e.getMessage(), e);
         }
     }

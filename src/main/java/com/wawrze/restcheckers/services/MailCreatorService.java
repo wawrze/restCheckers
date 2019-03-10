@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
 @Service
 public class MailCreatorService {
 
@@ -29,7 +30,7 @@ public class MailCreatorService {
     @Qualifier("templateEngine")
     private TemplateEngine templateEngine;
 
-    public String buildDailyEmail() {
+    String buildDailyEmail() {
         List<String[]> games = getGamesList();
         Context context = new Context();
         context.setVariable("message", "It's been " + games.size() + " games played last day.");

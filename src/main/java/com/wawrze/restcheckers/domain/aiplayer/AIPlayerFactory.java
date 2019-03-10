@@ -11,6 +11,7 @@ import java.util.HashMap;
 @Component
 public class AIPlayerFactory {
 
+    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
     @Autowired
     private AIPlayerMoveEvaluator aiPlayerMoveEvaluator;
 
@@ -49,7 +50,7 @@ public class AIPlayerFactory {
     }
 
     public AIPlayer newAIPlayer(Board board, boolean aiPlayer, boolean activePlayer, RulesSet rulesSet,
-                                 int whiteQueenMoves, int blackQueenMoves, int depth) {
+                                int whiteQueenMoves, int blackQueenMoves, int depth) {
         AIPlayer player = new AIPlayer(
                 board,
                 aiPlayer,
@@ -66,7 +67,7 @@ public class AIPlayerFactory {
     }
 
     public AIPlayer newAIPlayer(Board board, boolean aiPlayer, boolean activePlayer, RulesSet rulesSet,
-                                 int whiteQueenMoves, int blackQueenMoves, int depth, char row, int col) {
+                                int whiteQueenMoves, int blackQueenMoves, int depth, char row, int col) {
         AIPlayer player = new AIPlayer(
                 board,
                 aiPlayer,
