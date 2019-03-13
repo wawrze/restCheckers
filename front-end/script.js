@@ -4,14 +4,13 @@
     const board = $('[board]');
     const gStatus = $('[gameStatus]');
     const mHistory = $('[movesHistory]');
+    const gameName = $('[created-game-name]');
     const whitePlayer = $('[isWhiteAIPlayer]');
     const blackPlayer = $('[isBlackAIPlayer]');
     const status = $('[status]');
 
     var availableRulesSets = {};
     var availableRulesSetsLength;
-    var gameName;
-    var gameId;
 
     $('[next-move]').on('keydown', function () {
         if (event.keyCode == 13) {
@@ -22,6 +21,7 @@
     //init
     gStatus.text("Not connected to application. Please, wait for a while...");
     getAllAvailableRulesSets();
+    getGameInfo();
 
     function getAllAvailableRulesSets() {
         var requestUrl = apiRoot + 'rules';
@@ -80,7 +80,6 @@
     function createGame() {
         const requestUrl = apiRoot + 'games/new';
 
-        gameName = $('[game-name]').val();
         var gameRulesName = $('[rules-set-select]').val();
         var blackPlayer = "false";
         var whitePlayer = "false";
@@ -92,7 +91,7 @@
             whitePlayer = "true";
         }
 
-        if (gameName == "") {
+        if (($('[game-name]')).val() == "") {
             gStatus.text("You have to enter game name!");
             return;
         }
@@ -108,58 +107,46 @@
             url: requestUrl,
             method: 'POST',
             contentType: "application/json; charset=utf-8",
+            crossDomain: true,
+            xhrFields: {withCredentials: true},
             dataType: 'json',
             data: JSON.stringify({
-                name: gameName,
+                name: ($('[game-name]')).val(),
                 rulesName: gameRulesName,
                 isBlackAIPlayer: blackPlayer,
                 isWhiteAIPlayer: whitePlayer
             }),
-            success: function (id) {
-                $('[game-id]').text(id);
+            success: function () {
+                gStatus.text("Starting new game...");
                 getGameInfo();
                 playGame();
             },
             error: function () {
-                gStatus.text("Application error.");
+                gStatus.text("Starting new game...");
+                getGameInfo();
+                playGame();
             }
         });
 
-        $('[created-game-name]').text(gameName);
-        $('[new-game-section]')[0].style.display = 'none';
-        $('[created-game-section]')[0].style.display = 'block';
-        $('[next-move-section]')[0].style.display = 'block';
-        $('[next-move-input]')[0].style.display = 'inline-block';
-        $('[status]')[1].style.display = 'block';
-        $('[next-move]')[0].style.display = 'inline-block';
-        $('[send-move-button]')[0].style.display = 'inline-block';
+        changeView(true);
 
-        if (blackPlayer == "true" && whitePlayer == "true") {
-            gStatus[0].style.display = 'none';
-            $('[next-move-input]').text("Enter button to see next move:");
-            $('[next-move]')[0].style.display = 'none';
-            $('[send-move-button]').text("Next move");
-            $('[send-move-button]').focus();
-        } else {
-            $('[next-move-input]').text("Enter your next move:");
-            $('[send-move-button]').text("Send move");
-            $('[next-move]').focus();
-        }
-
+        getGameInfo();
     }
 
     function playGame() {
-        const requestUrl = apiRoot + 'games/' + $('[game-id]').text();
+        const requestUrl = apiRoot + 'games';
 
         $.ajax({
             url: requestUrl,
             method: 'POST',
+            crossDomain: true,
+            xhrFields: {withCredentials: true},
             contentType: "application/json; charset=utf-8"
         });
     }
 
     function sendMove() {
-        var requestUrl = apiRoot + 'games/' + $('[game-id]').text();
+        var requestUrl = apiRoot + 'games';
         var moveToSend;
 
         if ($('[black-player-select]').val() == "Computer" && $('[white-player-select]').val() == "Computer") {
@@ -171,6 +158,8 @@
         $.ajax({
             url: requestUrl,
             method: 'PUT',
+            crossDomain: true,
+            xhrFields: {withCredentials: true},
             processData: false,
             contentType: "application/json;charset=UTF-8",
             dataType: 'json',
@@ -187,18 +176,20 @@
             },
             statusCode: {
                 403: function () {
-                    gStatus.text("There is no game named \"" + gameName + "\" - possible application error.");
+                    gStatus.text("Game not started.");
                 }
             }
         });
     }
 
     function getGameInfo() {
-        const requestUrl = apiRoot + 'games/' + $('[game-id]').text();
+        const requestUrl = apiRoot + 'games';
 
         $.ajax({
             url: requestUrl,
             method: 'GET',
+            crossDomain: true,
+            xhrFields: {withCredentials: true},
             contentType: "application/json;charset=UTF-8",
             success: function (gameInfo) {
                 for (var i = 0; i < 7; i += 2) {
@@ -216,9 +207,11 @@
                     }
                 }
                 gStatus.text(gameInfo.gameStatus);
-                gameInfo.board.rows.forEach(row = > {
-                    row.figures.forEach(figure = > {
-                        if(figure.name == "pawn"
+                gameInfo.board.rows.forEach(row = >
+                {
+                    row.figures.forEach(figure = >
+                        {
+                            if(figure.name == "pawn"
             )
                 {
                     if (figure.color == "true") {
@@ -239,6 +232,7 @@
             })
                 ;
                 mHistory.text(gameInfo.movesHistory);
+                gameName.text(gameInfo.name);
                 if (gameInfo.blackAIPlayer) {
                     blackPlayer.text("(Computer)");
                 } else {
@@ -314,6 +308,7 @@
                     $('[next-move]')[0].style.display = 'none';
                     $('[send-move-button]')[0].style.display = 'none';
                 } else {
+                    changeView(true);
                     $('[game-in-progress]')[0].style.display = 'block';
                     $('[game-finished]')[0].style.display = 'none';
                     $('[moves-done]').text(gameInfo.moves);
@@ -330,36 +325,25 @@
             },
             statusCode: {
                 403: function () {
-                    gStatus.text("There is no game named \"" + gameName + "\" - possible application error.");
+                    gStatus.text("Game not started.");
                 }
             }
         });
     }
 
     function surrender() {
-        $('[game-in-progress]')[0].style.display = 'none';
-        $('[game-finished]')[0].style.display = 'block';
-        $('[next-move-section]')[0].style.display = 'block';
-        $('[game-finished]')[0].style.background = 'grey';
-        $('[game-finished]')[0].style.color = 'black';
-        $('[status]')[1].style.background = 'grey';
-        $('[next-move-section]')[0].style.background = 'grey';
-        $('[winner-or-draw]').text("GAME ENDED");
-        $('[type-of-game-finish]').text("(Game ended with no winner.)");
-        $('[new-game-section]')[0].style.display = 'block';
-        $('[created-game-section]')[0].style.display = 'none';
-        $('[next-move-input]')[0].style.display = 'none';
-        $('[next-move]')[0].style.display = 'none';
-        $('[send-move-button]')[0].style.display = 'none';
+        changeView(false);
 
         var requestUrl = apiRoot + 'games/' + $('[game-id]').text();
 
         $.ajax({
             url: requestUrl,
+            crossDomain: true,
+            xhrFields: {withCredentials: true},
             method: 'DELETE',
             statusCode: {
                 403: function () {
-                    gStatus.text("There is no game named \"" + gameName + "\" - possible application error.");
+                    gStatus.text("Game not started.");
                 }
             }
         });
@@ -371,5 +355,45 @@
     $('[rules-set-select]').change(function () {
         getSelectedRulesSet();
     });
+
+    function changeView(gameInProgress) {
+        if (gameInProgress == true) {
+            $('[new-game-section]')[0].style.display = 'none';
+            $('[created-game-section]')[0].style.display = 'block';
+            $('[next-move-section]')[0].style.display = 'block';
+            $('[next-move-input]')[0].style.display = 'inline-block';
+            $('[status]')[1].style.display = 'block';
+            $('[next-move]')[0].style.display = 'inline-block';
+            $('[send-move-button]')[0].style.display = 'inline-block';
+
+            if (blackPlayer == "true" && whitePlayer == "true") {
+                gStatus[0].style.display = 'none';
+                $('[next-move-input]').text("Enter button to see next move:");
+                $('[next-move]')[0].style.display = 'none';
+                $('[send-move-button]').text("Next move");
+                $('[send-move-button]').focus();
+            } else {
+                gStatus[0].style.display = 'block';
+                $('[next-move-input]').text("Enter your next move:");
+                $('[send-move-button]').text("Send move");
+                $('[next-move]').focus();
+            }
+        } else {
+            $('[game-in-progress]')[0].style.display = 'none';
+            $('[game-finished]')[0].style.display = 'block';
+            $('[next-move-section]')[0].style.display = 'block';
+            $('[game-finished]')[0].style.background = 'grey';
+            $('[game-finished]')[0].style.color = 'black';
+            $('[status]')[1].style.background = 'grey';
+            $('[next-move-section]')[0].style.background = 'grey';
+            $('[winner-or-draw]').text("GAME ENDED");
+            $('[type-of-game-finish]').text("(Game ended with no winner.)");
+            $('[new-game-section]')[0].style.display = 'block';
+            $('[created-game-section]')[0].style.display = 'none';
+            $('[next-move-input]')[0].style.display = 'none';
+            $('[next-move]')[0].style.display = 'none';
+            $('[send-move-button]')[0].style.display = 'none';
+        }
+    }
 
 });

@@ -6,6 +6,8 @@ import exceptions.MethodFailureException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -17,9 +19,9 @@ public class GameController {
     @Autowired
     GameEnvelope gameEnvelope;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/games/{gameId}")
-    public GameInfoDto getBoard(@PathVariable Long gameId) throws MethodFailureException {
-        return gameEnvelope.getGameInfo(gameId);
+    @RequestMapping(method = RequestMethod.GET, value = "/games")
+    public GameInfoDto getBoard(HttpServletRequest request) throws MethodFailureException {
+        return gameEnvelope.getGameInfo(request.getCookies());
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/rules")
@@ -33,26 +35,26 @@ public class GameController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/games/new")
-    public Long startNewGame(@RequestBody GameDto gameDto) throws MethodFailureException {
-        return gameEnvelope.startNewGame(gameDto);
+    public void startNewGame(@RequestBody GameDto gameDto, HttpServletResponse response) throws MethodFailureException {
+        response.addCookie(gameEnvelope.startNewGame(gameDto));
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/games/{gameId}")
-    public void playGame(@PathVariable Long gameId) throws MethodFailureException {
-        gameEnvelope.playGame(gameId);
+    @RequestMapping(method = RequestMethod.POST, value = "/games")
+    public void playGame(HttpServletRequest request) throws MethodFailureException {
+        gameEnvelope.playGame(request.getCookies());
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/games/{gameId}")
-    public boolean sendMove(@PathVariable Long gameId, @RequestBody MoveDto moveDto) throws MethodFailureException {
-        return gameEnvelope.sendMove(gameId, moveDto);
+    @RequestMapping(method = RequestMethod.PUT, value = "/games")
+    public boolean sendMove(@RequestBody MoveDto moveDto, HttpServletRequest request) throws MethodFailureException {
+        return gameEnvelope.sendMove(request.getCookies(), moveDto);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/games/{gameId}")
-    public void deleteGame(@PathVariable Long gameId) throws MethodFailureException {
-        gameEnvelope.deleteGame(gameId);
+    @RequestMapping(method = RequestMethod.DELETE, value = "/games")
+    public void deleteGame(HttpServletRequest request, HttpServletResponse response) throws MethodFailureException {
+        response.addCookie(gameEnvelope.deleteGame(request.getCookies()));
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/games")
+    @RequestMapping(method = RequestMethod.GET, value = "/games/all")
     public GameListDto getGames() {
         return gameEnvelope.getGameList();
     }

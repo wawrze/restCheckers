@@ -23,16 +23,13 @@ import static org.junit.Assert.*;
 @SpringBootTest
 public class GameEnvelopeTest {
 
+    private static int counter = 1;
     @Autowired
     GameEnvelope gameEnvelope;
-
     @Autowired
     RulesSets rulesSets;
-
     @Autowired
     DBService dbService;
-
-    private static int counter = 1;
 
     @BeforeClass
     public static void beforeTests() {

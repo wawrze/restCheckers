@@ -17,10 +17,9 @@ import static org.junit.Assert.*;
 @SpringBootTest
 public class DBServiceTest {
 
+    private static int counter = 1;
     @Autowired
     DBService dbService;
-
-    private static int counter = 1;
 
     @BeforeClass
     public static void beforeTests() {

@@ -58,10 +58,19 @@ public class Game {
         return id;
     }
 
+    @SuppressWarnings("unused")
+    private void setId(Long id) {
+        this.id = id;
+    }
+
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "board_id")
     public Board getBoard() {
         return board;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
     }
 
     @Transient
@@ -79,86 +88,6 @@ public class Game {
         return result.toString();
     }
 
-    @Transient
-    public Deque<String> getInQueue() {
-        return inQueue;
-    }
-
-    @Column(name = "game_status")
-    public String getGameStatus() {
-        return gameStatus;
-    }
-
-    @Column(name = "active_player")
-    public boolean isActivePlayer() {
-        return activePlayer;
-    }
-
-    @Column(name = "white_queen_moves")
-    public int getWhiteQueenMoves() {
-        return whiteQueenMoves;
-    }
-
-    @Column(name = "black_queen_moves")
-    public int getBlackQueenMoves() {
-        return blackQueenMoves;
-    }
-
-    @Column(name = "finished")
-    public boolean isFinished() {
-        return isFinished;
-    }
-
-    @Column(name = "draw")
-    public boolean isDraw() {
-        return isDraw;
-    }
-
-    @Column(name = "winner")
-    public boolean isWinner() {
-        return winner;
-    }
-
-    @Column(name = "name")
-    public String getName() {
-        return name;
-    }
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "rules_id")
-    public RulesSet getRulesSet() {
-        return rulesSet;
-    }
-
-    @Column(name = "black_AI_player")
-    public boolean isBlackAIPlayer() {
-        return isBlackAIPlayer;
-    }
-
-    @Column(name = "white_AI_player")
-    public boolean isWhiteAIPlayer() {
-        return isWhiteAIPlayer;
-    }
-
-    @Column(name = "start_time")
-    public LocalDateTime getStartTime() {
-        return startTime;
-    }
-
-    @Column(name = "last_action")
-    public LocalDateTime getLastAction() {
-        return lastAction;
-    }
-
-    public void setBoard(Board board) {
-        this.board = board;
-    }
-
-    @SuppressWarnings("unused")
-    private void setId(Long id) {
-        this.id = id;
-    }
-
     @SuppressWarnings("unused")
     private void setMoves(String moves) {
         this.moves = new LinkedList<>();
@@ -168,45 +97,101 @@ public class Game {
         }
     }
 
+    @Transient
+    public Deque<String> getInQueue() {
+        return inQueue;
+    }
+
     @SuppressWarnings("unused")
     private void setInQueue(Deque<String> inQueue) {
         this.inQueue = new ArrayDeque<>();
+    }
+
+    @Column(name = "game_status")
+    public String getGameStatus() {
+        return gameStatus;
     }
 
     public void setGameStatus(String gameStatus) {
         this.gameStatus = gameStatus;
     }
 
+    @Column(name = "active_player")
+    public boolean isActivePlayer() {
+        return activePlayer;
+    }
+
     public void setActivePlayer(boolean activePlayer) {
         this.activePlayer = activePlayer;
+    }
+
+    @Column(name = "white_queen_moves")
+    public int getWhiteQueenMoves() {
+        return whiteQueenMoves;
     }
 
     public void setWhiteQueenMoves(int whiteQueenMoves) {
         this.whiteQueenMoves = whiteQueenMoves;
     }
 
+    @Column(name = "black_queen_moves")
+    public int getBlackQueenMoves() {
+        return blackQueenMoves;
+    }
+
     public void setBlackQueenMoves(int blackQueenMoves) {
         this.blackQueenMoves = blackQueenMoves;
+    }
+
+    @Column(name = "finished")
+    public boolean isFinished() {
+        return isFinished;
     }
 
     public void setFinished(boolean finished) {
         isFinished = finished;
     }
 
+    @Column(name = "draw")
+    public boolean isDraw() {
+        return isDraw;
+    }
+
     public void setDraw(boolean draw) {
         isDraw = draw;
+    }
+
+    @Column(name = "winner")
+    public boolean isWinner() {
+        return winner;
     }
 
     public void setWinner(boolean winner) {
         this.winner = winner;
     }
 
+    @Column(name = "name")
+    public String getName() {
+        return name;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "rules_id")
+    public RulesSet getRulesSet() {
+        return rulesSet;
+    }
+
     public void setRulesSet(RulesSet rulesSet) {
         this.rulesSet = rulesSet;
+    }
+
+    @Column(name = "black_AI_player")
+    public boolean isBlackAIPlayer() {
+        return isBlackAIPlayer;
     }
 
     @SuppressWarnings("unused")
@@ -214,14 +199,29 @@ public class Game {
         isBlackAIPlayer = blackAIPlayer;
     }
 
+    @Column(name = "white_AI_player")
+    public boolean isWhiteAIPlayer() {
+        return isWhiteAIPlayer;
+    }
+
     @SuppressWarnings("unused")
     private void setWhiteAIPlayer(boolean whiteAIPlayer) {
         isWhiteAIPlayer = whiteAIPlayer;
     }
 
+    @Column(name = "start_time")
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
     @SuppressWarnings("unused")
     private void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
+    }
+
+    @Column(name = "last_action")
+    public LocalDateTime getLastAction() {
+        return lastAction;
     }
 
     @SuppressWarnings("unused")

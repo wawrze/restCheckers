@@ -14,9 +14,6 @@ import org.openqa.selenium.support.ui.Select;
 public class FirefoxCheckersTestSuite {
 
     private static final String BASE_URL = "https://wawrze.github.io/checkers/checkers.html";
-    //    private static final String BASE_URL = "file:///C:/Users/Wawra/Documents/Java_Projects/RestCheckers/front-end/index.html";
-    private WebDriver driver;
-
     private static final String XPATH_GAME_NAME = "/html/body/div/div[1]/div[1]/fieldset/input";
     private static final String XPATH_RULES = "/html/body/div/div[1]/div[1]/fieldset/select[1]";
     private static final String XPATH_WHITE_PLAYER = "/html/body/div/div[1]/div[1]/fieldset/select[2]";
@@ -27,6 +24,8 @@ public class FirefoxCheckersTestSuite {
     private static final String XPATH_MOVES_COUNTER = "/html/body/div/div[3]/div[3]/div[3]/label[2]";
     private static final String XPATH_GAME_FINISHED = "/html/body/div/div[3]/div[3]/div[4]";
     private static final String XPATH_NEXT_MOVE_INPUT = "/html/body/div/div[3]/div[3]/div[2]/fieldset/input";
+    //    private static final String BASE_URL = "file:///C:/Users/Wawra/Documents/Java_Projects/RestCheckers/front-end/index.html";
+    private WebDriver driver;
 
     @Before
     public void initTests() {

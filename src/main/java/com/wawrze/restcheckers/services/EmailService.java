@@ -13,15 +13,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmailService {
 
-    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
-    @Autowired
-    private JavaMailSender javaMailSender;
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(EmailService.class);
     @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
     @Autowired
     AppInfoConfig appInfoConfig;
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(EmailService.class);
+    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
+    @Autowired
+    private JavaMailSender javaMailSender;
 
     void send(final String receiverEmail, final String subject, final String message) {
         LOGGER.info("Starting email preparation...");

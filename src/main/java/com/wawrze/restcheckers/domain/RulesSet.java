@@ -42,49 +42,14 @@ public class RulesSet {
         return id;
     }
 
-    @Column(name = "victory_conditions_reversed")
-    public boolean isVictoryConditionsReversed() {
-        return isVictoryConditionsReversed;
-    }
-
-    @Column(name = "queen_range_one")
-    public boolean isQueenRangeOne() {
-        return isQueenRangeOne;
-    }
-
-    @Column(name = "capture_any")
-    public boolean isCaptureAny() {
-        return isCaptureAny;
-    }
-
-    @Column(name = "pawn_move_backward")
-    public boolean isPawnMoveBackward() {
-        return isPawnMoveBackward;
-    }
-
-    @Column(name = "pawn_capture_backward")
-    public boolean isPawnCaptureBackward() {
-        return isPawnCaptureBackward;
-    }
-
-    @Column(name = "queen_range_one_after_capture")
-    public boolean isQueenRangeOneAfterCapture() {
-        return isQueenRangeOneAfterCapture;
-    }
-
-    @Column(name = "name")
-    public String getName() {
-        return name;
-    }
-
-    @Column(name = "description")
-    public String getDescription() {
-        return description;
-    }
-
     @SuppressWarnings("unused")
     private void setId(Long id) {
         this.id = id;
+    }
+
+    @Column(name = "victory_conditions_reversed")
+    public boolean isVictoryConditionsReversed() {
+        return isVictoryConditionsReversed;
     }
 
     @SuppressWarnings("unused")
@@ -92,9 +57,19 @@ public class RulesSet {
         isVictoryConditionsReversed = victoryConditionsReversed;
     }
 
+    @Column(name = "queen_range_one")
+    public boolean isQueenRangeOne() {
+        return isQueenRangeOne;
+    }
+
     @SuppressWarnings("unused")
     private void setQueenRangeOne(boolean queenRangeOne) {
         isQueenRangeOne = queenRangeOne;
+    }
+
+    @Column(name = "capture_any")
+    public boolean isCaptureAny() {
+        return isCaptureAny;
     }
 
     @SuppressWarnings("unused")
@@ -102,9 +77,19 @@ public class RulesSet {
         isCaptureAny = captureAny;
     }
 
+    @Column(name = "pawn_move_backward")
+    public boolean isPawnMoveBackward() {
+        return isPawnMoveBackward;
+    }
+
     @SuppressWarnings("unused")
     private void setPawnMoveBackward(boolean pawnMoveBackward) {
         isPawnMoveBackward = pawnMoveBackward;
+    }
+
+    @Column(name = "pawn_capture_backward")
+    public boolean isPawnCaptureBackward() {
+        return isPawnCaptureBackward;
     }
 
     @SuppressWarnings("unused")
@@ -112,14 +97,29 @@ public class RulesSet {
         isPawnCaptureBackward = pawnCaptureBackward;
     }
 
+    @Column(name = "queen_range_one_after_capture")
+    public boolean isQueenRangeOneAfterCapture() {
+        return isQueenRangeOneAfterCapture;
+    }
+
     @SuppressWarnings("unused")
     private void setQueenRangeOneAfterCapture(boolean queenRangeOneAfterCapture) {
         isQueenRangeOneAfterCapture = queenRangeOneAfterCapture;
     }
 
+    @Column(name = "name")
+    public String getName() {
+        return name;
+    }
+
     @SuppressWarnings("unused")
     private void setName(String name) {
         this.name = name;
+    }
+
+    @Column(name = "description")
+    public String getDescription() {
+        return description;
     }
 
     @SuppressWarnings("unused")

@@ -7,12 +7,11 @@ import exceptions.IncorrectMoveFormat;
 
 public class Move {
 
-    private FigureFactory figureFactory = new FigureFactory();
-
     private final char row1;
     private final char row2;
     private final int col1;
     private final int col2;
+    private FigureFactory figureFactory = new FigureFactory();
 
     public Move(final char row1, final int col1, final char row2, final int col2) throws IncorrectMoveFormat {
         char row1u = Character.toUpperCase(row1);

@@ -18,16 +18,13 @@ import static org.junit.Assert.assertTrue;
 @SpringBootTest
 public class GameInfoMapperTest {
 
+    private static int counter = 1;
     @Autowired
     GameInfoMapper gameInfoMapper;
-
     @Autowired
     RulesSets rulesSets;
-
     @Autowired
     BoardMapper boardMapper;
-
-    private static int counter = 1;
 
     @BeforeClass
     public static void beforeTests() {

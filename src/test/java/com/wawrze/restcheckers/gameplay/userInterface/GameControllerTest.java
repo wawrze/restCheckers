@@ -31,17 +31,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest
 public class GameControllerTest {
 
+    private static int counter = 1;
     @InjectMocks
     private BoardMapper boardMapper;
-
     @Autowired
     private MockMvc mockMvc;
-
     @MockBean
     private GameEnvelope gameEnvelope;
-
-    private static int counter = 1;
-
     private Gson gson;
 
     @BeforeClass

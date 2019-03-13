@@ -28,28 +28,21 @@ import org.springframework.stereotype.Service;
 @Getter
 public class GameExecutor {
 
+    private final static Logger LOGGER = LoggerFactory.getLogger(GameExecutor.class);
     @Autowired
     private FigureFactory figureFactory;
-
     @Autowired
     private RestUI restUI;
-
     @Autowired
     private AIPlayerMoveEvaluator aiPlayerMoveEvaluator;
-
     @Autowired
     private AIPlayerFactory aiPlayerFactory;
-
     @Autowired
     private VictoryValidator victoryValidator;
-
     @Autowired
     private CapturePossibilityValidator capturePossibilityValidator;
-
     @Autowired
     private MoveValidator moveValidator;
-
-    private final static Logger LOGGER = LoggerFactory.getLogger(GameExecutor.class);
 
     void play(Game game) {
         boolean b;

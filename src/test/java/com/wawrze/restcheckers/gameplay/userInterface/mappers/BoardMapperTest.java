@@ -20,10 +20,9 @@ import static org.junit.Assert.assertEquals;
 @SpringBootTest
 public class BoardMapperTest {
 
+    private static int counter = 1;
     @Autowired
     BoardMapper boardMapper;
-
-    private static int counter = 1;
 
     @BeforeClass
     public static void beforeTests() {

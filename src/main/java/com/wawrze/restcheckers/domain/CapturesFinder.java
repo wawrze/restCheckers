@@ -41,12 +41,12 @@ public class CapturesFinder {
         return counter;
     }
 
-    public int getMaxDepth() {
-        return maxDepth;
-    }
-
     public void setCounter(int[] counter) {
         this.counter = counter;
+    }
+
+    public int getMaxDepth() {
+        return maxDepth;
     }
 
     public void setMaxDepth(int maxDepth) {

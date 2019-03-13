@@ -24,6 +24,18 @@ public class Board {
         this.rows = rows;
     }
 
+    public Board(Board board) {
+        rows = new HashMap<>();
+        IntStream.iterate(65, i -> ++i)
+                .limit(8)
+                .forEach(i -> {
+                    rows.put((char) i, new BoardRow((i % 2) == 1));
+                    IntStream.iterate(1, j -> ++j)
+                            .limit(8)
+                            .forEach(j -> rows.get((char) i).setFigure(j, board.getFigure((char) i, j)));
+                });
+    }
+
     @Transient
     public Board getNewBoard() {
         return new BoardBuilder()
@@ -55,45 +67,6 @@ public class Board {
                 .build();
     }
 
-    public Board(Board board) {
-        rows = new HashMap<>();
-        IntStream.iterate(65, i -> ++i)
-                .limit(8)
-                .forEach(i -> {
-                    rows.put((char) i, new BoardRow((i % 2) == 1));
-                    IntStream.iterate(1, j -> ++j)
-                            .limit(8)
-                            .forEach(j -> rows.get((char) i).setFigure(j, board.getFigure((char) i, j)));
-                });
-    }
-
-    public static class BoardBuilder {
-
-        private Map<Character, BoardRow> rows;
-
-        public BoardBuilder() {
-            rows = new HashMap<>();
-            rows.put('A', new BoardRow(true));
-            rows.put('B', new BoardRow(false));
-            rows.put('C', new BoardRow(true));
-            rows.put('D', new BoardRow(false));
-            rows.put('E', new BoardRow(true));
-            rows.put('F', new BoardRow(false));
-            rows.put('G', new BoardRow(true));
-            rows.put('H', new BoardRow(false));
-        }
-
-        public BoardBuilder addFigure(char row, int col, Figure figure) {
-            this.rows.get(row).setFigure(col, figure);
-            return this;
-        }
-
-        public Board build() {
-            return new Board(this.rows);
-        }
-
-    }
-
     @Transient
     public Figure getFigure(char row, int col) {
         return this.rows.get(row).getFigure(col);
@@ -113,6 +86,10 @@ public class Board {
     @Id
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @SuppressWarnings("unused")
@@ -173,8 +150,31 @@ public class Board {
         this.rows = board.getRows();
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public static class BoardBuilder {
+
+        private Map<Character, BoardRow> rows;
+
+        public BoardBuilder() {
+            rows = new HashMap<>();
+            rows.put('A', new BoardRow(true));
+            rows.put('B', new BoardRow(false));
+            rows.put('C', new BoardRow(true));
+            rows.put('D', new BoardRow(false));
+            rows.put('E', new BoardRow(true));
+            rows.put('F', new BoardRow(false));
+            rows.put('G', new BoardRow(true));
+            rows.put('H', new BoardRow(false));
+        }
+
+        public BoardBuilder addFigure(char row, int col, Figure figure) {
+            this.rows.get(row).setFigure(col, figure);
+            return this;
+        }
+
+        public Board build() {
+            return new Board(this.rows);
+        }
+
     }
 
 }

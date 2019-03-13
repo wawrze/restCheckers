@@ -20,9 +20,7 @@ import java.util.Map;
 @Component
 public class Scheduler {
 
-    @Autowired
-    private RestTemplate restTemplate;
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(Scheduler.class);
     @Autowired
     GameEnvelope gameEnvelope;
 
@@ -37,16 +35,16 @@ public class Scheduler {
 
     @Autowired
     AppInfoConfig appInfoConfig;
+    @Autowired
+    private RestTemplate restTemplate;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Scheduler.class);
-
-    @Scheduled(fixedDelay = 1500000)
+    @Scheduled(fixedDelay = 1000 * 60 * 25)
     private void getTasks() {
         restTemplate.getForObject("https://wawrze.herokuapp.com/v1/tasks", Object.class);
         LOGGER.info("Sending request to Task application...");
     }
 
-    @Scheduled(fixedDelay = 300000)
+    @Scheduled(fixedDelay = 1000 * 60 * 60)
     private void archiveGamesToDB() {
         LOGGER.info("Starting to archive non-active games...");
         Map<Long, Game> games = new HashMap<>(gameEnvelope.getGames());
@@ -61,7 +59,7 @@ public class Scheduler {
         LOGGER.info("Archiving finished.");
     }
 
-    @Scheduled(fixedDelay = 3600000)
+    @Scheduled(fixedDelay = 1000 * 60 * 60 * 24)
     private void archiveGamesInDB() {
         LOGGER.info("Starting to clean non-active games from DB...");
         List<Game> games = dbService.getAllGames();

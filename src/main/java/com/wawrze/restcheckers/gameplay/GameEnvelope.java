@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.Cookie;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,32 +27,28 @@ import java.util.stream.Collectors;
 @Getter
 public class GameEnvelope {
 
-    @Autowired
-    private DBService dbService;
+    private static final Logger LOGGER = LoggerFactory.getLogger(GameEnvelope.class);
 
-    @Autowired
-    private RulesSets rules;
-
-    @Autowired
-    private RulesSetsMapper rulesSetsMapper;
-
-    @Autowired
-    private GameInfoMapper gameInfoMapper;
-
-    @Autowired
-    private GameListMapper gameListMapper;
+    static String SESSION_ID = "sessionId";
+    private static int SESSION_TIME = 60 * 60 * 24;
 
     @Autowired
     GameExecutor gameExecutor;
-
     @Autowired
     RestUI restUI;
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(GameEnvelope.class);
-
+    @Autowired
+    private DBService dbService;
+    @Autowired
+    private RulesSets rules;
+    @Autowired
+    private RulesSetsMapper rulesSetsMapper;
+    @Autowired
+    private GameInfoMapper gameInfoMapper;
+    @Autowired
+    private GameListMapper gameListMapper;
     private Map<Long, Game> games = new HashMap<>();
 
-    public Long startNewGame(GameDto gameDto) throws MethodFailureException {
+    public Cookie startNewGame(GameDto gameDto) throws MethodFailureException {
         Game game;
         game = new Game(
                 gameDto.getName(),
@@ -62,28 +59,34 @@ public class GameEnvelope {
         dbService.saveGame(game);
         games.put(game.getId(), game);
         LOGGER.info("Game \"" + game.getName() + "\" (id " + game.getId() + ") created.");
-        return game.getId();
+
+        Long sessionId = game.getId();
+        Cookie cookie = new Cookie(SESSION_ID, "" + sessionId);
+        cookie.setMaxAge(SESSION_TIME);
+        return cookie;
     }
 
-    public void playGame(Long gameId) throws MethodFailureException {
-        Game game = games.get(gameId);
+    public void playGame(Cookie[] cookies) throws MethodFailureException {
+        Long sessionId = getGameIdFromCookie(cookies);
+        Game game = games.get(sessionId);
         if (game == null) {
-            LOGGER.warn("There is no game with id = " + gameId + "! Game not started!");
-            throw new MethodFailureException("There is no game with id = " + gameId + "! Game not started!");
+            LOGGER.warn("There is no game with id = " + sessionId + "! Game not started!");
+            throw new MethodFailureException("There is no game with id = " + sessionId + "! Game not started!");
         }
         LOGGER.info("Starting game \"" + game.getName() + "\" (id " + game.getId() + ").");
         game.updateLastAction();
         gameExecutor.play(game);
     }
 
-    public boolean sendMove(Long gameId, MoveDto moveDto) throws MethodFailureException {
+    public boolean sendMove(Cookie[] cookies, MoveDto moveDto) throws MethodFailureException {
         String s = moveDto.getMove();
-        Game game = games.get(gameId);
+        Long sessionId = getGameIdFromCookie(cookies);
+        Game game = games.get(sessionId);
         if (game == null) {
-            game = dbService.getGameById(gameId);
+            game = dbService.getGameById(sessionId);
             if (game == null) {
-                LOGGER.warn("There is no game with id = \"" + gameId + "\"! Move not served!");
-                throw new MethodFailureException("There is no game with id = \"" + gameId + "\"! Move not served!");
+                LOGGER.warn("There is no game with id = \"" + sessionId + "\"! Move not served!");
+                throw new MethodFailureException("There is no game with id = \"" + sessionId + "\"! Move not served!");
             }
         }
         game.getInQueue().offer(s);
@@ -113,11 +116,12 @@ public class GameEnvelope {
         return rulesSetsMapper.mapToRulesSetDto(rulesSet);
     }
 
-    public GameInfoDto getGameInfo(Long gameId) throws MethodFailureException {
-        Game game = games.get(gameId);
+    public GameInfoDto getGameInfo(Cookie[] cookies) throws MethodFailureException {
+        Long sessionId = getGameIdFromCookie(cookies);
+        Game game = games.get(sessionId);
         if (game == null) {
-            LOGGER.warn("There is no game with id = \"" + gameId + "\"! Game info not sent!");
-            throw new MethodFailureException("There is no game with id = \"" + gameId + "\"! Game info not sent!");
+            LOGGER.warn("There is no game with id = \"" + sessionId + "\"! Game info not sent!");
+            throw new MethodFailureException("There is no game with id = \"" + sessionId + "\"! Game info not sent!");
         }
         try {
             Thread.sleep(1000);
@@ -127,10 +131,10 @@ public class GameEnvelope {
         }
         GameInfoDto gameInfoDto = gameInfoMapper.mapToGameInfoDto(game);
         if (game.isFinished()) {
-            games.remove(gameId);
+            games.remove(sessionId);
             game.updateLastAction();
             dbService.saveFinishedGame(game);
-            dbService.deleteGame(gameId);
+            dbService.deleteGame(sessionId);
             LOGGER.info("Game \"" + game.getName() + "\" (id " + game.getId() + ") finished. Game info sent. " +
                     "Game archived in DB.");
         } else {
@@ -140,14 +144,18 @@ public class GameEnvelope {
         return gameInfoDto;
     }
 
-    public void deleteGame(Long gameId) throws MethodFailureException {
-        Game game = games.get(gameId);
+    public Cookie deleteGame(Cookie[] cookies) throws MethodFailureException {
+        Long sessionId = getGameIdFromCookie(cookies);
+        Game game = games.get(sessionId);
         if (game == null) {
-            LOGGER.warn("There is no game with id = \"" + gameId + "\"! Game not removed!");
-            throw new MethodFailureException("There is no game with id = \"" + gameId + "\"! Game not removed!");
+            LOGGER.warn("There is no game with id = \"" + sessionId + "\"! Game not removed!");
+            throw new MethodFailureException("There is no game with id = \"" + sessionId + "\"! Game not removed!");
         }
-        games.remove(gameId);
+        games.remove(sessionId);
         LOGGER.info("Game  \"" + game.getName() + "\" (id " + game.getId() + ") removed.");
+        Cookie cookie = new Cookie(SESSION_ID, "");
+        cookie.setMaxAge(0);
+        return cookie;
     }
 
     public GameListDto getGameList() {
@@ -170,6 +178,19 @@ public class GameEnvelope {
         });
         LOGGER.info("<================================");
         return finishedGames;
+    }
+
+    private Long getGameIdFromCookie(Cookie[] cookies) throws MethodFailureException {
+        Long sessionId = -1L;
+        if (cookies == null || cookies.length == 0) {
+            throw new MethodFailureException("");
+        }
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals(SESSION_ID)) {
+                sessionId = Long.valueOf(cookie.getValue());
+            }
+        }
+        return sessionId;
     }
 
 }
