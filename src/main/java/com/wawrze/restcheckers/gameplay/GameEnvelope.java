@@ -8,6 +8,7 @@ import com.wawrze.restcheckers.dtos.*;
 import com.wawrze.restcheckers.dtos.mappers.GameInfoMapper;
 import com.wawrze.restcheckers.dtos.mappers.GameListMapper;
 import com.wawrze.restcheckers.dtos.mappers.RulesSetsMapper;
+import com.wawrze.restcheckers.services.Encryptor;
 import com.wawrze.restcheckers.services.dbservices.DBService;
 import exceptions.MethodFailureException;
 import lombok.Getter;
@@ -46,6 +47,9 @@ public class GameEnvelope {
     private GameInfoMapper gameInfoMapper;
     @Autowired
     private GameListMapper gameListMapper;
+    @Autowired
+    private Encryptor encryptor;
+
     private Map<Long, Game> games = new HashMap<>();
 
     public Cookie startNewGame(GameDto gameDto) throws MethodFailureException {
@@ -60,14 +64,14 @@ public class GameEnvelope {
         games.put(game.getId(), game);
         LOGGER.info("Game \"" + game.getName() + "\" (id " + game.getId() + ") created.");
 
-        Long sessionId = game.getId();
-        Cookie cookie = new Cookie(SESSION_ID, "" + sessionId);
+        String sessionId = encryptor.encrypt("" + game.getId());
+        Cookie cookie = new Cookie(SESSION_ID, sessionId);
         cookie.setMaxAge(SESSION_TIME);
         return cookie;
     }
 
     public void playGame(Cookie[] cookies) throws MethodFailureException {
-        Long sessionId = getGameIdFromCookie(cookies);
+        Long sessionId = getSessionIdFromCookie(cookies);
         Game game = games.get(sessionId);
         if (game == null) {
             LOGGER.warn("There is no game with id = " + sessionId + "! Game not started!");
@@ -80,7 +84,7 @@ public class GameEnvelope {
 
     public boolean sendMove(Cookie[] cookies, MoveDto moveDto) throws MethodFailureException {
         String s = moveDto.getMove();
-        Long sessionId = getGameIdFromCookie(cookies);
+        Long sessionId = getSessionIdFromCookie(cookies);
         Game game = games.get(sessionId);
         if (game == null) {
             game = dbService.getGameById(sessionId);
@@ -117,7 +121,7 @@ public class GameEnvelope {
     }
 
     public GameInfoDto getGameInfo(Cookie[] cookies) throws MethodFailureException {
-        Long sessionId = getGameIdFromCookie(cookies);
+        Long sessionId = getSessionIdFromCookie(cookies);
         Game game = games.get(sessionId);
         if (game == null) {
             LOGGER.warn("There is no game with id = \"" + sessionId + "\"! Game info not sent!");
@@ -145,7 +149,7 @@ public class GameEnvelope {
     }
 
     public Cookie deleteGame(Cookie[] cookies) throws MethodFailureException {
-        Long sessionId = getGameIdFromCookie(cookies);
+        Long sessionId = getSessionIdFromCookie(cookies);
         Game game = games.get(sessionId);
         if (game == null) {
             LOGGER.warn("There is no game with id = \"" + sessionId + "\"! Game not removed!");
@@ -180,14 +184,14 @@ public class GameEnvelope {
         return finishedGames;
     }
 
-    private Long getGameIdFromCookie(Cookie[] cookies) throws MethodFailureException {
+    private Long getSessionIdFromCookie(Cookie[] cookies) throws MethodFailureException {
         Long sessionId = -1L;
         if (cookies == null || cookies.length == 0) {
             throw new MethodFailureException("");
         }
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals(SESSION_ID)) {
-                sessionId = Long.valueOf(cookie.getValue());
+                sessionId = Long.valueOf(encryptor.decrypt(cookie.getValue()));
             }
         }
         return sessionId;

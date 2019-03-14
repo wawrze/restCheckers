@@ -207,30 +207,26 @@
                     }
                 }
                 gStatus.text(gameInfo.gameStatus);
-                gameInfo.board.rows.forEach(row = >
+                gameInfo.board.rows.forEach(row =>
                 {
-                    row.figures.forEach(figure = >
-                        {
-                            if(figure.name == "pawn"
-            )
-                {
-                    if (figure.color == "true") {
-                        board.children()[row.name].children[figure.col].children[0].style.display = 'block';
-                    } else {
-                        board.children()[row.name].children[figure.col].children[2].style.display = 'block';
-                    }
-                }
-                if (figure.name == "queen") {
-                    if (figure.color == "true") {
-                        board.children()[row.name].children[figure.col].children[1].style.display = 'block';
-                    } else {
-                        board.children()[row.name].children[figure.col].children[3].style.display = 'block';
-                    }
-                }
-            })
-                ;
-            })
-                ;
+                    row.figures.forEach(figure =>
+                    {
+                        if(figure.name == "pawn") {
+                            if (figure.color == "true") {
+                                board.children()[row.name].children[figure.col].children[0].style.display = 'block';
+                            } else {
+                                board.children()[row.name].children[figure.col].children[2].style.display = 'block';
+                            }
+                        }
+                        if (figure.name == "queen") {
+                            if (figure.color == "true") {
+                                board.children()[row.name].children[figure.col].children[1].style.display = 'block';
+                            } else {
+                                board.children()[row.name].children[figure.col].children[3].style.display = 'block';
+                            }
+                        }
+                    });
+                });
                 mHistory.text(gameInfo.movesHistory);
                 gameName.text(gameInfo.name);
                 if (gameInfo.blackAIPlayer) {
